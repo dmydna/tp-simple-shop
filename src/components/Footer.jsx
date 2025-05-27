@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="bg-dark text-white text-center py-3 mt-auto">
       <Container>
-        <p className="mb-0">© 2025 Talento Tech. Todos los derechos reservados.</p>
+        <p className="mb-0">© 2025 Simple SHOP. Todos los derechos reservados.</p>
       </Container>
     </footer>
   );

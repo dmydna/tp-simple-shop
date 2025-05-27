@@ -5,7 +5,7 @@ function Products({ products, onAgregarAlCarrito }) {
 
 
   return (
-    //muestro las cards
+
     <Container className='mt-4'>
     <h1>Products</h1>
     <Row>

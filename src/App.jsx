@@ -8,6 +8,9 @@ import Contact from './components/Contact';
 import Carrito from './components/Carrito';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+// TODO react router
+
 function App() {
 
   const [productosEnCarrito, setProductosEnCarrito] = useState([]);
@@ -15,9 +18,11 @@ function App() {
   const[products,setProducts]=useState([]);
   const[loading,setLoading]=useState(true);
 
+
+// TODO separar actualizar Stock de agregarCarrito
+
   const agregarAlCarrito = (productoAAgregar) => {
  
-
     const productoExiste = productosEnCarrito.find(
       (item) => item.producto.id === productoAAgregar.id
     );
@@ -33,13 +38,13 @@ function App() {
       );
 
     } else {
-      setProductosEnCarrito((prevProductos) => [ // ojo aca, retorno implicito de un array 
+      setProductosEnCarrito((prevProductos) => [ // retorno implicito de un array 
         ...prevProductos,
         { producto: productoAAgregar, cantidad: 1 },
       ]);
     }
 
-    setProducts((prevProducts) => // ojo aca, retorno implicito de un array 
+    setProducts((prevProducts) => // retorno implicito de un array 
         prevProducts.map((producto) => 
       producto.id === productoAAgregar.id
         ? { ...producto, stock: producto.stock - 1 } 
@@ -66,15 +71,10 @@ function App() {
   },[]);
 
 
-  const usuario = "Nicolas Fernandez";
-  const tipo = "Administrador";
+  const usuario = "Jhon Doe";
+  const tipo = "user";
 
   const navItems = ["Inicio", "Productos", "Contacto", "Carrito"];
-  const imagenes = [
-    "https://picsum.photos/200/300?random=1",
-    "https://picsum.photos/200/300?random=2",
-    "https://picsum.photos/200/300?random=3",
-  ];
 
   const [seccion, setSeccion] = useState("Inicio");
 
