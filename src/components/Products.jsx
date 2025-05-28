@@ -25,8 +25,7 @@ function Products({ products, onAgregarAlCarrito }) {
                 </Card.Text>
             </Card.Body>
           </Card>
-          <Button  className='mx-2' variant="success" type="submit">Comprar</Button>
-          <Button onClick={()=>{onAgregarAlCarrito(product)}} className='mx-2 my-2' variant="light" type="submit">Agregar al Carrito</Button>
+          <Button onClick={()=>{onAgregarAlCarrito(product)}} className='mx-2 my-2 fw-bold' variant="success" type="submit">Agregar al Carrito</Button>
         </Col>
       ))}
     </Row>

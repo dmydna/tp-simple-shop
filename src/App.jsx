@@ -55,11 +55,15 @@ function App() {
 
 
   setCounter((prevCounter) => {
-    if(!productoExiste){
-      return productosEnCarrito.length + 1;
-    }else{
-      return productosEnCarrito.length
-    }
+
+    return prevCounter + 1
+
+    // if(!productoExiste){
+    //   return productosEnCarrito.length + 1;
+    // }else{
+    //   return productosEnCarrito.length
+    // }
+
 
   });
 
