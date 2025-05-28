@@ -18,6 +18,7 @@ function App() {
   const[products,setProducts]=useState([]);
   const[loading,setLoading]=useState(true);
 
+  const [counter, setCounter] = useState(0);
 
 // TODO quitarCarrito
 
@@ -53,7 +54,16 @@ function App() {
   );
 
 
-  };
+  setCounter((prevCounter) => {
+    if(!productoExiste){
+      return productosEnCarrito.length + 1;
+    }else{
+      return productosEnCarrito.length
+    }
+
+  });
+
+}
 
   useEffect(()=>
   {
@@ -99,7 +109,7 @@ function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header tipo={tipo} usuario={usuario} />
-      <Nav items={navItems} onSeleccion={setSeccion} />
+      <Nav items={navItems} counter={counter} onSeleccion={setSeccion} />
       <main className="flex-grow-1 p-3">
         {renderContenido()}
       </main>

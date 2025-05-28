@@ -18,7 +18,7 @@ function Products({ products, onAgregarAlCarrito }) {
             <Card.Body>
               <Card.Title style={{ height: '2.50rem'}} >{product.title}</Card.Title>
                 <Card.Text>
-                    <h1 className='font-weight-bold'>{product.price || 'N/A'} USD</h1>
+                    <h1 className='font-weight-bold'>$ {product.price || 'N/A'}</h1>
                 </Card.Text>
                 <Card.Text>
                     <strong className='text-secondary'>stock: {product.stock || 'N/A'}</strong>
@@ -26,7 +26,7 @@ function Products({ products, onAgregarAlCarrito }) {
             </Card.Body>
           </Card>
           <Button  className='mx-2' variant="success" type="submit">Comprar</Button>
-          <Button onClick={()=>{onAgregarAlCarrito(product)}} className='mx-2 my-2' variant="muted" type="submit">Agregar al Carrito</Button>
+          <Button onClick={()=>{onAgregarAlCarrito(product)}} className='mx-2 my-2' variant="light" type="submit">Agregar al Carrito</Button>
         </Col>
       ))}
     </Row>
