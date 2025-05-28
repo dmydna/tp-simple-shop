@@ -1,20 +1,22 @@
 import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 function Products({ products, onAgregarAlCarrito }) {
 
 
+  // Agregar al Carrito, actualiza stock e incrementa producto en el Carrito
+
   return (
 
     <Container className='mt-4'>
-    <h1>Products</h1>
+    <h1>Productos</h1>
     <Row>
       {products.map(product=>(
         <Col  className='d-flex flex-column' key={product.id} md={4}>
           <Card className="row m-2">
           <Card.Img src={product.thumbnail}/>
             <Card.Body>
-              <Card.Title>{product.title}</Card.Title>
+              <Card.Title style={{ height: '2.50rem'}} >{product.title}</Card.Title>
                 <Card.Text>
                     <h1 className='font-weight-bold'>{product.price || 'N/A'} USD</h1>
                 </Card.Text>

@@ -19,7 +19,7 @@ function App() {
   const[loading,setLoading]=useState(true);
 
 
-// TODO separar actualizar Stock de agregarCarrito
+// TODO quitarCarrito
 
   const agregarAlCarrito = (productoAAgregar) => {
  

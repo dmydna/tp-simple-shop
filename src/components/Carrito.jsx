@@ -4,6 +4,7 @@ import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 function Carrito({productosCarrito}){
 
+
   let retCarrito = (
     <Container className='mt-4'>
     <h1>Carrito</h1>
@@ -23,7 +24,7 @@ function Carrito({productosCarrito}){
               </Col>
               <Col className='col-md-4'>
                 <Card.Body>
-                  <Card.Title>{item.producto.title}</Card.Title>
+                  <Card.Title >{item.producto.title}</Card.Title>
                     <Card.Text>
                         <h1 className='font-weight-bold'>{
                         (item.producto.price * item.cantidad).toFixed(2)} USD</h1>
