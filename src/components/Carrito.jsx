@@ -13,10 +13,16 @@ function Carrito({productosCarrito}){
   )
 
     if(productosCarrito.length != 0){
+
+      const total = productosCarrito.reduce((accumulator, item) => {
+        return accumulator + (item.producto.price * item.cantidad);
+      }, 0);
+
       retCarrito = (<Container className='mt-4'>
 
         <h1>Carrito</h1>
           {productosCarrito.map(item=>(
+              
               <Card className="m-2">
               <Row className='g-0' key={item.producto.id} md={4}>
               <Col className='col-md-2'>
@@ -33,11 +39,15 @@ function Carrito({productosCarrito}){
                         <strong className='text-secondary'>Cantidad: {item.cantidad || 'N/A'}</strong>
                     </Card.Text>
                 </Card.Body>
-                <Button className='m-2' variant="success" type="submit">Comprar</Button>
               </Col>
               </Row>
               </Card>    
           ))}
+          <Card className="m-2 p-3">
+          <Card.Text > <h1 className='font-weight-bold'> Total: {total.toFixed(2)} USD </h1></Card.Text>
+          <Button className='m-2' variant="success" type="submit">Finalizar Comprar</Button>
+          </Card>
+
        </Container>  
        )
     
