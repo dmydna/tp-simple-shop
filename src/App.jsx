@@ -5,9 +5,8 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import Products from './components/Products';
 import Contact from './components/Contact';
-import Carrito from './components/Carrito';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import CartCanvas from './components/CartCanvas';
 
 // TODO react router
 
@@ -20,7 +19,10 @@ function App() {
 
   const [counter, setCounter] = useState(0);
 
-// TODO quitarCarrito
+  const [showCart, setShowCart] = useState(false);
+
+  const handleShowCart = () => setShowCart(true);
+  const handleCloseCart = () => setShowCart(false);
 
   const agregarAlCarrito = (productoAAgregar) => {
  
@@ -55,16 +57,7 @@ function App() {
 
 
   setCounter((prevCounter) => {
-
     return prevCounter + 1
-
-    // if(!productoExiste){
-    //   return productosEnCarrito.length + 1;
-    // }else{
-    //   return productosEnCarrito.length
-    // }
-
-
   });
 
 }
@@ -88,7 +81,7 @@ function App() {
   const usuario = "Jhon Doe";
   const tipo = "user";
 
-  const navItems = ["Inicio", "Productos", "Contacto", "Carrito"];
+  const navItems = ["Inicio", "Productos", "Contacto"];
 
   const [seccion, setSeccion] = useState("Inicio");
 
@@ -101,10 +94,6 @@ function App() {
         return <Products products={products} onAgregarAlCarrito={agregarAlCarrito} />;
       case "Contacto":
         return <Contact />;
-      case "Carrito":
-        return <Carrito productos={setProducts} 
-                productosCarrito={productosEnCarrito} 
-                agregarCarrito={agregarAlCarrito} />
       default:
         return <Home />;
     }
@@ -113,9 +102,19 @@ function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header tipo={tipo} usuario={usuario} />
-      <Nav items={navItems} counter={counter} onSeleccion={setSeccion} />
-      <main className="flex-grow-1 p-3">
-        {renderContenido()}
+      <Nav items={navItems} 
+        counter={counter} 
+        onSeleccion={setSeccion} 
+        handleShowCart={handleShowCart}
+      />
+      <CartCanvas productos={setProducts} 
+            productosCarrito={productosEnCarrito} 
+            agregarCarrito={agregarAlCarrito} 
+            showCart={showCart}
+            handleCloseCart = {handleCloseCart}
+      />
+      <main className="flex-grow-1 p-3 bg-light">
+      {renderContenido()}
       </main>
       <Footer />
     </div>

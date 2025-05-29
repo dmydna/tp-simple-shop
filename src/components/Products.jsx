@@ -16,9 +16,9 @@ function Products({ products, onAgregarAlCarrito }) {
           <Card className="row m-2">
           <Card.Img src={product.thumbnail}/>
             <Card.Body>
-              <Card.Title style={{ height: '2.50rem'}} >{product.title}</Card.Title>
-                <Card.Text>
-                    <h1 className='font-weight-bold'>$ {product.price || 'N/A'}</h1>
+              <Card.Title style={{ textWrap: 'no-wrap',overflow: 'hidden', height: '2.55rem', textOverflow: 'ellipsis'}} >{product.title}</Card.Title>
+                <Card.Text className='fw-bold fs-1'>
+                   $ {product.price || 'N/A'}
                 </Card.Text>
                 <Card.Text>
                     <strong className='text-secondary'>stock: {product.stock || 'N/A'}</strong>

@@ -1,29 +1,31 @@
 import React from 'react';
-import { Nav as BootstrapNav, Navbar, Container } from 'react-bootstrap';
+import { Nav as BootstrapNav, Navbar, Container, Button } from 'react-bootstrap';
 
 
-function Nav({ items, onSeleccion, counter }) {
+function Nav({ items, onSeleccion, counter, handleShowCart  }) {
+
+
 
   return (
-    <Navbar bg="light" expand="md" className="sticky-top py-0" >
+    <Navbar bg="white" expand="md" className="sticky-top py-0 border" >
       <Container>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
+      <BootstrapNav className='order-md-last'>
+      <Button className='fw-bold fs-3 d-flex' variant="outline-blac" onClick={handleShowCart}>
+            <i className="bi bi-cart3"></i>
+            <p className='mx-2 my-0'>{counter}</p>
+      </Button>
+      </BootstrapNav>
+       <Navbar.Collapse id="basic-navbar-nav">
         <BootstrapNav className="me-auto w-100  align-items-center">
           {items.map((item) => (
-            item == 'Carrito' ?
-            <BootstrapNav.Link  className={'ms-md-auto fs-2'} key={item} onClick={() => onSeleccion(item)}>
-              
-              <i class="bi bi-cart3"></i> 
-              <p style={{display: 'contents'}} className='mx-2 fw-bold'>{counter}</p>
-            </BootstrapNav.Link> :
-                        <BootstrapNav.Link key={item} onClick={() => onSeleccion(item)}>
-                        {item}
-            </BootstrapNav.Link>
-
+          <BootstrapNav.Link key={item} onClick={() => onSeleccion(item)}>
+                {item}
+          </BootstrapNav.Link>
           ))}
         </BootstrapNav>
-      </Navbar.Collapse>
+       </Navbar.Collapse>
+
       </Container>
     </Navbar>
   );

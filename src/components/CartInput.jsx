@@ -20,7 +20,6 @@ function CantidadInput( { cantidad} ){
 
             <Button variant='outline-secondary'> +
             </Button>
-
         </InputGroup> 
     )
 }
