@@ -1,13 +1,13 @@
-import React, { useState,useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Footer from './components/Footer';
 import Header from './components/Header';
 import Nav from './components/Nav';
-import Footer from './components/Footer';
-import Home from './components/Home';
-import Products from './components/Products';
-import Contact from './components/Contact';
-import Carrito from './components/Carrito';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Carrito from './pages/Carrito';
+import Contact from './pages/Contact';
+import Home from './pages/Home';
+import Products from './pages/Products';
 
 // TODO react router
 
@@ -18,53 +18,110 @@ function App() {
   const[products,setProducts]=useState([]);
   const[loading,setLoading]=useState(true);
 
-  const [counter, setCounter] = useState(0);
+  const [contadorCarrito, setContadorCarrito] = useState(0);
+  const [carritoTotal, setTotalCarrito] = useState(0)
+  
 
 // TODO quitarCarrito
+
+  const limpiarCarrito = () => {
+    setProductosEnCarrito([])
+    setTotalCarrito(0)
+    setContadorCarrito(0)
+  }
+
+  const  limpiarProductoCarrito = (productoCarrito) => {
+    setContadorCarrito((prevContador) => prevContador - productoCarrito.cantidad)
+    setTotalCarrito((prevTotal) => prevTotal - (productoCarrito.price * productoCarrito.cantidad))
+
+    setProducts((prevProducts) => // retorno implicito de un array 
+      prevProducts.map((item) => 
+        item.id === productoCarrito.id
+        ? { ...item, stock: item.stock + productoCarrito.cantidad } 
+        : item 
+      )
+    );
+
+    setProductosEnCarrito((prevProductos) =>
+      prevProductos.filter((item) =>
+        item.id !== productoCarrito.id 
+    ))
+
+  }
+  const  disminuirProductoCarrito = (productoCarrito) => {
+    setContadorCarrito((prevContador) => prevContador - 1)
+    setTotalCarrito((prevTotal) => prevTotal - 1)
+
+    setProductosEnCarrito((prevProductos) =>
+      prevProductos.map((item) =>
+        item.id === productoCarrito.id 
+          ? { ...item, cantidad: item.cantidad - 1 } // Incrementa la cantidad
+          : item
+    ))
+
+    setProducts((prevProducts) => // retorno implicito de un array 
+      prevProducts.map((item) => 
+      item.id === productoCarrito.id
+        ? { ...item, stock: item.stock + 1 } 
+        : item 
+      )
+    );
+  }  
+
+
+  const incrementarProductoCarrito = (productoCarrito) => {
+    setContadorCarrito((prevContador) => prevContador + 1)
+    setTotalCarrito((prevTotal) => prevTotal + 1)
+
+    setProductosEnCarrito((prevProductos) =>
+      prevProductos.map((item) =>
+        item.id === productoCarrito.id 
+          ? { ...item, cantidad: item.cantidad + 1 } // Incrementa la cantidad
+          : item
+    ))
+
+    setProducts((prevProducts) => // retorno implicito de un array 
+      prevProducts.map((item) => 
+      item.id === productoCarrito.id
+        ? { ...item, stock: item.stock - 1 } 
+        : item 
+      )
+    );
+  }
 
   const agregarAlCarrito = (productoAAgregar) => {
  
     const productoExiste = productosEnCarrito.find(
-      (item) => item.producto.id === productoAAgregar.id
+      (item) => item.id === productoAAgregar.id
     );
 
     if (productoExiste) {
       //  actualiza la cantidad del producto
       setProductosEnCarrito((prevProductos) =>
         prevProductos.map((item) =>
-          item.producto.id === productoAAgregar.id
+          item.id === productoAAgregar.id 
             ? { ...item, cantidad: item.cantidad + 1 } // Incrementa la cantidad
             : item
         )
       );
-
     } else {
       setProductosEnCarrito((prevProductos) => [ // retorno implicito de un array 
         ...prevProductos,
-        { producto: productoAAgregar, cantidad: 1 },
+        { ...productoAAgregar, cantidad: 1 },
       ]);
     }
 
     setProducts((prevProducts) => // retorno implicito de un array 
-        prevProducts.map((producto) => 
-      producto.id === productoAAgregar.id
-        ? { ...producto, stock: producto.stock - 1 } 
-        : producto 
-    )
-  );
+        prevProducts.map((item) => 
+        item.id === productoAAgregar.id
+        ? { ...item, stock: item.stock - 1 } 
+        : item 
+      )
+    );
 
 
-  setCounter((prevCounter) => {
-
+  setContadorCarrito((prevCounter) => {
     return prevCounter + 1
-
-    // if(!productoExiste){
-    //   return productosEnCarrito.length + 1;
-    // }else{
-    //   return productosEnCarrito.length
-    // }
-
-
   });
 
 }
@@ -88,34 +145,36 @@ function App() {
   const usuario = "Jhon Doe";
   const tipo = "user";
 
-  const navItems = ["Inicio", "Productos", "Contacto", "Carrito"];
+  const navItems = ["Inicio", "Productos", "Contacto"];
 
   const [seccion, setSeccion] = useState("Inicio");
-
-  const renderContenido = () => 
-    {
-    switch (seccion) {
-      case "Inicio":
-        return <Home />;
-      case "Productos":
-        return <Products products={products} onAgregarAlCarrito={agregarAlCarrito} />;
-      case "Contacto":
-        return <Contact />;
-      case "Carrito":
-        return <Carrito productos={setProducts} 
-                productosCarrito={productosEnCarrito} 
-                agregarCarrito={agregarAlCarrito} />
-      default:
-        return <Home />;
-    }
-  };
 
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header tipo={tipo} usuario={usuario} />
-      <Nav items={navItems} counter={counter} onSeleccion={setSeccion} />
+      <Nav items={navItems} carritoContador={contadorCarrito} onSeleccion={setSeccion} />
       <main className="flex-grow-1 p-3">
-        {renderContenido()}
+      <Routes>
+        <Route path='/' element={
+          <Home/>}  />
+        <Route path='/Inicio' element={
+          <Home/>}  />
+        <Route path='/Productos' element={
+          <Products products={products} onAgregarAlCarrito={agregarAlCarrito} />}  />
+        <Route path='/Contact' element={
+          <Contact />}  />
+        <Route path='/Carrito' element={
+          <Carrito  carritoTotal={carritoTotal}
+               setCarritoTotal={setTotalCarrito} 
+               limpiarCarrito={limpiarCarrito}
+               productosCarrito={productosEnCarrito} 
+               agregarCarrito={agregarAlCarrito} 
+               decProductoCarrito = {disminuirProductoCarrito}
+               incProductoCarrito = {incrementarProductoCarrito}
+               limpiarProductoCarrito = {limpiarProductoCarrito}
+               
+          />}  />
+      </Routes>
       </main>
       <Footer />
     </div>

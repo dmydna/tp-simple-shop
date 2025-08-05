@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import { InputGroup, Button, Form, Container } from 'react-bootstrap';
 
-function CantidadInput( { cantidad} ){
-
+function CantidadInput( { producto, decProductoCarrito, incProductoCarrito, limpiarProductoCarrito} ){
 
 
     return(
         <InputGroup style={{width: '160px'}}>
-            <Button variant='outline-secondary'>
+            <Button onClick={ () => limpiarProductoCarrito(producto) } variant='outline-secondary'>
             <i class="bi bi-trash3"></i>
             </Button>
-            <Button variant='outline-secondary'> -
-            </Button>
+            <Button onClick={ ()=> decProductoCarrito(producto) } variant='outline-secondary'> - </Button>
                 <Form.Control
                     type='text'
-                    value={cantidad}
+                    value={ producto.cantidad }
                     className='text-center'
                 ></Form.Control>
-
-            <Button variant='outline-secondary'> +
-            </Button>
+            <Button onClick={ ()=> incProductoCarrito(producto) } variant='outline-secondary'> + </Button>
 
         </InputGroup> 
     )
