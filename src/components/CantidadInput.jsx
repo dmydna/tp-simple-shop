@@ -7,7 +7,7 @@ function CantidadInput( { producto, decProductoCarrito, incProductoCarrito, limp
     return(
         <InputGroup style={{width: '160px'}}>
             <Button onClick={ () => limpiarProductoCarrito(producto) } variant='outline-secondary'>
-            <i class="bi bi-trash3"></i>
+            <i className="bi bi-trash3"></i>
             </Button>
             <Button onClick={ ()=> decProductoCarrito(producto) } variant='outline-secondary'> - </Button>
                 <Form.Control

@@ -14,12 +14,11 @@ import Products from './pages/Products';
 function App() {
 
   const [productosEnCarrito, setProductosEnCarrito] = useState([]);
-
   const[products,setProducts]=useState([]);
   const[loading,setLoading]=useState(true);
 
   const [contadorCarrito, setContadorCarrito] = useState(0);
-  const [carritoTotal, setTotalCarrito] = useState(0)
+  const [totalCarrito, setTotalCarrito] = useState(0)
   
 
 // TODO quitarCarrito
@@ -49,19 +48,23 @@ function App() {
 
   }
   const  disminuirProductoCarrito = (productoCarrito) => {
-    setContadorCarrito((prevContador) => prevContador - 1)
-    setTotalCarrito((prevTotal) => prevTotal - 1)
+
+    if(productoCarrito.cantidad <= 0){
+      return
+    }
+    setContadorCarrito((prevContador) => productoCarrito.stock ? prevContador - 1 : prevContador)
+    setTotalCarrito((prevTotal) => productoCarrito.stock ? prevTotal - 1 : prevTotal)
 
     setProductosEnCarrito((prevProductos) =>
       prevProductos.map((item) =>
-        item.id === productoCarrito.id 
+        item.id === productoCarrito.id && item.stock 
           ? { ...item, cantidad: item.cantidad - 1 } // Incrementa la cantidad
           : item
     ))
 
     setProducts((prevProducts) => // retorno implicito de un array 
       prevProducts.map((item) => 
-      item.id === productoCarrito.id
+      item.id === productoCarrito.id && item.stock 
         ? { ...item, stock: item.stock + 1 } 
         : item 
       )
@@ -70,19 +73,28 @@ function App() {
 
 
   const incrementarProductoCarrito = (productoCarrito) => {
-    setContadorCarrito((prevContador) => prevContador + 1)
-    setTotalCarrito((prevTotal) => prevTotal + 1)
+
+    const disponible= productoCarrito.stock - productoCarrito.cantidad
+    if( disponible == 0){
+      return
+    }
+    setContadorCarrito((prevContador) => (
+      productoCarrito.stock ? prevContador + 1 : prevContador
+    ))
+    setTotalCarrito((prevTotal) => (
+       productoCarrito.stock ? prevTotal + 1 : prevTotal
+    ))
 
     setProductosEnCarrito((prevProductos) =>
       prevProductos.map((item) =>
-        item.id === productoCarrito.id 
+        item.id === productoCarrito.id && item.stock
           ? { ...item, cantidad: item.cantidad + 1 } // Incrementa la cantidad
           : item
     ))
 
     setProducts((prevProducts) => // retorno implicito de un array 
       prevProducts.map((item) => 
-      item.id === productoCarrito.id
+      item.id === productoCarrito.id && item.stock
         ? { ...item, stock: item.stock - 1 } 
         : item 
       )
@@ -91,15 +103,19 @@ function App() {
 
   const agregarAlCarrito = (productoAAgregar) => {
  
+    if(productoAAgregar.stock <= 0){
+      return
+    }
+    
     const productoExiste = productosEnCarrito.find(
-      (item) => item.id === productoAAgregar.id
+      (item) => item.id === productoAAgregar.id 
     );
 
     if (productoExiste) {
       //  actualiza la cantidad del producto
       setProductosEnCarrito((prevProductos) =>
         prevProductos.map((item) =>
-          item.id === productoAAgregar.id 
+          item.id === productoAAgregar.id && item.stock 
             ? { ...item, cantidad: item.cantidad + 1 } // Incrementa la cantidad
             : item
         )
@@ -113,16 +129,16 @@ function App() {
 
     setProducts((prevProducts) => // retorno implicito de un array 
         prevProducts.map((item) => 
-        item.id === productoAAgregar.id
+        item.id === productoAAgregar.id && item.stock
         ? { ...item, stock: item.stock - 1 } 
         : item 
       )
     );
 
 
-  setContadorCarrito((prevCounter) => {
-    return prevCounter + 1
-  });
+  setContadorCarrito((prevCounter) => (
+    productoAAgregar.stock ?  prevCounter + 1 : prevCounter
+  ));
 
 }
 
@@ -152,7 +168,7 @@ function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header tipo={tipo} usuario={usuario} />
-      <Nav items={navItems} carritoContador={contadorCarrito} onSeleccion={setSeccion} />
+      <Nav items={navItems} carritoContador={contadorCarrito} seccion={seccion} onSeleccion={setSeccion} />
       <main className="flex-grow-1 p-3">
       <Routes>
         <Route path='/' element={
@@ -161,11 +177,11 @@ function App() {
           <Home/>}  />
         <Route path='/Productos' element={
           <Products products={products} onAgregarAlCarrito={agregarAlCarrito} />}  />
-        <Route path='/Contact' element={
+        <Route path='/Contacto' element={
           <Contact />}  />
         <Route path='/Carrito' element={
-          <Carrito  carritoTotal={carritoTotal}
-               setCarritoTotal={setTotalCarrito} 
+          <Carrito  totalCarrito={totalCarrito}
+               setTotalCarrito={setTotalCarrito} 
                limpiarCarrito={limpiarCarrito}
                productosCarrito={productosEnCarrito} 
                agregarCarrito={agregarAlCarrito} 

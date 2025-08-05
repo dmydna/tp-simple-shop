@@ -1,17 +1,16 @@
 import React from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Row
-} from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import CantidadInput from "../components/CantidadInput";
 
-function Carrito({ setCarritoTotal, carritoTotal, limpiarCarrito, productosCarrito, incProductoCarrito, decProductoCarrito, limpiarProductoCarrito }) {
-
-
-
+function Carrito({
+  setTotalCarrito,
+  totalCarrito,
+  limpiarCarrito,
+  productosCarrito,
+  incProductoCarrito,
+  decProductoCarrito,
+  limpiarProductoCarrito,
+}) {
   let retCarrito = (
     <Container className="mt-4">
       <h1>Carrito</h1>
@@ -20,55 +19,58 @@ function Carrito({ setCarritoTotal, carritoTotal, limpiarCarrito, productosCarri
   );
 
   if (productosCarrito.length != 0) {
-
-    setCarritoTotal(productosCarrito.reduce(
-     (accumulator, item) => accumulator + item.price * item.cantidad, 
-    0))
+    setTotalCarrito(
+      productosCarrito.reduce(
+        (accumulator, item) => accumulator + item.price * item.cantidad,
+        0
+      )
+    );
 
     retCarrito = (
       <Container className="mt-4">
-        <h1>Carrito</h1>
+        <div className="h1">Carrito</div>
         {productosCarrito.map((item) => (
-          <Card className="m-2">
-            <Row className="g-0" key={item.id} md={4}>
+          <Card key={item.id}  className="m-2">
+            <Row className="g-0" md={4}>
               <Col className="col-md-2">
                 <Card.Img src={item.thumbnail} />
               </Col>
               <Col className="col-md-4">
                 <Card.Body>
                   <Card.Title>{item.title}</Card.Title>
-                  <Card.Text>
-                    <h2 className="font-weight-bold">
-                      $ {(item.price * item.cantidad).toFixed(2)}
-                    </h2>
+                  <Card.Text className="h1">
+                    $ {(item.price * item.cantidad).toFixed(2)}
                   </Card.Text>
-                  <Card.Text>
-                    <strong className="text-secondary">
-                      Disponible: {item.stock - item.cantidad || "N/A"}
-                    </strong>
+                  <Card.Text className="text-secondary">
+                    Disponible: {item.stock - item.cantidad || 0}
                   </Card.Text>
-                  <CantidadInput 
-                  decProductoCarrito={decProductoCarrito} 
-                  incProductoCarrito={incProductoCarrito}  
-                  productosCarrito={productosCarrito}
-                  limpiarProductoCarrito = {limpiarProductoCarrito}
-                  producto={item}></CantidadInput>
+                  <CantidadInput
+                    decProductoCarrito={decProductoCarrito}
+                    incProductoCarrito={incProductoCarrito}
+                    productosCarrito={productosCarrito}
+                    limpiarProductoCarrito={limpiarProductoCarrito}
+                    producto={item}
+                  />
                 </Card.Body>
               </Col>
             </Row>
           </Card>
         ))}
         <div className="my-5 mx-2 d-flex flex-row-reverse">
-        <Button type="button" className="btn btn-danger" onClick={ ()=> limpiarCarrito()}>
-          Vaciar carrito
-        </Button>
+          <Button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => limpiarCarrito()}
+          >
+            <i className="bi bi-trash3" /> Vaciar carrito
+          </Button>
         </div>
 
         <Card className="m-2 p-3">
-          <Card.Text className="d-flex">
-            <h1 className="font-weight-bold"> Total</h1>
-            <h1 className="ms-auto me-1">$ {carritoTotal.toFixed(2)}</h1>
-          </Card.Text>
+          <Card.Body className="d-flex">
+            <Card.Text className="h1"> Total</Card.Text>
+            <Card.Text className="ms-auto me-1 h1">$ {totalCarrito.toFixed(2)}</Card.Text>
+          </Card.Body>
           <Button className="m-2" variant="success" type="submit">
             Finalizar Compra
           </Button>

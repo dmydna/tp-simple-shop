@@ -2,13 +2,24 @@ import React from "react";
 import { Nav as BootstrapNav, Navbar, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function Nav({ items, onSeleccion, carritoContador }) {
+function Nav({ items, seccion, onSeleccion, carritoContador }) {
+
+  const toggleSeccionCarrito = () => { 
+    seccion == 'Carrito' ? 
+    onSeleccion('Productos') : 
+    onSeleccion('Carrito')  
+  }
+
+
   return (
     <Navbar bg="light" expand="md" className="sticky-top py-0">
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNav className='order-md-last'>
-        <Button as={Link} to='/Carrito' className='fw-bold fs-3 d-flex' variant="outline-blac">
+        <Button onClick={ () => toggleSeccionCarrito() } 
+         as={Link} 
+         to={ seccion != 'Carrito' ?  'Carrito' : 'Productos'} 
+         className='fw-bold fs-3 d-flex' variant="outline-blac">
             <i className="bi bi-cart3"></i>
             <p className='mx-2 my-0'>{carritoContador}</p>
         </Button>

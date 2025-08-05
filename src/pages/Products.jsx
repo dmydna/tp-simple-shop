@@ -16,15 +16,11 @@ function Products({ products, onAgregarAlCarrito }) {
                 <Card.Title style={{ height: "2.50rem" }}>
                   {product.title}
                 </Card.Title>
-                <Card.Text>
-                  <h1 className="font-weight-bold">
-                    $ {product.price || "N/A"}
-                  </h1>
+                <Card.Text className="h1">
+                  $ {product.price || "N/A"}
                 </Card.Text>
-                <Card.Text>
-                  <strong className="text-secondary">
-                    stock: {product.stock || "N/A"}
-                  </strong>
+                <Card.Text className="text-secondary">
+                  stock: {product.stock || 0}
                 </Card.Text>
               </Card.Body>
             </Card>
