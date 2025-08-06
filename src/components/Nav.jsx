@@ -1,8 +1,12 @@
-import React from "react";
-import { Nav as BootstrapNav, Navbar, Container, Button } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Nav as BootstrapNav, Button, Container, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { DropdownContext } from "../contexts/DropdownContext";
 
-function Nav({ items, seccion, onSeleccion, carritoContador }) {
+
+function Nav({ items, seccion, onSeleccion, contadorCarrito}) {
+
+  const {isActiveDropdown , setIsActiveDropdown} = useContext(DropdownContext)
 
   const toggleSeccionCarrito = () => { 
     seccion == 'Carrito' ? 
@@ -12,7 +16,7 @@ function Nav({ items, seccion, onSeleccion, carritoContador }) {
 
 
   return (
-    <Navbar bg="light" expand="md" className="sticky-top py-0">
+    <Navbar bg="light" expand="md" className={ !isActiveDropdown ?  'sticky-top py-0' : 'py-0'} >
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNav className='order-md-last'>
@@ -21,7 +25,7 @@ function Nav({ items, seccion, onSeleccion, carritoContador }) {
          to={ seccion != 'Carrito' ?  'Carrito' : 'Productos'} 
          className='fw-bold fs-3 d-flex' variant="outline-blac">
             <i className="bi bi-cart3"></i>
-            <p className='mx-2 my-0'>{carritoContador}</p>
+            <p className='mx-2 my-0'>{contadorCarrito}</p>
         </Button>
         </BootstrapNav>
         <Navbar.Collapse id="basic-navbar-nav">

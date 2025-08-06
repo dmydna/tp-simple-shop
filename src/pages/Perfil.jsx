@@ -1,0 +1,15 @@
+import { useParams } from "react-router-dom";
+import { Container } from "react-bootstrap";
+
+export default function Perfil(){
+    const {id} = useParams()
+    // captura el param mandado por use Navigate
+
+    return (
+        <Container className="mt-4">
+            <h2>Perfil del Usuario</h2>
+            <p>Bienvenido, <b>{id}</b></p>
+        </Container>
+    )
+
+}

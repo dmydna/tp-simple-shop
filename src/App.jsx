@@ -1,196 +1,97 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Nav from './components/Nav';
-import Carrito from './pages/Carrito';
-import Contact from './pages/Contact';
-import Home from './pages/Home';
-import Products from './pages/Products';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 
-// TODO react router
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Nav from "./components/Nav";
+import RutaProtegida from "./components/RutaProtegida";
+import Admin from "./pages/Admin";
+import Carrito from "./pages/Carrito";
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Perfil from "./pages/Perfil";
+import Products from "./pages/Products";
+
+import { DropdownContext } from "./contexts/DropdownContext";
+import { ProductosContext } from "./contexts/ProductosContext";
+
 
 function App() {
-
   const [productosEnCarrito, setProductosEnCarrito] = useState([]);
-  const[products,setProducts]=useState([]);
-  const[loading,setLoading]=useState(true);
-
+  const [products, setProducts] = useState([]);
   const [contadorCarrito, setContadorCarrito] = useState(0);
-  const [totalCarrito, setTotalCarrito] = useState(0)
-  
+  const [totalCarrito, setTotalCarrito] = useState(0);
+  const [isActiveDropdown, setIsActiveDropdown] = useState(false);
 
-// TODO quitarCarrito
 
-  const limpiarCarrito = () => {
-    setProductosEnCarrito([])
-    setTotalCarrito(0)
-    setContadorCarrito(0)
+  const [loading, setLoading] = useState(true);
+
+  const useProductosContext = {
+    productosEnCarrito, setProductosEnCarrito, 
+    products, setProducts, 
+    contadorCarrito, setContadorCarrito, 
+    totalCarrito, setTotalCarrito,
   }
 
-  const  limpiarProductoCarrito = (productoCarrito) => {
-    setContadorCarrito((prevContador) => prevContador - productoCarrito.cantidad)
-    setTotalCarrito((prevTotal) => prevTotal - (productoCarrito.price * productoCarrito.cantidad))
-
-    setProducts((prevProducts) => // retorno implicito de un array 
-      prevProducts.map((item) => 
-        item.id === productoCarrito.id
-        ? { ...item, stock: item.stock + productoCarrito.cantidad } 
-        : item 
-      )
-    );
-
-    setProductosEnCarrito((prevProductos) =>
-      prevProductos.filter((item) =>
-        item.id !== productoCarrito.id 
-    ))
-
-  }
-  const  disminuirProductoCarrito = (productoCarrito) => {
-
-    if(productoCarrito.cantidad <= 0){
-      return
-    }
-    setContadorCarrito((prevContador) => productoCarrito.stock ? prevContador - 1 : prevContador)
-    setTotalCarrito((prevTotal) => productoCarrito.stock ? prevTotal - 1 : prevTotal)
-
-    setProductosEnCarrito((prevProductos) =>
-      prevProductos.map((item) =>
-        item.id === productoCarrito.id && item.stock 
-          ? { ...item, cantidad: item.cantidad - 1 } // Incrementa la cantidad
-          : item
-    ))
-
-    setProducts((prevProducts) => // retorno implicito de un array 
-      prevProducts.map((item) => 
-      item.id === productoCarrito.id && item.stock 
-        ? { ...item, stock: item.stock + 1 } 
-        : item 
-      )
-    );
-  }  
 
 
-  const incrementarProductoCarrito = (productoCarrito) => {
-
-    const disponible= productoCarrito.stock - productoCarrito.cantidad
-    if( disponible == 0){
-      return
-    }
-    setContadorCarrito((prevContador) => (
-      productoCarrito.stock ? prevContador + 1 : prevContador
-    ))
-    setTotalCarrito((prevTotal) => (
-       productoCarrito.stock ? prevTotal + 1 : prevTotal
-    ))
-
-    setProductosEnCarrito((prevProductos) =>
-      prevProductos.map((item) =>
-        item.id === productoCarrito.id && item.stock
-          ? { ...item, cantidad: item.cantidad + 1 } // Incrementa la cantidad
-          : item
-    ))
-
-    setProducts((prevProducts) => // retorno implicito de un array 
-      prevProducts.map((item) => 
-      item.id === productoCarrito.id && item.stock
-        ? { ...item, stock: item.stock - 1 } 
-        : item 
-      )
-    );
-  }
-
-  const agregarAlCarrito = (productoAAgregar) => {
- 
-    if(productoAAgregar.stock <= 0){
-      return
-    }
-    
-    const productoExiste = productosEnCarrito.find(
-      (item) => item.id === productoAAgregar.id 
-    );
-
-    if (productoExiste) {
-      //  actualiza la cantidad del producto
-      setProductosEnCarrito((prevProductos) =>
-        prevProductos.map((item) =>
-          item.id === productoAAgregar.id && item.stock 
-            ? { ...item, cantidad: item.cantidad + 1 } // Incrementa la cantidad
-            : item
-        )
-      );
-    } else {
-      setProductosEnCarrito((prevProductos) => [ // retorno implicito de un array 
-        ...prevProductos,
-        { ...productoAAgregar, cantidad: 1 },
-      ]);
-    }
-
-    setProducts((prevProducts) => // retorno implicito de un array 
-        prevProducts.map((item) => 
-        item.id === productoAAgregar.id && item.stock
-        ? { ...item, stock: item.stock - 1 } 
-        : item 
-      )
-    );
-
-
-  setContadorCarrito((prevCounter) => (
-    productoAAgregar.stock ?  prevCounter + 1 : prevCounter
-  ));
-
-}
-
-  useEffect(()=>
-  {
+  useEffect(() => {
     // hacer el pedido de la api
-    fetch('https://dummyjson.com/products')
-    .then(res=>res.json())
-    .then(data=>{
+    fetch("https://dummyjson.com/products")
+      .then((res) => res.json())
+      .then((data) => {
         setProducts(data.products);
         setLoading(false);
-    })
-    .catch(err=>{
-      console.error("Error de carga de API",err);
-      setLoading(false);
-    });
-  },[]);
+      })
+      .catch((err) => {
+        console.error("Error de carga de API", err);
+        setLoading(false);
+      });
+  }, []);
 
 
-  const usuario = "Jhon Doe";
-  const tipo = "user";
 
   const navItems = ["Inicio", "Productos", "Contacto"];
-
   const [seccion, setSeccion] = useState("Inicio");
 
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Header tipo={tipo} usuario={usuario} />
-      <Nav items={navItems} carritoContador={contadorCarrito} seccion={seccion} onSeleccion={setSeccion} />
+      <DropdownContext.Provider value={{ isActiveDropdown, setIsActiveDropdown }} >
+        <Header />
+        <Nav items={navItems} contadorCarrito={contadorCarrito} seccion={seccion} onSeleccion={setSeccion}/>
+      </DropdownContext.Provider>
+
       <main className="flex-grow-1 p-3">
-      <Routes>
-        <Route path='/' element={
-          <Home/>}  />
-        <Route path='/Inicio' element={
-          <Home/>}  />
-        <Route path='/Productos' element={
-          <Products products={products} onAgregarAlCarrito={agregarAlCarrito} />}  />
-        <Route path='/Contacto' element={
-          <Contact />}  />
-        <Route path='/Carrito' element={
-          <Carrito  totalCarrito={totalCarrito}
-               setTotalCarrito={setTotalCarrito} 
-               limpiarCarrito={limpiarCarrito}
-               productosCarrito={productosEnCarrito} 
-               agregarCarrito={agregarAlCarrito} 
-               decProductoCarrito = {disminuirProductoCarrito}
-               incProductoCarrito = {incrementarProductoCarrito}
-               limpiarProductoCarrito = {limpiarProductoCarrito}
-               
-          />}  />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/Inicio" element={<Home />} />
+          <Route path="/perfil/:id" element={
+            <RutaProtegida> 
+              <Perfil /> 
+            </RutaProtegida>}>
+          </Route>
+          <Route path="/admin" element={
+            <RutaProtegida>
+              <Admin />
+            </RutaProtegida>}>
+          </Route>
+          <Route path="/Contacto" element={<Contact />} />
+          <Route path="/Carrito"   element={
+            <ProductosContext.Provider value={useProductosContext}>
+              <Carrito/>
+            </ProductosContext.Provider> } 
+          />
+          <Route path="/Productos" element={
+            <ProductosContext.Provider value={useProductosContext}>
+              <Products/>
+            </ProductosContext.Provider>} 
+          />
+        </Routes>
+              
+        
       </main>
       <Footer />
     </div>

@@ -1,16 +1,28 @@
-import React from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import CantidadInput from "../components/CantidadInput";
+import React, { useContext } from "react";
+import { Button, Card, Container } from "react-bootstrap";
+import CarritoItem from "../components/CarritoItem";
+import { ProductosContext } from "../contexts/ProductosContext";
 
-function Carrito({
-  setTotalCarrito,
-  totalCarrito,
-  limpiarCarrito,
-  productosCarrito,
-  incProductoCarrito,
-  decProductoCarrito,
-  limpiarProductoCarrito,
-}) {
+function Carrito() {
+
+  const {
+    productosEnCarrito, setProductosEnCarrito,
+    products,setProducts,
+    contadorCarrito, setContadorCarrito,
+    totalCarrito, setTotalCarrito,
+  } = useContext(ProductosContext)
+
+
+  const limpiarCarrito = () => {
+    setProductosEnCarrito([])
+    setTotalCarrito(0)
+    setContadorCarrito(0)
+  }
+
+
+
+
+
   let retCarrito = (
     <Container className="mt-4 overflow-hidden">
       <h1>Carrito</h1>
@@ -25,9 +37,9 @@ function Carrito({
     </Container>
   );
 
-  if (productosCarrito.length != 0) {
+  if (productosEnCarrito.length != 0) {
     setTotalCarrito(
-      productosCarrito.reduce(
+      productosEnCarrito.reduce(
         (accumulator, item) => accumulator + item.price * item.cantidad,
         0
       )
@@ -36,33 +48,7 @@ function Carrito({
     retCarrito = (
       <Container className="mt-4">
         <div className="h1">Carrito</div>
-        {productosCarrito.map((item) => (
-          <Card key={item.id}  className="m-2">
-            <Row className="g-0" md={4}>
-              <Col className="col-md-2">
-                <Card.Img src={item.thumbnail} />
-              </Col>
-              <Col className="col-md-4">
-                <Card.Body>
-                  <Card.Title>{item.title}</Card.Title>
-                  <Card.Text className="h1">
-                    $ {(item.price).toFixed(2)}
-                  </Card.Text>
-                  <Card.Text className="text-secondary">
-                    Disponible: {item.stock - item.cantidad || 0}
-                  </Card.Text>
-                  <CantidadInput
-                    decProductoCarrito={decProductoCarrito}
-                    incProductoCarrito={incProductoCarrito}
-                    productosCarrito={productosCarrito}
-                    limpiarProductoCarrito={limpiarProductoCarrito}
-                    producto={item}
-                  />
-                </Card.Body>
-              </Col>
-            </Row>
-          </Card>
-        ))}
+        <CarritoItem/>
         <div className="my-5 mx-2 d-flex flex-row-reverse">
           <Button
             type="button"
