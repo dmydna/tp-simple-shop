@@ -12,9 +12,16 @@ function Carrito({
   limpiarProductoCarrito,
 }) {
   let retCarrito = (
-    <Container className="mt-4">
+    <Container className="mt-4 overflow-hidden">
       <h1>Carrito</h1>
-      <h2 className="text-muted">Tu carrito esta vacio!</h2>
+      <img style={{
+        marginInline: "auto",
+        maxWidth: "400px",
+        display: "block", 
+        position: "relative",
+        left: "-100px",
+        marginTop: "20vh"}} src="/shopping.png" />
+      <h2 style={{textAlign: "center"}} className="text-muted">Tu carrito esta vacio!</h2>
     </Container>
   );
 
@@ -39,7 +46,7 @@ function Carrito({
                 <Card.Body>
                   <Card.Title>{item.title}</Card.Title>
                   <Card.Text className="h1">
-                    $ {(item.price * item.cantidad).toFixed(2)}
+                    $ {(item.price).toFixed(2)}
                   </Card.Text>
                   <Card.Text className="text-secondary">
                     Disponible: {item.stock - item.cantidad || 0}

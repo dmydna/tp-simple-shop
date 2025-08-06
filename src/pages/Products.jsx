@@ -11,23 +11,21 @@ function Products({ products, onAgregarAlCarrito }) {
         {products.map((product) => (
           <Col className="d-flex flex-column" key={product.id} md={4}>
             <Card className="row m-2">
-              <Card.Img src={product.thumbnail} />
+              <Card.Img  style={{minHeight : '315px' }} src={product.thumbnail} />
               <Card.Body>
-                <Card.Title style={{ height: "2.50rem" }}>
+                <Card.Title style={{ height: "3.2rem", overflow: "hidden" }}>
                   {product.title}
                 </Card.Title>
                 <Card.Text className="h1">
                   $ {product.price || "N/A"}
                 </Card.Text>
-                <Card.Text className="text-secondary">
+                <Card.Text className="fw-bolder text-secondary">
                   stock: {product.stock || 0}
                 </Card.Text>
               </Card.Body>
             </Card>
             <Button
-              onClick={() => {
-                onAgregarAlCarrito(product);
-              }}
+              onClick={() => onAgregarAlCarrito(product) }
               className="mx-2 my-2 fw-bold"
               variant="success"
               type="submit"

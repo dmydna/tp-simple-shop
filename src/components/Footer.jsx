@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 
 function Footer() {
   return (
-    <footer className="bg-dark text-white text-center py-3 mt-auto">
+    <footer className="bg-dark text-center py-3 mt-auto text-white">
       <Container>
         <p className="mb-0">© 2025 Simple SHOP. Todos los derechos reservados.</p>
       </Container>

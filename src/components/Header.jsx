@@ -8,7 +8,7 @@ function Header({ usuario, tipo }) {
       <Container>
         <Navbar.Brand as={Link} to='/'>
          <i className="bi bi-bag-heart-fill"></i> 
-         <b>Simple SHOP</b></Navbar.Brand>
+         <b> Simple SHOP</b></Navbar.Brand>
         <Navbar.Text className="ms-auto text-white">
          <i className="bi bi-person-circle"></i> {tipo} - {usuario}
         </Navbar.Text>
