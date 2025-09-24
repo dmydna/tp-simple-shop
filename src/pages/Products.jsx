@@ -32,11 +32,11 @@ function Products() {
     let filtered = productosVisibles;
   
     if (categoryMatch?.params.category) {
-      filtered = filterProducts.filter((item) =>
+      filtered = products.filter((item) =>
         item.category == categoryMatch.params.category
       );
     } else if (searchMatch?.params.product) {
-      filtered = filterProducts.filter((item) =>
+      filtered = products.filter((item) =>
         item.title.toLowerCase().includes(searchMatch.params.product.toLowerCase())
       );
     }
