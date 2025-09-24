@@ -39,7 +39,7 @@ function ProductsDetails(){
 
                 </Col>
 
-                <Col style={{top: '55px'}} className={`col-md-5 col-sm-12 
+                <Col style={{top: '55px'}} className={`col-md-5 col-12 
                     ${width >= 768 ? "sticky-top" : ""}`}>
                 <Card className="h-100">
                   <Card.Body>
@@ -55,7 +55,7 @@ function ProductsDetails(){
                       <i class="bi bi-truck"></i>  {item.shippingInformation}
                     </Card.Text>
                   </Card.Body>
-                  <InputGroup className="w-100 align-items-center gap-3">
+                  <InputGroup className="w-100 align-items-center gap">
                   <Button className="m-2 rounded flex-fill" variant="primary" type="submit">
                       Comprar ahora
                   </Button> 
@@ -74,26 +74,31 @@ function ProductsDetails(){
                       <ProductSpecs producto={item} />              
                    </Col>
                 </Col >
-                <Col className="col-md-7 col-sm-12 m-3 mx-0" >
+                <Col className="col-md-7 col-12 m-3 mx-0" >
                    <Col className="col-md-11" >
                       <div className="h3 mb-5">Descripcion</div>
                       <p>{item.description}</p>
                    </Col>
                 </Col >
 
-                <Col className="col-md-7 col-sm-12 m-3 mx-0" >
+                <Col className="col-md-7 col-12 m-3 mx-0" >
                    <Col className="col-md-11" >
                       <div className="h3 mb-5">Opiniones</div>
                       {item.reviews.map(review => 
                         <Card key={item.id} className="m-2">
                         <Row className="g-0" md={4}>
-                          <Col className="col-md-2 col-sm-2">
-                          <Card.Img  style={{scale:"0.7"}} src="/user.png" />
+                          <Col className="col-md-2 col-xs-2 col-sm-4">
+                          <Card.Img  src="/user.png"
+                                style={{scale: "0.8",
+                                  height: "66px",
+                                  width: "66px",
+                                  margin: "10px"}}
+                          />
                           </Col>
                           <Col className="col-md-8">
                             <Card.Body>
-                              <img src={`/rating${review.rating}.png`} />
-                              <Card.Text>{review.comment}</Card.Text>
+                              <img src={`/rating${review.rating}.png`}/>
+                              <Card.Text className="text-truncate">{review.comment}</Card.Text>
                             </Card.Body>
                           </Col>
                         </Row>
