@@ -1,96 +1,112 @@
-import React, { useContext } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { ProductosContext } from "../contexts/ProductosContext";
+import React, { useEffect, useState } from "react";
+import { Card, Col, Container, Row } from "react-bootstrap";
+import { Link, useMatch } from "react-router-dom";
+import CarritoAgregarBoton from "../components/CarritoAgregarBoton";
+import { HoverProvider } from "../contexts/HoverContext";
+import HoverWrapper from "../contexts/HoverWrapper";
+import { useProducts } from "../contexts/ProductosContext";
 
 function Products() {
+
   // Agregar al Carrito, actualiza stock e incrementa producto en el Carrito
 
-  const { productosEnCarrito, setProductosEnCarrito,
-      products,setProducts,
-      contadorCarrito, setContadorCarrito,
-      totalCarrito, setTotalCarrito
-  } = useContext(ProductosContext)
+  const categoryMatch = useMatch("/productos/category/:category");
+  const searchMatch = useMatch("/productos/search/:product");
 
 
+ 
 
-  const agregarAlCarrito = (productoAAgregar) => {
-    
-    if (productoAAgregar.stock <= 0) {
-      return;
-    }
+  // Informacion a mostrar segun Pagina
+  const [meta, setMeta] = useState({
+    title: "Productos",
+    message: "",
+    description: "",
+  });
+  
+  const { productosVisibles, products} = useProducts()
 
-    const productoExiste = productosEnCarrito.find(
-      (item) => item.id === productoAAgregar.id
-    );
+  const [filterProducts, setFilterProducts] = useState(productosVisibles)
 
-    if (productoExiste) {//  actualiza la cantidad del producto
-      setProductosEnCarrito((prevProductos) =>
-        prevProductos.map((item) =>
-          item.id === productoAAgregar.id && item.stock
-            ? { ...item, cantidad: item.cantidad + 1 } // Incrementa la cantidad
-            : item
-        )
+  // recalcula productos filtrados
+  useEffect(() => {
+    let filtered = productosVisibles;
+  
+    if (categoryMatch?.params.category) {
+      filtered = filterProducts.filter((item) =>
+        item.category == categoryMatch.params.category
       );
-    } else {
-      setProductosEnCarrito((prevProductos) => [
-        ...prevProductos,
-        { ...productoAAgregar, cantidad: 1 },
-      ]);
+    } else if (searchMatch?.params.product) {
+      filtered = filterProducts.filter((item) =>
+        item.title.toLowerCase().includes(searchMatch.params.product.toLowerCase())
+      );
     }
+  
+    setFilterProducts(filtered);
+  }, [categoryMatch, searchMatch, productosVisibles]);
+  
+  // actualiza meta cuando cambia el filtro
+  useEffect(() => {
+    if (categoryMatch?.params.category) {
+      setMeta(prev => ({ ...prev, title: categoryMatch.params.category }));
+    } else if (searchMatch?.params.product) {
+      setMeta(prev => ({ 
+        ...prev, 
+        title: "Resultados de Busqueda",
+        message: filterProducts.length + " encontrado"  // ahora sí usa el estado
+      }));
+    } else {
+      setMeta(prev => ({ ...prev, title: "Productos" }));
+    }
+  }, [categoryMatch, searchMatch, filterProducts]);
 
-    setProducts((prevProducts) =>
-        prevProducts.map((item) =>
-          item.id === productoAAgregar.id && item.stock
-            ? { ...item, stock: item.stock - 1 }
-            : item
-        )
-    );
 
-    setContadorCarrito((prevCounter) =>
-      productoAAgregar.stock ? prevCounter + 1 : prevCounter
-    );
-  };
+  const cardLinkStyle = {height: "3.2rem", overflow: "hidden", textDecoration: "none", fontWeight: "bold" }
+  const textWrap = { textWrap: "nowrap", textOverflow: "ellipsis", width: "100%", overflow: "hidden"}
 
   return (
-    <Container className="mt-4">
-      <h1>Productos</h1>
+    <HoverProvider>
+<Container className="mt-2 py-3 bg-white rounded">
+      { <>
+       <h1>{meta.title}</h1>
+       </> }
       <Row>
-        {products.map((product) => (
-          <Col className="d-flex flex-column" key={product.id} md={4}>
-            <Card className="row m-2">
-              <Card.Img  style={{minHeight : '315px' }} src={product.thumbnail} />
+      <span>{meta.message}</span>
+        {filterProducts.map((product) => (  
+          <Col className="d-flex flex-column" key={product.id} md={3}>
+          <HoverWrapper id={product.id}>
+          {(isHovered) => (
+            <Card className={`row m-2 text-decoration-none ${isHovered ? 'shadow' : ''}`}>
+              <Link 
+               className="text-decoration-none text-black"
+               to={"/productos/details/" + encodeURIComponent(product.title)}
+              >
+              <Card.Img  src={product.thumbnail} />
               <Card.Body>
-                <Card.Title style={{ height: "3.2rem", overflow: "hidden" }}>
+                <Card.Title 
+                 className={`d-block text-${ isHovered ? 'primary' : 'black'}`}
+                 style={cardLinkStyle}>
                   {product.title}
                 </Card.Title>
-                <Card.Text className="h1">
+                <Card.Text className="h3 text-truncate">
                   $ {product.price || "N/A"}
                 </Card.Text>
                 <Card.Text className="fw-bolder text-secondary">
                   stock: {product.stock || 0}
                 </Card.Text>
               </Card.Body>
+              </Link>
+              <Card.Text className="w-100 d-flex mb-2">
+                  <CarritoAgregarBoton variant='outline-success' product={product}/> 
+              </Card.Text>
             </Card>
-            <Button
-              onClick={() => agregarAlCarrito(product) }
-              className="mx-2 my-2 fw-bold"
-              variant="success"
-              type="submit"
-            > 
-                {productosEnCarrito.map((item)=> 
-                  item.id === product.id && item.cantidad != 0 ?
-                  <div className="position-relative d-inline-block me-3">
-                  <span className=" p-1 rounded-circle badge bg-white text-success">
-                    {item.cantidad < 10 ? (`0${item.cantidad}`) : item.cantidad }
-                  </span> 
-                  </div> : '' 
-                )}
-              Agregar al Carrito
-            </Button>
+              )}
+            </HoverWrapper>
           </Col>
         ))}
       </Row>
     </Container>
+    </HoverProvider>
+    
   );
 }
 

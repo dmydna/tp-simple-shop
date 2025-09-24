@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 
-export default function Login(){
+export default function Register(){
 
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
@@ -18,15 +18,17 @@ export default function Login(){
         e.preventDefault();
         if (login(user, pass)) 
           {
-          navigate("/");
+          navigate("/dashboard");
         } else {
           setError("Usuario o contraseña inválidos");
         }
       };
 
+
+
     return (
         <Container className="my-5" style={{maxWidth: 400, minWidth:300}}>
-            <h2>Login</h2>
+            <h2>Registrar</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form  onSubmit={handleSubmit}>
 
@@ -48,12 +50,8 @@ export default function Login(){
                         onChange={(e) => setPass(e.target.value)}
                     />
                 </Form.Group>
-                <Button variant="primary" type="submit" className="w-100 my-2" >
-                    Entrar
-                </Button>
-                <Button variant="outline-secondary" className="w-100 my-2" >
-                    Registrar
-                </Button>
+                <Button variant="primary" type="submit" className="w-100 my-2" >Entrar</Button>
+                <Button variant="success" className="w-100 my-2" >Registrar</Button>
             </Form>
         </Container>
     )

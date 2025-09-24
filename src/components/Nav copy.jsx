@@ -3,8 +3,6 @@ import { Nav as BootstrapNav, Button, Container, Navbar } from "react-bootstrap"
 import { Link, useLocation ,useNavigate } from "react-router-dom";
 import { DropdownContext } from "../contexts/DropdownContext";
 import { useCarrito } from "../contexts/CarritoContext";
-import { HoverProvider } from "../contexts/HoverContext";
-import HoverWrapper from "../contexts/HoverWrapper";
 
 
 function Nav({items, onSeleccion}) {
@@ -22,9 +20,24 @@ function Nav({items, onSeleccion}) {
     navigate(-1) || navigate('/') : navigate('/carrito')
   }
 
+  const [carritoBoton, setCarritoBoton] = useState({icon: 'cart3', contador: contadorCarrito})
+
+  const mouseOverHandle =  () => {
+    location.pathname == '/carrito' ? 
+    setCarritoBoton({icon :'x', contador: ''} ) : {}
+  }
+  const mouseOutHandle = () => { 
+    setCarritoBoton( {icon :'cart3', contador: contadorCarrito } )
+  }
+
+  useEffect(() => {
+    setCarritoBoton( {icon :'cart3', contador: contadorCarrito } )
+  }, [contadorCarrito]); 
+
+
+
 
   return (
-    <HoverProvider>
     <Navbar 
       bg="light" 
       expand="md"       
@@ -35,23 +48,16 @@ function Nav({items, onSeleccion}) {
         <Navbar.Toggle 
         aria-controls="basic-navbar-nav" />
         <BootstrapNav className='order-md-last'>
-        <HoverWrapper id="carrito-btn">
-          {(isHovered) => (
-           <Button 
-           onClick={ toggleRoute } 
-           className='fw-bold fs-3 d-flex' variant="outline-black">
-              <i className={`bi bi-${ 
-                isHovered && location.pathname == '/carrito' ?
-                'x' : 'cart3'  }`}></i>
-              <p className='mx-2 my-0'>
-                {contadorCarrito == 0 ? '' : 
-                (isHovered && location.pathname == '/carrito' ?
-                  '' : contadorCarrito  )}
-              </p>
-          </Button>
-          )}
-
-        </HoverWrapper>
+        <Button 
+         onClick={ toggleRoute } 
+         onMouseEnter={ mouseOverHandle } 
+         onMouseLeave={ mouseOutHandle }
+         className='fw-bold fs-3 d-flex' variant="outline-black">
+            <i className={`bi bi-${ carritoBoton.icon  }`}></i>
+            <p className='mx-2 my-0'>
+              {contadorCarrito == 0 ? '' : carritoBoton.contador}
+            </p>
+        </Button>
         </BootstrapNav>
         <Navbar.Collapse id="basic-navbar-nav">
           <BootstrapNav className="me-auto w-100  align-items-center">
@@ -67,7 +73,6 @@ function Nav({items, onSeleccion}) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    </HoverProvider>
   );
 }
 

@@ -1,0 +1,19 @@
+.textEllipsis{
+    height: 3.2rem;
+    font-weight: bold;
+    display: -webkit-box !important;
+    overflow: hidden;    /* número de líneas visibles */
+   text-decoration: none;
+   text-overflow: ellipsis;
+   width: 100%;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+}
+
+.gradientBanner{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 119px;
+    background: linear-gradient(to bottom, rgb(0 86 172), rgba(255, 0, 0, 0));
+}

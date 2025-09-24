@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
@@ -13,61 +12,40 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
 import Products from "./pages/Products";
-
+import NotFound from "./pages/NotFound";
+import ProductsDetails from "./pages/ProductsDetails";
+import { CarritoProvider } from "./contexts/CarritoContext";
 import { DropdownContext } from "./contexts/DropdownContext";
-import { ProductosContext } from "./contexts/ProductosContext";
+import { ProductosProvider } from "./contexts/ProductosContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import Paginador from "./components/Paginador";
 
+
+import ProductManager from "./pages/ProductManager";
 
 function App() {
-  const [productosEnCarrito, setProductosEnCarrito] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [contadorCarrito, setContadorCarrito] = useState(0);
-  const [totalCarrito, setTotalCarrito] = useState(0);
+ 
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
-
-
-  const [loading, setLoading] = useState(true);
-
-  const useProductosContext = {
-    productosEnCarrito, setProductosEnCarrito, 
-    products, setProducts, 
-    contadorCarrito, setContadorCarrito, 
-    totalCarrito, setTotalCarrito,
-  }
-
-
-
-  useEffect(() => {
-    // hacer el pedido de la api
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.products);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error de carga de API", err);
-        setLoading(false);
-      });
-  }, []);
-
-
-
   const navItems = ["Inicio", "Productos", "Contacto"];
   const [seccion, setSeccion] = useState("Inicio");
 
+  const mode = 'preview';
+
+
   return (
+    <AuthProvider>
+    <ProductosProvider mode={mode}>
+    <CarritoProvider>
     <div className="d-flex flex-column min-vh-100">
       <DropdownContext.Provider value={{ isActiveDropdown, setIsActiveDropdown }} >
         <Header />
-        <Nav items={navItems} contadorCarrito={contadorCarrito} seccion={seccion} onSeleccion={setSeccion}/>
+        <Nav items={navItems} seccion={seccion} onSeleccion={setSeccion}/>
       </DropdownContext.Provider>
-
       <main className="flex-grow-1 p-3">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Inicio" element={<Home />} />
+          <Route path="/inicio" element={<Home />} />
           <Route path="/perfil/:id" element={
             <RutaProtegida> 
               <Perfil /> 
@@ -78,23 +56,43 @@ function App() {
               <Admin />
             </RutaProtegida>}>
           </Route>
-          <Route path="/Contacto" element={<Contact />} />
-          <Route path="/Carrito"   element={
-            <ProductosContext.Provider value={useProductosContext}>
-              <Carrito/>
-            </ProductosContext.Provider> } 
+          <Route path="/contacto" element={<Contact />} />
+          <Route path="/carrito"   element={
+              <Carrito/>} 
           />
-          <Route path="/Productos" element={
-            <ProductosContext.Provider value={useProductosContext}>
-              <Products/>
-            </ProductosContext.Provider>} 
+          <Route path="/productos/category/:category" element={
+            <Products/>}
+          /> 
+          <Route path="/productos/search/:product" element={
+            <> <Products/>
+              <Paginador />
+            </>}
+          />         
+          <Route path="/productos/details/:name" element={
+              <ProductsDetails /> 
+            } 
           />
+          <Route path="/productos" element={
+            <> <Products/>
+              <Paginador />
+            </>}
+          />
+          <Route path="/admin/:manager" element= {             
+             <RutaProtegida>
+               <ProductManager />
+             </RutaProtegida>} />
+          {/* Ruta para no coincidencias */}
+          <Route path="*" element={<NotFound />} />
+
         </Routes>
-              
-        
       </main>
       <Footer />
     </div>
+    </CarritoProvider>
+    
+    </ProductosProvider>
+    
+    </AuthProvider>
   );
 }
 
