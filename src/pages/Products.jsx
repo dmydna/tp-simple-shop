@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { Link, useLocation, useMatch } from "react-router-dom";
+import { Link, useLocation, useMatch, useParams } from "react-router-dom";
 import CarritoAgregarBoton from "../components/CarritoAgregarBoton";
 import { HoverProvider } from "../contexts/HoverContext";
 import HoverWrapper from "../contexts/HoverWrapper";
 import { useProducts } from "../contexts/ProductosContext";
+import CategoryNav from "../components/CategoryNav";
 
 function Products() {
 
@@ -14,6 +15,7 @@ function Products() {
   const searchMatch = useMatch("/productos/search/:product");
 
 
+  const { productosVisibles, setCategory, setSearch, filtered, products } = useProducts();
   const location = useLocation();
 
   // Informacion a mostrar segun Pagina
@@ -23,43 +25,30 @@ function Products() {
     description: "",
   });
   
-  const { productosVisibles, products} = useProducts()
 
-  const [filterProducts, setFilterProducts] = useState(productosVisibles)
 
-  // recalcula productos filtrados
-  useEffect(() => {
-    let filtered = productosVisibles;
   
-    if (categoryMatch?.params.category) {
-      filtered = products.filter((item) =>
-        item.category == categoryMatch.params.category
-      );
-    } else if (searchMatch?.params.product) {
-      filtered = products.filter((item) =>
-        item.title.toLowerCase().includes(searchMatch.params.product.toLowerCase())
-      );
-    }
-  
-    setFilterProducts(filtered);
-  }, [categoryMatch, searchMatch, productosVisibles]);
-  
-  // actualiza meta cuando cambia el filtro
   useEffect(() => {
     if (categoryMatch?.params.category) {
-      setMeta(prev => ({ ...prev, 
-               title: categoryMatch.params.category ,
-               message: filterProducts.length + " productos"}));
+
+      setCategory(categoryMatch.params.category);
+      setSearch(""); // limpia búsqueda si vengo de categoría
+      setMeta(prev => ({ ...prev,  title: categoryMatch.params.category, message: filtered.length + " productos"}));
+
     } else if (searchMatch?.params.product) {
-      setMeta(prev => ({ 
-        ...prev, 
-        title: "Resultados de Busqueda",
-        message: filterProducts.length + " encontrado"  // ahora sí usa el estado
-      }));
+      setSearch(searchMatch?.params.product);
+      setCategory(null); // limpia categoría si vengo de búsqueda
+      setMeta(prev => ({ ...prev, title: "Resultados de Busqueda", message: filtered.length + " encontrado"  // ahora sí usa el estado
+      }))
+
     } else {
+      setCategory(null);
+      setSearch("");
       setMeta(prev => ({ ...prev, title: "Productos", message: "todas las categorias" }));
     }
-  }, [categoryMatch, searchMatch, filterProducts]);
+  }, [location, searchMatch, categoryMatch, filtered]);
+
+ 
 
 
   const cardLinkStyle = {height: "3.2rem", overflow: "hidden", textDecoration: "none", fontWeight: "bold" }
@@ -70,26 +59,12 @@ function Products() {
     <HoverProvider>
 <Container className="mt-2 bg-white rounded">
       { <>
-        <div className={`d-flex mb-4 overflow-auto`}>
-          <b className={`p-2 border mx-2 rounded px-3 ${ location.pathname == '/productos' ? 'd-none' : '' } `}>
-              <Link to={'/productos'}><i class="bi bi-arrow-left"></i>
-              </Link></b>
-         {[...new Set(products.map(p => p.category))].map(category => (
-           <b className={`p-2 border mx-2 rounded 
-              ${categoryMatch?.params.category == category ? 'bg-primary' : ''} `} key={category}>
-            <Link className={`text-decoration-none
-              ${categoryMatch?.params.category == category ? 'text-white' : ''}
-              `} to={'/productos/category/'+ category }>
-               {category}
-            </Link>
-           </b> 
-          ))}
-        </div>
+       <CategoryNav/>
        <h1 className="text-capitalize" >{meta.title}</h1>
        </> }
       <Row>
         <span className="mb-5">{meta.message}</span>
-        {filterProducts.map((product) => (  
+        {productosVisibles.map((product) => (  
           <Col className="d-flex flex-column" key={product.id} md={3}>
           <HoverWrapper id={product.id}>
           {(isHovered) => (

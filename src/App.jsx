@@ -61,12 +61,19 @@ function App() {
               <Carrito/>} 
           />
           <Route path="/productos/category/:category" element={
-            <Products/>}
+            <>
+            <Products/>
+            <Paginador />
+            </>
+
+          }
           /> 
           <Route path="/productos/search/:product" element={
-            <> <Products/>
-              <Paginador />
-            </>}
+            <> 
+            <Products/>
+            <Paginador/>
+            </>
+          }
           />         
           <Route path="/productos/details/:name" element={
               <ProductsDetails /> 

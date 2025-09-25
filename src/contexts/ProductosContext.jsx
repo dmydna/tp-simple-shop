@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
 
 export const ProductosContext = createContext(null)
 
@@ -6,7 +6,10 @@ export function ProductosProvider({ children }){
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [filterProducts, setFilterProducts] = useState([])
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [category, setCategory] = useState(null);
+    const [search, setSearch] = useState("");
+    const productosPorPagina = 6;
 
     useEffect( () => { 
       const fetchData = async () => {// hacer el pedido de la api
@@ -25,17 +28,30 @@ export function ProductosProvider({ children }){
       fetchData() 
     }, []);
 
+    useEffect( ()=>{
+      // Reseteo paginador cuando entro en pagina categorias o busqueda
+      setPaginaActual(1)
+    }, [category, search])
 
-    const [paginaActual, setPaginaActual] = useState(1);
-    const productosPorPagina = 6;
+
+    // Logica de filter
+    const filtered = useMemo(() => {
+      return products.filter(p => {
+        const matchCategory = category ? p.category === category : true;
+        const matchSearch = search ? 
+         p.title.toLowerCase().includes(search.toLowerCase()) ||
+         p.description?.toLowerCase().includes(search.toLowerCase()) ||
+         p.brand?.toLowerCase().includes(search.toLowerCase())  : true;
+        return matchCategory && matchSearch;
+      });
+    }, [products, category, search]);
+
 
     // Lógica de paginación
     const indiceUltimoProducto = paginaActual * productosPorPagina; 
     const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
-
-
-    const productosVisibles = products.slice(indicePrimerProducto, indiceUltimoProducto);
-    const totalPaginas = Math.ceil(products.length / productosPorPagina);
+    const productosVisibles = filtered.slice(indicePrimerProducto, indiceUltimoProducto);
+    const totalPaginas = Math.ceil(filtered.length / productosPorPagina);
 
 
     return (
@@ -47,7 +63,9 @@ export function ProductosProvider({ children }){
           totalPaginas, 
           paginaActual, setPaginaActual, 
           productosVisibles ,
-          filterProducts, setFilterProducts
+          filtered,
+          setCategory,
+          setSearch,
           }}>
             {children}
         </ProductosContext.Provider>

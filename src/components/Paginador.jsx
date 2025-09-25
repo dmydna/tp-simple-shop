@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { useProducts } from "../contexts/ProductosContext";
-
+import left from "/src/assets/angle-ts-left.svg"
 
 // Componente que muestra los botones de paginación
 
@@ -24,7 +24,8 @@ const irAPagina = (numeroPagina) => {
         disabled={paginaActual === 1}
         onClick={() => irAPagina(paginaActual - 1)}
       >
-      <i class="bi bi-caret-left"></i>
+      <i class><img width={20} src={left}/></i>
+      {/* <i class="bi bi-caret-left"></i> */}
       </Button>
 
      {/* Botones numerados */}
@@ -46,7 +47,8 @@ const irAPagina = (numeroPagina) => {
         disabled={paginaActual === totalPaginas}
         onClick={() => irAPagina(paginaActual + 1)}
       >
-        <i class="bi bi-caret-right"></i>
+        <i class><img style={{rotate: '180deg'}} width={20} src={left}/></i>
+        {/* <i class="bi bi-caret-right"></i> */}
       </Button>
     </div>
   );
