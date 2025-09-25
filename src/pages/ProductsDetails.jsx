@@ -33,7 +33,7 @@ function ProductsDetails(){
             </Link>
               <Row className="g-0" md={4}>
                 <Col className="col-md-7 col-sm-12">
-                    <div className="w-100">
+                    <div className="w-100 overflow-hidden">
                       <img className="mx-auto d-block" src={item.thumbnail} />
                     </div>
 
@@ -85,23 +85,19 @@ function ProductsDetails(){
                    <Col className="col-md-11" >
                       <div className="h3 mb-5">Opiniones</div>
                       {item.reviews.map(review => 
-                        <Card key={item.id} className="m-2">
-                        <Row className="g-0" md={4}>
-                          <Col className="col-md-2 col-xs-2 col-sm-4">
+                        <Card key={item.id} className="m-2 overflow-hidden">
+                        <div className="d-flex" md={4}>
                           <Card.Img  src="/user.png"
                                 style={{scale: "0.8",
                                   height: "66px",
                                   width: "66px",
                                   margin: "10px"}}
                           />
-                          </Col>
-                          <Col className="col-md-8">
-                            <Card.Body>
-                              <img src={`/rating${review.rating}.png`}/>
-                              <Card.Text className="text-truncate">{review.comment}</Card.Text>
-                            </Card.Body>
-                          </Col>
-                        </Row>
+                          <Card.Body>
+                            <img src={`/rating${review.rating}.png`}/>
+                            <Card.Text className="text-truncate">{review.comment}</Card.Text>
+                          </Card.Body>
+                        </div>
                       </Card>
                       )}
                       

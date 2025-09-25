@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 import CarritoAgregarBoton from "../components/CarritoAgregarBoton";
 import { HoverProvider } from "../contexts/HoverContext";
 import HoverWrapper from "../contexts/HoverWrapper";
@@ -14,7 +14,7 @@ function Products() {
   const searchMatch = useMatch("/productos/search/:product");
 
 
- 
+  const location = useLocation();
 
   // Informacion a mostrar segun Pagina
   const [meta, setMeta] = useState({
@@ -47,7 +47,9 @@ function Products() {
   // actualiza meta cuando cambia el filtro
   useEffect(() => {
     if (categoryMatch?.params.category) {
-      setMeta(prev => ({ ...prev, title: categoryMatch.params.category }));
+      setMeta(prev => ({ ...prev, 
+               title: categoryMatch.params.category ,
+               message: filterProducts.length + " productos"}));
     } else if (searchMatch?.params.product) {
       setMeta(prev => ({ 
         ...prev, 
@@ -55,7 +57,7 @@ function Products() {
         message: filterProducts.length + " encontrado"  // ahora sí usa el estado
       }));
     } else {
-      setMeta(prev => ({ ...prev, title: "Productos" }));
+      setMeta(prev => ({ ...prev, title: "Productos", message: "todas las categorias" }));
     }
   }, [categoryMatch, searchMatch, filterProducts]);
 
@@ -63,14 +65,30 @@ function Products() {
   const cardLinkStyle = {height: "3.2rem", overflow: "hidden", textDecoration: "none", fontWeight: "bold" }
   const textWrap = { textWrap: "nowrap", textOverflow: "ellipsis", width: "100%", overflow: "hidden"}
 
+
   return (
     <HoverProvider>
-<Container className="mt-2 py-3 bg-white rounded">
+<Container className="mt-2 bg-white rounded">
       { <>
-       <h1>{meta.title}</h1>
+        <div className={`d-flex mb-4 overflow-auto`}>
+          <b className={`p-2 border mx-2 rounded px-3 ${ location.pathname == '/productos' ? 'd-none' : '' } `}>
+              <Link to={'/productos'}><i class="bi bi-arrow-left"></i>
+              </Link></b>
+         {[...new Set(products.map(p => p.category))].map(category => (
+           <b className={`p-2 border mx-2 rounded 
+              ${categoryMatch?.params.category == category ? 'bg-primary' : ''} `} key={category}>
+            <Link className={`text-decoration-none
+              ${categoryMatch?.params.category == category ? 'text-white' : ''}
+              `} to={'/productos/category/'+ category }>
+               {category}
+            </Link>
+           </b> 
+          ))}
+        </div>
+       <h1 className="text-capitalize" >{meta.title}</h1>
        </> }
       <Row>
-      <span>{meta.message}</span>
+        <span className="mb-5">{meta.message}</span>
         {filterProducts.map((product) => (  
           <Col className="d-flex flex-column" key={product.id} md={3}>
           <HoverWrapper id={product.id}>
