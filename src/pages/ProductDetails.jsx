@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import AddToCartButton from "../components/AddToCartButton";
 import ProductSpecs from "../components/ProductSpecs";
+import PurchaseSuccessModal from "../components/PurchaseSuccessModal";
 import { useWindowsWidth } from "../components/useWindowSize";
+import { useCarrito } from "../contexts/CartContext";
 import { useProducts } from "../contexts/ProductContext";
 
 
@@ -11,9 +13,11 @@ function ProductDetails(){
 
     const width = useWindowsWidth()
     const navigate = useNavigate();
+    const [modalShow, setModalShow] = useState(false)
 
     const name = decodeURIComponent(useParams().name) 
 
+    const {limpiarCarrito} = useCarrito()
     const { products } = useProducts()
 
     return (
@@ -52,17 +56,23 @@ function ProductDetails(){
                     </Card.Text>
                   </Card.Body>
                   <InputGroup className="w-100 align-items-center gap">
-                  <Button className="m-2 rounded flex-fill" variant="primary" type="submit">
+                  <Button 
+                    className="m-2 rounded flex-fill" variant="primary" type="submit"
+                    onClick={() => setModalShow(true)}
+                  >
                       Comprar ahora
                   </Button> 
                   <AddToCartButton product={item}/>
-                  {/* <CarritoInput producto={ item }/> */}
+                  <PurchaseSuccessModal 
+                    show={modalShow} 
+                    onHide={() =>{ setModalShow(false); limpiarCarrito() }}
+                  />
                   </InputGroup>
   
 
                   </Card>
                 </Col>
-
+                
 
                 <Col className="col-md-7 col-sm-12 m-3 mt-5 mx-0" >
                    <Col className="col-md-11" >

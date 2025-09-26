@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import CarritoItem from "../components/CartItem";
+import PurchaseSuccessModal from "../components/PurchaseSuccessModal";
 import { useWindowsHeight } from "../components/useWindowSize";
 import { useCarrito } from "../contexts/CartContext";
+import emptyCaryImg from "/src/assets/empty-cart.png";
+
 
 function Carrito() {
 
@@ -14,6 +18,7 @@ function Carrito() {
       productosEnCarrito 
   } = useCarrito()
 
+  const [modalShow, setModalShow] = useState(false)
 
   return( productosEnCarrito.length != 0 ? 
     <Container className="mt-4">
@@ -37,27 +42,32 @@ function Carrito() {
           <Card.Text className="h3"> Total</Card.Text>
           <Card.Text className="h3 ms-auto me-1">$ {totalCarrito.toFixed(2)}</Card.Text>
         </Card.Body>
-        <Button className="m-2" variant="primary" type="submit">
+        <Button className="m-2" variant="primary" type="submit"
+            onClick={()=>{setModalShow(true)}}
+        >
           Finalizar Compra
         </Button>
       </Card>
+      <PurchaseSuccessModal 
+        show={modalShow} 
+        onHide={() =>{ setModalShow(false); limpiarCarrito() }}
+      />
     </Container> :
   <Container style={{height: "80vh"}} 
-  className="mt-4 overflow-hidden container d-flex row mx-auto">
-    <h1>Carrito</h1>
+     className="py-5 mt-5 d-flex justify-content-center align-items-center">
     <div>
     <img style={{
       marginInline: "auto",
-      maxWidth: "400px",
+      maxWidth: "300px",
       display: "block", 
       position: "relative",
     }} 
-      src="/shopping.png" />
-    </div>
-
-    <h2 style={{textAlign: "center"}} className="text-muted fw-bolder">
+      src={emptyCaryImg} />
+    <h3 className="text-muted fw-bolder m-4">
       Tu carrito esta vacio!
-    </h2>
+    </h3>
+    <Button as={Link} to={'/productos'}  className="col w-100 col-md-2 p-2 " variant="danger"><i className="bi bi-house-door-fill"></i> <b className="mx-2"> ir a Comprar </b>   </Button>
+    </div>
   </Container>
   )
 
