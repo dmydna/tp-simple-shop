@@ -1,19 +1,23 @@
 import React from "react";
-import { Link, useLocation, useMatch, useParams } from "react-router-dom";
-import { useProducts } from "../contexts/ProductosContext";
+import { Link, useMatch } from "react-router-dom";
+import { useProducts } from "../contexts/ProductContext";
 
 function CategoryNav(){
 
     const categoryMatch = useMatch("/productos/category/:category");
+    const searchMatch = useMatch("/productos/search/:product");
     const {products} = useProducts()
 
     return(
-        <div className={`d-flex mb-4 overflow-auto`}>
-          <b className={`p-2 border mx-2 rounded px-3 ${ location.pathname == '/productos' ? 'd-none' : '' } `}>
-              <Link to={'/productos'}><i class="bi bi-arrow-left"></i>
+        <div className={`d-flex mb-2 flex-wrap`}>
+          <b className={`p-2 border mx-2 rounded px-3 mb-2  ${ location.pathname == '/productos' ? 'bg-primary' : '' } `}>
+              <Link to={'/productos'} className={` text-decoration-none
+                ${location.pathname == '/productos' ? 'text-white' : ''}`}>
+                  {(location.pathname == '/productos' ? "#": <i class="bi bi-arrow-left"></i> )}
+                  
               </Link></b>
          {[...new Set(products.map(p => p.category))].map(category => (
-           <b className={`p-2 border mx-2 rounded 
+           <b className={`p-2 border mx-2 rounded mb-0 mb-2
               ${categoryMatch?.params.category == category ? 'bg-primary' : ''} `} key={category}>
             <Link className={`text-decoration-none
               ${categoryMatch?.params.category == category ? 'text-white' : ''}

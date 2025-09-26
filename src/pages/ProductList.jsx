@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { Link, useLocation, useMatch, useParams } from "react-router-dom";
-import CarritoAgregarBoton from "../components/CarritoAgregarBoton";
+import { Link, useLocation, useMatch } from "react-router-dom";
+import AddToCartButton from "../components/AddToCartButton";
+import CategoryNav from "../components/CategoryNav";
 import { HoverProvider } from "../contexts/HoverContext";
 import HoverWrapper from "../contexts/HoverWrapper";
-import { useProducts } from "../contexts/ProductosContext";
-import CategoryNav from "../components/CategoryNav";
+import { useProducts } from "../contexts/ProductContext";
 
 function Products() {
 
@@ -89,7 +89,7 @@ function Products() {
               </Card.Body>
               </Link>
               <Card.Text className="w-100 d-flex mb-2">
-                  <CarritoAgregarBoton variant='outline-success' product={product}/> 
+                  <AddToCartButton variant='outline-success' product={product}/> 
               </Card.Text>
             </Card>
               )}
@@ -97,6 +97,7 @@ function Products() {
           </Col>
         ))}
       </Row>
+      <hr className="mt-5"/>
     </Container>
     </HoverProvider>
     

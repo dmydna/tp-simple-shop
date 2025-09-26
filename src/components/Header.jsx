@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import { Navbar, Nav, Button, Container } from "react-bootstrap";
-import { Link, useLocation ,useNavigate } from "react-router-dom";
-import DropdownLogin from "./DropdownLogin";
-import Search from "../pages/Search";
+import React, { useEffect, useState } from "react";
+import { Container, Navbar } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
+import DropdownLogin from "./LoginDropdown";
+import Search from "./SearchBar";
 import { useWindowsWidth } from "./useWindowSize";
 
 
@@ -41,7 +41,7 @@ function Header() {
           <div className={`${toggleBarraBusquedaActiva ? 'd-none' : '' } `} >
              {location.pathname != '/login' ? <DropdownLogin /> : '' }
           </div>
-          {(width < 1300 ?  <Search   toggle={toggleBarraBusqueda} setToggle ={setToggleBarraBusqueda} /> : '' )} 
+          {(width < 1300 ?  < Search   toggle={toggleBarraBusqueda} setToggle ={setToggleBarraBusqueda} /> : '' )} 
         </div>
 
       </Container>

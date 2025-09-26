@@ -1,13 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { useCarrito } from "../contexts/CarritoContext";
+import { useCarrito } from "../contexts/CartContext";
 
-function CarritoCantidadBoton({ producto }) {
+function CarritoInput({ producto }) {
 
   const { eliminarProductoCarrito,
-     decrementarProductoCarrito, 
-     incrementarProductoCarrito,
-     productosEnCarrito
+      decrementarProductoCarrito, 
+      incrementarProductoCarrito,
   } = useCarrito();
 
   const [cantidad, setCantidad] = useState(!producto.cantidad ? 0 : producto.cantidad)
@@ -68,4 +67,4 @@ function CarritoCantidadBoton({ producto }) {
   );
 }
 
-export default CarritoCantidadBoton;
+export default CarritoInput;

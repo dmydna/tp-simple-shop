@@ -1,12 +1,12 @@
-import React,{ useState, useContext } from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import ProductoForm from "../components/FormProductos";
-import ListaProductos from "../components/ListaProductos";
-import { useProducts } from "../contexts/ProductosContext";
+import ProductoForm from "../components/ProductForm";
+import ProductTable from "../components/ProductTable";
+import { useProducts } from "../contexts/ProductContext";
 
 
 
-function ProductManager(){
+function AdminProductTable(){
 
     const {products, setProducts} = useProducts() 
     const [productoAEditar, setProductoAEditar] = useState(null)
@@ -43,7 +43,7 @@ function ProductManager(){
               onCancel={()=> setProductoAEditar(null)}
             />
             <hr />
-            <ListaProductos
+            <ProductTable
               productos = {products}
               onEdit={editarProducto}
               onDelete={borrarProducto}
@@ -53,4 +53,4 @@ function ProductManager(){
 }
 
 
-export default ProductManager
+export default AdminProductTable

@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import { useProducts } from "../contexts/ProductosContext";
-import left from "/src/assets/angle-ts-left.svg"
+import { useProducts } from "../contexts/ProductContext";
+import left from "/src/assets/angle-ts-left.svg";
 
 // Componente que muestra los botones de paginación
 
-const Paginador = () => {
+const Pagination = () => {
 
    const { totalPaginas, paginaActual, setPaginaActual, setProducts } =  useProducts()
     // Cambia a una página específica si está dentro del rango
@@ -20,7 +19,7 @@ const irAPagina = (numeroPagina) => {
       {/* Botón Anterior */}
       <Button
         variant="outline-secondary"
-        className="mx-1 mb-2"
+        className="mx-1 mb-2 rounded-pill"
         disabled={paginaActual === 1}
         onClick={() => irAPagina(paginaActual - 1)}
       >
@@ -33,7 +32,7 @@ const irAPagina = (numeroPagina) => {
         <Button
           key={indice + 1}
           variant={paginaActual === indice + 1 ? 'primary' : 'outline-primary'}
-          className="mx-1 mb-2"
+          className="mx-1 mb-2 rounded-pill fw-bold"
           onClick={() => irAPagina(indice + 1)}
         >
           {indice + 1}
@@ -43,7 +42,7 @@ const irAPagina = (numeroPagina) => {
             {/* Botón Siguiente */}
       <Button
         variant="outline-secondary"
-        className="mx-1 mb-2"
+        className="mx-1 mb-2 rounded-pill"
         disabled={paginaActual === totalPaginas}
         onClick={() => irAPagina(paginaActual + 1)}
       >
@@ -54,4 +53,4 @@ const irAPagina = (numeroPagina) => {
   );
 };
 
-export default Paginador;
+export default Pagination;

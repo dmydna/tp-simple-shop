@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { useCarrito } from "../contexts/CarritoContext";
+import React from "react";
+import { Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useCarrito } from "../contexts/CartContext";
 
 
 
-function CarritoAgregarBoton({product, variant='success'}){
+function AddToCartButton({product, variant='success'}){
 
     const { productosEnCarrito, agregarAlCarrito} = useCarrito()
 
@@ -39,4 +39,4 @@ function CarritoAgregarBoton({product, variant='success'}){
     )
 }
 
-export default CarritoAgregarBoton;
+export default AddToCartButton;

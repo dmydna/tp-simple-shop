@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Card, Container } from "react-bootstrap";
-import CarritoItem from "../components/CarritoItem";
+import CarritoItem from "../components/CartItem";
 import { useWindowsHeight } from "../components/useWindowSize";
-import { useCarrito } from "../contexts/CarritoContext";
+import { useCarrito } from "../contexts/CartContext";
 
 function Carrito() {
 

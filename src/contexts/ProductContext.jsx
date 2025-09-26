@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-export const ProductosContext = createContext(null)
+export const ProductContext = createContext(null)
 
 export function ProductosProvider({ children }){
 
@@ -9,7 +9,7 @@ export function ProductosProvider({ children }){
     const [paginaActual, setPaginaActual] = useState(1);
     const [category, setCategory] = useState(null);
     const [search, setSearch] = useState("");
-    const productosPorPagina = 6;
+    const productosPorPagina = 8;
 
     useEffect( () => { 
       const fetchData = async () => {// hacer el pedido de la api
@@ -29,7 +29,7 @@ export function ProductosProvider({ children }){
     }, []);
 
     useEffect( ()=>{
-      // Reseteo paginador cuando entro en pagina categorias o busqueda
+      // Reseteo Pagination cuando entro en pagina categorias o busqueda
       setPaginaActual(1)
     }, [category, search])
 
@@ -56,7 +56,7 @@ export function ProductosProvider({ children }){
 
     return (
         
-        <ProductosContext.Provider 
+        <ProductContext.Provider 
         value={{ 
           products, setProducts, 
           loading, setLoading, 
@@ -68,9 +68,9 @@ export function ProductosProvider({ children }){
           setSearch,
           }}>
             {children}
-        </ProductosContext.Provider>
+        </ProductContext.Provider>
 
     )
 }
 
-export const useProducts = () => useContext(ProductosContext);
+export const useProducts = () => useContext(ProductContext);

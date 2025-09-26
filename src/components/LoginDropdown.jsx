@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { DropdownContext } from "../contexts/DropdownContext";
 import Login from '../pages/Login';
-import { useAuth } from "../contexts/AuthContext";
-import { useWindowsWidth } from "../components/useWindowSize";
+import { useWindowsWidth } from "./useWindowSize";
 
 
 function DropdownLogin() {

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useProducts } from "./ProductosContext";
+import { useProducts } from "./ProductContext";
 
-const CarritoContext = createContext();
+const CartContext = createContext();
 
 
 export function CarritoProvider({ children }) {
@@ -19,8 +19,7 @@ export function CarritoProvider({ children }) {
     setContadorCarrito(0)
   }
 
-
-  const  limpiarItemCarrito = (productoCarrito) => {
+  const  eliminarProductoCarrito = (productoCarrito) => {
 
     setContadorCarrito((prevContador) => 
       prevContador - productoCarrito.cantidad)
@@ -42,16 +41,11 @@ export function CarritoProvider({ children }) {
 
   }
 
-  const disminuirProductoCarrito = (productoCarrito) => {
+  const decrementarProductoCarrito = (productoCarrito) => {
 
     const productoExiste = productosEnCarrito.find(
       (item) => item.id === productoCarrito.id 
     );
-
-    // if(!productoExiste){
-    //   agregarAlCarrito(productoCarrito)
-    //   return
-    // }
 
     if (productoCarrito.cantidad <= 0) {
       return;
@@ -59,9 +53,10 @@ export function CarritoProvider({ children }) {
     setContadorCarrito((prevContador) =>
       productoCarrito.stock ? prevContador - 1 : prevContador
     );
-    setTotalCarrito((prevTotal) =>
-      productoCarrito.stock ? prevTotal - 1 : prevTotal
-    );
+    
+    // setTotalCarrito((prevTotal) =>
+    //   productoCarrito.stock ? prevTotal - 1 : prevTotal
+    // );
 
     setProductosEnCarrito((prevProductos) =>
       prevProductos.map((item) =>
@@ -83,29 +78,27 @@ export function CarritoProvider({ children }) {
 
   const incrementarProductoCarrito = (productoCarrito) => {
 
-    console.log("aca")
-    const productoExiste = productosEnCarrito.find(
-      (item) => item.id === productoCarrito.id 
-    );
-
-    // if(!productoExiste){
-    //   agregarAlCarrito(productoCarrito)
-    //   return
-    // }
-    
     const esProductoDisponible = productoCarrito.stock - productoCarrito.cantidad  != 0;
 
     if (!esProductoDisponible) {
       return;
     }
 
+
+    const productoExiste = productosEnCarrito.find(
+      (item) => item.id === productoCarrito.id 
+    );
+
+
+
     if(productoCarrito.id )
     setContadorCarrito((prevContador) =>
       productoCarrito.stock ? prevContador + 1 : prevContador
     );
-    setTotalCarrito((prevTotal) =>
-      productoCarrito.stock ? prevTotal + 1 : prevTotal
-    );
+
+    // setTotalCarrito((prevTotal) =>
+    //   productoCarrito.stock ? prevTotal + 1 : prevTotal
+    // );
 
     setProductosEnCarrito((prevProductos) =>
       prevProductos.map((item) =>
@@ -115,10 +108,7 @@ export function CarritoProvider({ children }) {
       )
     );
 
-    setProducts(
-      (
-        prevProducts // retorno implicito de un array
-      ) =>
+    setProducts((prevProducts) => // retorno implicito de un array
         prevProducts.map((item) =>
           item.id === productoCarrito.id && item.stock
             ? { ...item, stock: item.stock - 1 }
@@ -169,13 +159,22 @@ export function CarritoProvider({ children }) {
 
   }
 
+  useEffect(() => {
+    if (productosEnCarrito.length != 0) {
+      setTotalCarrito(
+        productosEnCarrito.reduce(
+         (accumulator, item) => accumulator + item.price * item.cantidad
+         ,0)
+      );
+    }
+  }, [productosEnCarrito]);
   
 
   return (
-    <CarritoContext.Provider 
+    <CartContext.Provider 
     value={{  incrementarProductoCarrito,  
-         disminuirProductoCarrito, 
-         limpiarItemCarrito, 
+         decrementarProductoCarrito, 
+         eliminarProductoCarrito, 
          productosEnCarrito, 
          setProductosEnCarrito, 
          contadorCarrito, 
@@ -187,8 +186,8 @@ export function CarritoProvider({ children }) {
          limpiarCarrito,
          agregarAlCarrito}}>
       {children}
-    </CarritoContext.Provider>
+    </CartContext.Provider>
   )
 }
 
-export const useCarrito = () => useContext(CarritoContext);
+export const useCarrito = () => useContext(CartContext);

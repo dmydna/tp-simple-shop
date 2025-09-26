@@ -1,10 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Nav as BootstrapNav, Button, Container, Navbar } from "react-bootstrap";
-import { Link, useLocation ,useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useCarrito } from "../contexts/CartContext";
 import { DropdownContext } from "../contexts/DropdownContext";
-import { useCarrito } from "../contexts/CarritoContext";
 import { HoverProvider } from "../contexts/HoverContext";
 import HoverWrapper from "../contexts/HoverWrapper";
+
+
 
 
 function Nav({items, onSeleccion}) {
@@ -22,6 +24,7 @@ function Nav({items, onSeleccion}) {
     navigate(-1) || navigate('/') : navigate('/carrito')
   }
 
+  // Desactiva nav sticky top mientra dropdown se muestra dropdown
 
   return (
     <HoverProvider>
@@ -42,12 +45,18 @@ function Nav({items, onSeleccion}) {
            className='fw-bold fs-3 d-flex' variant="outline-black">
               <i className={`bi bi-${ 
                 isHovered && location.pathname == '/carrito' ?
-                'x' : 'cart3'  }`}></i>
-              <p className='mx-2 my-0'>
-                {contadorCarrito == 0 ? '' : 
-                (isHovered && location.pathname == '/carrito' ?
-                  '' : contadorCarrito  )}
-              </p>
+                'x' : 'cart3'  }`}>
+              </i>
+              {contadorCarrito == 0 ? '' : 
+              (isHovered && location.pathname == '/carrito' ?
+                  '' : 
+              <span className={`position-absolute bg-dark rounded-circle`}
+                 style={{width:18, height:18}}>
+                <p style={{zIndex: 999, fontSize: 13}} className="text-white">
+                  {contadorCarrito}
+                </p>
+              </span>  
+              )}
           </Button>
           )}
 
@@ -72,3 +81,5 @@ function Nav({items, onSeleccion}) {
 }
 
 export default Nav;
+
+

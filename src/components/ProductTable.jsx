@@ -1,8 +1,8 @@
-import React,{useContext} from 'react';
-import { Table, Button } from 'react-bootstrap';
+import React from 'react';
+import { Button, Table } from 'react-bootstrap';
 
 
-function ListaProductos({ productos, onEdit, onDelete }) {
+function ProductTable({ productos, onEdit, onDelete }) {
 
   if (productos.length === 0) {
     return <p>No hay productos cargados.</p>;
@@ -48,4 +48,4 @@ function ListaProductos({ productos, onEdit, onDelete }) {
   );
 }
 
-export default ListaProductos;
+export default ProductTable;

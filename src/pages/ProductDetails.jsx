@@ -1,16 +1,13 @@
-import React, { useContext } from "react";
-import { Button, Card, Col, Container, Row, InputGroup} from "react-bootstrap";
-import { useProducts } from "../contexts/ProductosContext";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
+import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import AddToCartButton from "../components/AddToCartButton";
 import ProductSpecs from "../components/ProductSpecs";
 import { useWindowsWidth } from "../components/useWindowSize";
-import CarritoCantidadBoton from "../components/CarritoCantidadBoton";
-import CarritoAgregarBoton from "../components/CarritoAgregarBoton";
-import { useCarrito } from "../contexts/CarritoContext";
-import { useNavigate } from "react-router-dom";
+import { useProducts } from "../contexts/ProductContext";
 
 
-function ProductsDetails(){
+function ProductDetails(){
 
     const width = useWindowsWidth()
     const navigate = useNavigate();
@@ -36,7 +33,6 @@ function ProductsDetails(){
                     <div className="w-100 overflow-hidden">
                       <img className="mx-auto d-block" src={item.thumbnail} />
                     </div>
-
                 </Col>
 
                 <Col style={{top: '55px'}} className={`col-md-5 col-12 
@@ -59,8 +55,8 @@ function ProductsDetails(){
                   <Button className="m-2 rounded flex-fill" variant="primary" type="submit">
                       Comprar ahora
                   </Button> 
-                  <CarritoAgregarBoton product={item}/>
-                  {/* <CarritoCantidadBoton producto={ item }/> */}
+                  <AddToCartButton product={item}/>
+                  {/* <CarritoInput producto={ item }/> */}
                   </InputGroup>
   
 
@@ -80,7 +76,6 @@ function ProductsDetails(){
                       <p>{item.description}</p>
                    </Col>
                 </Col >
-
                 <Col className="col-md-7 col-12 m-3 mx-0" >
                    <Col className="col-md-11" >
                       <div className="h3 mb-5">Opiniones</div>
@@ -112,4 +107,4 @@ function ProductsDetails(){
       );
 }
 
-export default ProductsDetails
+export default ProductDetails

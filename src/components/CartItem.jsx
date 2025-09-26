@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
-import CarritoCantidad from "./CarritoCantidadBoton";
 import { Link } from "react-router-dom";
-import { useCarrito } from "../contexts/CarritoContext";
+import { useCarrito } from "../contexts/CartContext";
+import CarritoInput from "./CartInput";
 
 function CarritoItem(){
 
-    const {productosEnCarrito, limpiarItemCarrito } = useCarrito()
+    const {productosEnCarrito} = useCarrito()
 
     const cardLinkStyle = {height: "3.2rem", overflow: "hidden", textDecoration: "none", fontWeight: "bold"}
     return (
@@ -30,7 +30,7 @@ function CarritoItem(){
                     <Card.Text className="text-secondary">
                       Disponible: {item.stock - item.cantidad || 0}
                     </Card.Text>
-                    <CarritoCantidad
+                    <CarritoInput
                       producto={item}
                     />
                   </Card.Body>
