@@ -14,11 +14,11 @@ function PurchaseSuccessModal({show,onHide}) {
 
     const handleNext = () => {
         setStep((prev) => prev + 1)
-        setProgress((prev) => prev + step * 25)
+        setProgress(((step) * 33.3))
     }
     const handlePrev = () => {
         setStep((prev) => prev - 1)
-        setProgress((prev) => prev - step - 25)
+        setProgress((prev) => (prev - 33.3))
     };
     const handleAccept = () => {
         setProgress(0)
@@ -45,25 +45,26 @@ function PurchaseSuccessModal({show,onHide}) {
         style={{ height: "5px" }}
         animated variant="primary" 
         now={ progress  } />
-        {step === 1 && (
-            <>
-              <div className="d-flex">
-                 <img width={200} className="mx-auto" src={payLater}/>
-              </div>
-              <p className="text-center"> 
-                  Tu orden de comprar fue registrada con exito.
-              </p>
-            </>
+        {step === 1 && 
+        (
+          <>
+            <div className="d-flex">
+               <img width={200} className="mx-auto" src={payLater}/>
+            </div>
+            <p className="text-center"> 
+                Tu orden de comprar fue registrada con exito.
+            </p>
+          </>
         )}
         {step === 2 && 
         (
          <>
            <div className="d-flex">
-               <img width={200} className="mx-auto" src={mail}/>
+             <img width={200} className="mx-auto" src={mail}/>
            </div>
            <p className="text-center"> 
              En breve nos comunicaremos para coordinar los detalles. 
-          </p>
+           </p>
          </>   
         )}
         {step === 3 && 
@@ -73,19 +74,19 @@ function PurchaseSuccessModal({show,onHide}) {
                <img width={200} className="mx-auto" src={devilery}/>
            </div>
            <p className="text-center"> 
-             Puedes hacer seguimiento de tu producto en todo momento. 
-          </p>
+             Puedes hacer seguimiento de tu compra en todo momento. 
+           </p>
          </>   
         )}
         {step === 4 && (
-            <>
-              <div className="d-flex">
-                <img width={200} className="mx-auto" src={purchasing}/>
-              </div>
-              <p className="text-center">
-                Gracias por tu compra. Vuelve pronto.
-              </p>
-            </>  
+         <>
+           <div className="d-flex">
+             <img width={200} className="mx-auto" src={purchasing}/>
+           </div>
+           <p className="text-center">
+             Gracias por tu compra. Vuelve pronto.
+           </p>
+         </>  
         )}
         </Modal.Body>
         <Modal.Footer>
