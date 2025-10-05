@@ -26,6 +26,7 @@ function Products() {
   });
   
 
+  const [ showCategoryNav, setShowCategoryNav ] = useState(false);
 
   
   useEffect(() => {
@@ -59,8 +60,11 @@ function Products() {
     <HoverProvider>
 <Container className="mt-2 bg-white rounded">
       { <>
-       <CategoryNav/>
-       <h1 className="text-capitalize" >{meta.title}</h1>
+       <CategoryNav show={showCategoryNav} />
+       <div className="w-100 d-flex  align-items-center justify-content-between">
+         <h1 className="text-capitalize" >{meta.title}</h1>
+         <i  onClick={() => setShowCategoryNav(prev => !prev)} style={{fontSize: "x-large"}} className="bi bi-three-dots-vertical"></i>
+       </div>
        </> }
       <Row>
         <span className="mb-5">{meta.message}</span>

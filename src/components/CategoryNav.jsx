@@ -2,14 +2,14 @@ import React from "react";
 import { Link, useMatch } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
 
-function CategoryNav(){
+function CategoryNav({show}){
 
     const categoryMatch = useMatch("/productos/category/:category");
     const searchMatch = useMatch("/productos/search/:product");
     const {products} = useProducts()
 
     return(
-        <div className={`d-flex mb-2 flex-wrap`}>
+        <div className={`d-flex mb-2 flex-wrap ${show ? '': 'd-none' } `}>
           <b className={`p-2 border mx-2 rounded px-3 mb-2  ${ location.pathname == '/productos' ? 'bg-primary' : '' } `}>
               <Link to={'/productos'} className={` text-decoration-none
                 ${location.pathname == '/productos' ? 'text-white' : ''}`}>
