@@ -5,7 +5,7 @@ import { useCarrito } from "../contexts/CartContext";
 import { DropdownContext } from "../contexts/DropdownContext";
 import { HoverProvider } from "../contexts/HoverContext";
 import HoverWrapper from "../contexts/HoverWrapper";
-
+import CartButton from "./CartButton";
 
 
 
@@ -38,29 +38,7 @@ function Nav({items, onSeleccion}) {
         <Navbar.Toggle 
         aria-controls="basic-navbar-nav" />
         <BootstrapNav className='order-md-last'>
-        <HoverWrapper id="carrito-btn">
-          {(isHovered) => (
-           <Button 
-           onClick={ toggleRoute } 
-           className='fw-bold fs-3 d-flex' variant="outline-black">
-              <i className={`bi bi-${ 
-                isHovered && location.pathname == '/carrito' ?
-                'x' : 'cart3'  }`}>
-              </i>
-              {contadorCarrito == 0 ? '' : 
-              (isHovered && location.pathname == '/carrito' ?
-                  '' : 
-              <span className={`position-absolute bg-dark rounded-circle`}
-                 style={{width:18, height:18}}>
-                <p style={{zIndex: 999, fontSize: 13}} className="text-white">
-                  {contadorCarrito}
-                </p>
-              </span>  
-              )}
-          </Button>
-          )}
-
-        </HoverWrapper>
+        <CartButton   />
         </BootstrapNav>
         <Navbar.Collapse id="basic-navbar-nav">
           <BootstrapNav className="me-auto w-100  align-items-center">

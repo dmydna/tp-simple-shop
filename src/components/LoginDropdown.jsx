@@ -11,6 +11,7 @@ import { useWindowsWidth } from "./useWindowSize";
 function DropdownLogin() {
 
   const width = useWindowsWidth()
+
   const loginRedirect = () => width < 445 && !isAuth ? navigate('/login') : '' 
   const { user, token, login, logout } = useAuth();
   const isAuth = token && user ? true : false
@@ -32,14 +33,19 @@ function DropdownLogin() {
     >
       <Dropdown.Toggle variant="dark" id="dropdown-basic"  >
         <i className='bi-person-circle h4 me-2'></i>
-        {"  "}{isAuth && ( width <= 800 ? '' : user )}
+        {/* {"  "}{isAuth && ( width <= 800 ? '' : user )} */}
       </Dropdown.Toggle>
-      <Dropdown.Menu className={ !isAuth && width < 445 ? 'd-none' : '' }
+      <Dropdown.Menu className={ !isAuth && width < 445 ? 'd-md-none' : '' }
         style={{zIndex: '99999999'}}
       >
         {/* Enlaces que solo se muestran si el usuario está autenticado */}
         {isAuth && (
          <>
+           <Dropdown.Item as={Link} to={`/perfil/${user}`}>
+           <i className='bi-person-circle h1 me-2'></i>
+             <b className="fw-bold">{user}</b>
+             <hr className="my-2"/>
+           </Dropdown.Item >
            <Dropdown.Item  as={Link} to={`/perfil/${user}`}>
              Perfil
            </Dropdown.Item >

@@ -36,6 +36,7 @@ function Header() {
           </i>
           <b> {(width <= 320 ?  '' : 'Simple SHOP' )}</b>
         </Navbar.Brand>
+        <div className="d-flex w-100 m-0 p-0 justify-content-end">
         {(width >= 1300 ?  <Search /> : '' )} 
         <div className={`${ toggleBarraBusquedaActiva ? 'd-block w-100' : 'd-flex' } `}>
           <div className={`${toggleBarraBusquedaActiva ? 'd-none' : '' } `} >
@@ -43,6 +44,9 @@ function Header() {
           </div>
           {(width < 1300 ?  < Search   toggle={toggleBarraBusqueda} setToggle ={setToggleBarraBusqueda} /> : '' )} 
         </div>
+        </div>
+
+ 
 
       </Container>
     </Navbar>

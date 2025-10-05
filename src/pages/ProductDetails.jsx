@@ -10,8 +10,7 @@ import { useProducts } from "../contexts/ProductContext";
 
 
 function ProductDetails(){
-
-    const width = useWindowsWidth()
+  
     const navigate = useNavigate();
     const [modalShow, setModalShow] = useState(false)
 
@@ -39,8 +38,7 @@ function ProductDetails(){
                     </div>
                 </Col>
 
-                <Col style={{top: '55px'}} className={`col-md-5 col-12 
-                    ${width >= 768 ? "sticky-top" : ""}`}>
+                <Col style={{top: '55px'}} className="col-md-5 col-12 sticky-md-bottom">
                 <Card className="h-100">
                   <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
