@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Nav from "./components/Nav";
+import Nav  from "./components/Nav";
+import NavHeader from "./components/NavHeader";
 import Pagination from "./components/Pagination";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -19,14 +20,15 @@ import NotFound from "./pages/NotFound";
 import Perfil from "./pages/Perfil";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/ProductList";
-
+import { ModalContext } from "./contexts/ModalContext";
 
 import AdminProductTable from "./pages/AdminProductTable";
 
 function App() {
  
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
-  const navItems = ["Inicio", "Productos", "Contacto"];
+  const [showModal, onHideModal] = useState(false);
+  const navItems = ["Productos", "Contacto"];
   const [seccion, setSeccion] = useState("Inicio");
 
   const mode = 'preview';
@@ -37,10 +39,11 @@ function App() {
     <ProductosProvider mode={mode}>
     <CarritoProvider>
     <div className="d-flex flex-column min-vh-100">
-      <DropdownContext.Provider value={{ isActiveDropdown, setIsActiveDropdown }} >
+        <DropdownContext.Provider value={{isActiveDropdown, setIsActiveDropdown }}>
+           {/* <NavHeader  items={navItems} onSeleccion={setSeccion} /> */}
         <Header />
         <Nav items={navItems} seccion={seccion} onSeleccion={setSeccion}/>
-      </DropdownContext.Provider>
+        </DropdownContext.Provider>
       <main className="flex-grow-1 p-3">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -57,8 +60,7 @@ function App() {
             </ProtectedRoute>}>
           </Route>
           <Route path="/contacto" element={<Contact />} />
-          <Route path="/carrito"   element={
-              <Carrito/>} 
+          <Route path="/carrito"   element={<Carrito/>} 
           />
           <Route path="/productos/category/:category" element={
             <>
