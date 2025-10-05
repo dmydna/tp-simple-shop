@@ -4,6 +4,7 @@ import { useCarrito } from "../contexts/CartContext";
 
 function CarritoInput({ producto }) {
 
+
   const { eliminarProductoCarrito,
       decrementarProductoCarrito, 
       incrementarProductoCarrito,
@@ -40,7 +41,7 @@ function CarritoInput({ producto }) {
      e.target.value > 0 && e.target.value <= producto.stock ? setCantidad(e.target.value ): (!producto.cantidad ? prev : producto.cantidad)
   }
   return (
-    <InputGroup className="align-items-center mx-2" style={{ width: "160px" }}>
+    <InputGroup className="align-items-center" style={{ width: "160px" }}>
       <Button
         onClick={() => elimItem(producto)}
         variant="outline-secondary"

@@ -6,25 +6,27 @@ import CarritoInput from "./CartInput";
 
 function CarritoItem(){
 
+    const cardItemStyle = { borderLeft: "0", borderRight: "0", borderTop: "0" }
+
     const {productosEnCarrito} = useCarrito()
 
-    const cardLinkStyle = {height: "3.2rem", overflow: "hidden", textDecoration: "none", fontWeight: "bold"}
+    const cardLinkStyle = { overflow: "hidden"}
     return (
         <>
-        {productosEnCarrito.map((item) => (
-            <Card key={item.id} className="m-2">
+        {productosEnCarrito.map((item, index) => (
+            <Card style={cardItemStyle} key={item.id} className="my-2 border-0">
               <Row className="g-0" md={4}>
-                <Col className="col-md-2">
-                  <Card.Img src={item.thumbnail} />
-                </Col>
                 <Col className="col-md-4">
+                  <Card.Img  src={item.thumbnail} />
+                </Col>
+                <Col className="col-md-6">
                   <Card.Body>
                     <Card.Title as={Link} style={cardLinkStyle} 
                     className="d-block"
                     to={"../productos/details/" + encodeURIComponent(item.title)} >
                       {item.title}
                     </Card.Title>
-                    <Card.Text className="h3">
+                    <Card.Text className="h4">
                       $ {(item.price).toFixed(2)}
                     </Card.Text>
                     <Card.Text className="text-secondary">
@@ -36,7 +38,9 @@ function CarritoItem(){
                   </Card.Body>
                 </Col>
               </Row>
+              <hr className={`${index ==  productosEnCarrito.length - 1 ? 'd-none' : ''}`}/>
             </Card>
+
           ))}
         </>
         
