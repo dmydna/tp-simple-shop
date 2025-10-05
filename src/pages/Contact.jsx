@@ -1,10 +1,15 @@
 import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 
-function Contact() {
+function Contact({onHideModal}) {
   return (
-    <Container>
-      <h2>Contacto</h2>
+    <Container  className="my-5" style={{maxWidth: 400, minWidth:300}}>
+      <div className="d-flex align-items-center justify-content-between mb-4">
+        <h1 className="h3 m-0">Contacto</h1>
+        {onHideModal ?
+        <i onClick={() => onHideModal(false)} className="h3 bi bi-x m-0"></i> 
+        : ''}
+      </div>
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Nombre</Form.Label>
@@ -18,7 +23,9 @@ function Contact() {
           <Form.Label>Mensaje</Form.Label>
           <Form.Control as="textarea" rows={3} />
         </Form.Group>
-        <Button variant="primary" type="submit">Enviar</Button>
+        <Button variant="primary" type="submit"  className="w-100 my-2" >
+          Enviar
+        </Button>
       </Form>
     </Container>
   );

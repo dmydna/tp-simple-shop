@@ -4,7 +4,8 @@ import React, { useContext, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 
-export default function Login(){
+export default function Login({ onHideModal}){
+
 
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
@@ -18,7 +19,8 @@ export default function Login(){
         e.preventDefault();
         if (login(user, pass)) 
           {
-          navigate("/");
+          navigate("/perfil/admin");
+          onHideModal(false)
         } else {
           setError("Usuario o contraseña inválidos");
         }
@@ -26,7 +28,13 @@ export default function Login(){
 
     return (
         <Container className="my-5" style={{maxWidth: 400, minWidth:300}}>
-            <h2>Login</h2>
+            <div className="d-flex align-items-center justify-content-between mb-4">
+               <h1 className="h3 m-0">Iniciar sesión</h1>
+               {onHideModal ?
+                <i onClick={() => onHideModal(false)} className="h3 bi bi-x m-0"></i> 
+                : ''}
+            </div>
+
             {error && <Alert variant="danger">{error}</Alert>}
             <Form  onSubmit={handleSubmit}>
 
@@ -49,11 +57,12 @@ export default function Login(){
                     />
                 </Form.Group>
                 <Button variant="primary" type="submit" className="w-100 my-2" >
-                    Entrar
+                    Acceder
                 </Button>
-                <Button variant="outline-secondary" className="w-100 my-2" >
-                    Registrar
-                </Button>
+                <div className="d-flex justify-content-center m-2">
+                <p className="me-2">¿Aun no tienes una cuenta?</p> <p className="text-primary fw-bold">Registrarme</p>
+                </div>
+
             </Form>
         </Container>
     )
