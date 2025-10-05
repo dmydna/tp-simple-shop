@@ -23,6 +23,7 @@ function Search({toggle, setToggle}){
     function handleSubmit(e){
       e.preventDefault();
       navigate(`/productos/search/${query}?`);
+      setToggle(false)
       setShow(false)
     }
 
@@ -37,39 +38,62 @@ function Search({toggle, setToggle}){
     }, [products, query]);
 
     return (
-      <Form  onSubmit={handleSubmit} className={`${width >= 1300 ? 'w-75' : '' }`}>
-        <InputGroup  
-           className={`${toggle ? 'bg-white' : (width >= 1300 ? 'bg-white': '') }  rounded` }>
-           <input type="text"
-               placeholder="Buscar productos..."
-               className={`form-control ${toggle ? '' : (width < 1300 ? 'd-none' : '' )}`}
-               value={query}
-               onChange={handleChange}
-               onClick={() =>  !!query ? setShow(true) : {} }
-           />
+      <div className="d-flex">
+        
+        <Form
+          onSubmit={handleSubmit}
+          className={`w-100 ${ !toggle && width < 1300 ? "d-none" : "" }  bg-white border mx-2 rounded `}
+        >
+          
+          <InputGroup className="h-100">
+          <Button variant="ligth" 
+              style={{opacity: .4}}
+              className={`bi-search`}></Button>
+            <input
+              type="text"
+              placeholder="Buscar productos..."
+              className={`form-control border-0`}
+              value={query}
+              onChange={handleChange}
+              onClick={() => (!!query ? setShow(true) : {})}
+            />
 
-           <Button variant={`${toggle ? 'ligth' : (width >= 1300 ? 'ligth': 'dark')}`}
-               className={`bg-transparent bi  ${toggle ? 'bi-x-lg' : 'bi-search'} border-0`}
-               onClick={  () => setToggle(prev => !prev) }
-           >
-           </Button>
-        </InputGroup>
-        <Dropdown show={show} onToggle={(isOpen) => setShow(isOpen)} style={{zIndex:99999}}>
-         {/* !! convierte a booleano cualquier expresion */}
-         <Dropdown.Menu  className={`w-100`}>
-         {filtered.slice(0,3).map(p => (
-           <Dropdown.Item 
-           onClick={() => setShow(false)}
-           as={Link} to={`/productos/details/${p.title}`} key={p.id}>
-              {p.title}
-           </Dropdown.Item>
-         ))}
-        </Dropdown.Menu>
-        </Dropdown>
-
-      </Form>
-
-    )
+            <Button
+              style={{opacity: .4}}
+              variant="ligth"
+              className={`bi bi-filter border-0`}
+            ></Button>
+          </InputGroup>
+          <Dropdown
+            show={show}
+            onToggle={(isOpen) => setShow(isOpen)}
+            style={{ zIndex: 99999 }}
+          >
+            {/* !! convierte a booleano cualquier expresion */}
+            <Dropdown.Menu className={`w-100`}>
+              {filtered.slice(0, 3).map((p) => (
+                <Dropdown.Item
+                  onClick={() => {
+                    setShow(false);
+                    setToggle(false);
+                  }}
+                  as={Link}
+                  to={`/productos/details/${p.title}`}
+                  key={p.id}
+                >
+                  {p.title}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Form>
+        <Button
+          onClick={()=> setToggle((prev)=>!prev)}
+          variant="dark"
+          className={`bg-transparent bi d-xl-none  ${ toggle ? "bi-x-lg" : "bi-search"} border-0`}
+        ></Button>
+      </div>
+    );
 }
 
 export default Search
