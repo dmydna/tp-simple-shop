@@ -15,8 +15,23 @@ export function useWindowSize(size) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return (size.toLowerCase() != 'height'? width : height);
+  size = size?.toLowerCase();
+  
+  if(size === 'breakpoint'){
+    return {
+      isXsm: width < 320, 
+      isSm:  width < 768,
+      isMd:  width < 992,
+      isLg:  width < 1200, 
+      isXl:  width < 1400,
+      isXxl: width >= 1400,
+    }
+  }
+      
+  return (size === 'height'? height : width);
 }
 
-export  const useWindowsWidth = () => useWindowSize('width')
-export  const useWindowsHeight = () => useWindowSize('height')
+
+export const useWindowBreakpoints = () => useWindowSize('breakpoint');
+export const useWindowsWidth = () => useWindowSize('width')
+export const useWindowsHeight = () => useWindowSize('height')
