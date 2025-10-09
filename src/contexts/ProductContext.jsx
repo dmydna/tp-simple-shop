@@ -7,8 +7,17 @@ export function ProductosProvider({ children }){
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [paginaActual, setPaginaActual] = useState(1);
+
+    // Filtros
     const [category, setCategory] = useState(null);
     const [search, setSearch] = useState("");
+    const [discount, setDiscount] = useState(0)
+    const [rating, setRating] = useState(0)
+    const [price, setPrice] = useState(0)
+    const [stock, setStock] = useState(0)
+    const [tags, setTags] = useState("")
+    const [funcFilter, setFuncFilter] = useState()
+
     const productosPorPagina = 8;
 
     useEffect( () => { 
@@ -37,12 +46,25 @@ export function ProductosProvider({ children }){
     // Logica de filter
     const filtered = useMemo(() => {
       return products.filter(p => {
+        const matchFunc = funcFilter ? funcFilter(p) : true;
         const matchCategory = category ? p.category === category : true;
+        const matchTags = tags ? p.tags === tags : true;
+        const matchRating = rating ? p.rating >= rating : true;
+        const matchStock = stock ? p.stock >= stock : true;
+        const matchDiscount = discount ? p.discountPercentage >= discount : true;
+        const matchPrice = price ? p.price >= price : true;
         const matchSearch = search ? 
          p.title.toLowerCase().includes(search.toLowerCase()) ||
          p.description?.toLowerCase().includes(search.toLowerCase()) ||
          p.brand?.toLowerCase().includes(search.toLowerCase())  : true;
-        return matchCategory && matchSearch;
+        return matchCategory 
+          && matchSearch 
+          && matchRating 
+          && matchDiscount
+          && matchTags 
+          && matchPrice
+          && matchStock
+          && matchFunc;
       });
     }, [products, category, search]);
 
