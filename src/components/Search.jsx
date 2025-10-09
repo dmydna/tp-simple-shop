@@ -22,11 +22,18 @@ function Search({toggle, setToggle}){
 
     function handleSubmit(e){
       e.preventDefault();
+      !! query && 
       navigate(`/productos/search/${query}?`);
+      setToggle(false);
+      setShow(false);
+    }
+
+    function handleFilter(e){
+      e.preventDefault();
+      navigate(`/productos/`);
       setToggle(false)
       setShow(false)
     }
-
     // Similar a useEffect pero para datos
     const filtered = useMemo(() => {
       // filtro de forma local
@@ -38,21 +45,18 @@ function Search({toggle, setToggle}){
     }, [products, query]);
 
     return (
-      <div className="d-flex">
+      <div className="d-flex w-100">
         
         <Form
           onSubmit={handleSubmit}
-          className={`w-100 ${ !toggle && width < 1300 ? "d-none" : "" }  bg-white border mx-2 rounded `}
+          className={`w-100 ${ !toggle && width < 1300 ? "d-none" : "" }  bg-white border mx-2 rounded custom-input-group `}
         >
           
-          <InputGroup className="h-100">
-          <Button variant="ligth" 
-              style={{opacity: .4}}
-              className={`bi-search`}></Button>
+          <InputGroup>
             <input
               type="text"
               placeholder="Buscar productos..."
-              className={`form-control border-0`}
+              className={`form-control border-0 no-focus`}
               value={query}
               onChange={handleChange}
               onClick={() => (!!query ? setShow(true) : {})}
@@ -61,8 +65,14 @@ function Search({toggle, setToggle}){
             <Button
               style={{opacity: .4}}
               variant="ligth"
-              className={`bi bi-filter border-0`}
-            ></Button>
+              className={`bi bi-sliders border-0 hover-icon`}
+              onClick={(e)=> handleFilter(e)} >
+            </Button>
+            <Button variant="ligth" 
+              style={{opacity: .4}}
+              className={`bi-search border-0 hover-icon`}
+              onClick={(e)=> handleSubmit(e)} >
+            </Button>
           </InputGroup>
           <Dropdown
             show={show}
@@ -89,9 +99,9 @@ function Search({toggle, setToggle}){
         </Form>
         <Button
           onClick={()=> setToggle((prev)=>!prev)}
-          variant="dark"
-          className={`bg-transparent bi d-xl-none  ${ toggle ? "bi-x-lg" : "bi-search"} border-0`}
-        ></Button>
+          variant="ligth"
+          className={`bg-transparent bi d-xl-none  ${ toggle ? "bi-x-lg" : "bi-search"} border-0`}>
+        </Button>
       </div>
     );
 }
