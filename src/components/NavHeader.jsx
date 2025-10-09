@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Container, Modal, Nav, Navbar } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import DropdownContext from "react-bootstrap/esm/DropdownContext";
 import { Link, useLocation } from "react-router-dom";
-import { useCarrito } from "../contexts/CartContext";
-import { HoverProvider } from "../contexts/HoverContext";
-import CartButton from "./CartButton";
-import DropdownLogin from "./LoginDropdown";
-import LoginModal from "./LoginModal"
-import Logo from "./Logo";
-import Search from "./SearchBar";
-import { useWindowsWidth } from "./useWindowSize";
-import context from "react-bootstrap/esm/AccordionContext";
-import { ModalContext } from "../contexts/ModalContext";
 import { useAuth } from "../contexts/AuthContext";
+import CartButton from "./CartButton";
 import ContactModal from "./ContactModal";
+import DropdownLogin from "./LoginDropdown";
+import LoginModal from "./LoginModal";
+import Logo from "./Logo";
+import SearchBarOverlay from "./SearchOverlay";
+import { useWindowsWidth } from "./useWindowSize";
+import { useScrollY } from "../contexts/useWindowScroll";
+import LoginMenu from "./LoginMenu";
 
 
 function NavHeader({onSeleccion, items}) {
@@ -28,65 +26,46 @@ function NavHeader({onSeleccion, items}) {
   const [showModal, onHideModal] = useState(false)
   const [showModalContact, onHideModalContact] = useState(false)
 
-  // TODO : arreglar esto, logica de Search.jsx en Header.jsx
-
-  const [toggleBarraBusqueda, setToggleBarraBusqueda] = useState(false);
-  const toggleBarraBusquedaActiva = width <= windowSize.lg && toggleBarraBusqueda
-
-  useEffect(() => {
-    if (width >= windowSize.lg && toggleBarraBusqueda) {
-      setToggleBarraBusqueda(false);
-    }
-  }, [width, toggleBarraBusqueda]);
-  
 
   const [expanded, setExpanded] = useState(false);
   const {isActiveDropdown , setIsActiveDropdown} = useContext(DropdownContext)
-  const {contadorCarrito} = useCarrito()
+ 
+  const scrollY =  useScrollY()
 
 
-  const toggleRoute = () => { 
-    location.pathname == '/carrito' ? 
-    navigate(-1) || navigate('/') : navigate('/carrito')
-  }
 
 
 
   return (
-    <HoverProvider>
     <Navbar
     bg="light" 
     expand="md"       
     expanded={expanded}
     onToggle={(isOpen) => setExpanded(isOpen)}
-    className={`${!isActiveDropdown ?  'sticky-top py-0' : 'py-0'} px-0 px-sm-3 py-3` }  >
-      <Container>
-        <Nav className=''>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        </Nav>
-        <Logo isSearchActive={toggleBarraBusquedaActiva}/>
-        <Nav className="flex-row align-items-center order-md-2">
-        <div className={`${ toggleBarraBusquedaActiva ? 'd-block w-100' : 'd-flex' } `}>
-          <div className={`${toggleBarraBusquedaActiva ? 'd-none' : '' } `} >
+    className={`${scrollY >= 100 ? 'py-0 shadow-sm' : 'py-3'} fixed-top px-0 px-sm-3 transition` } 
+    >
+      <Container className="align-items-center"> 
+        <dir class="m-0 p-0">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3 border-0"/> 
+          <Logo/>
+        </dir>
+        <div className={`d-flex align-items-center order-md-2`}>
+          <SearchBarOverlay/>
           {isAuth ?  
             <DropdownLogin/> : 
             <>
-             <i onClick={()=>  onHideModal(true)} class="h3 bi bi-person-fill"></i>
+             <i onClick={()=>  onHideModal(true)} class="h3 bi bi-person-fill hover-icon m-0"></i>
              <LoginModal show={showModal} onHide={onHideModal}/> 
             </>
           }
-          </div>
-          {(width < 1300 ?  < Search   toggle={toggleBarraBusqueda} setToggle ={setToggleBarraBusqueda} /> : '' )} 
-        </div>
 
-        <HoverProvider>
-          <CartButton  />
-        </HoverProvider>
-        </Nav>
-        {(width >= 1300 ?  <Search /> : '' )} 
+        <CartButton/> 
+        </div>
         <ContactModal show={showModalContact} onHide={onHideModalContact}/>
         <Navbar.Collapse className="order-md-1" id="basic-navbar-nav">
-          <Nav className="me-auto w-100  align-items-center">
+
+          {/* <LoginMenu /> */}
+          <Nav className="me-auto w-100 ms-5 ps-4 align-items-left">
             {items.map((item) =>
               <Nav.Link 
                 as={Link} to={ item == "Contacto" ? '':  item.toLowerCase()} key={item} 
@@ -99,7 +78,6 @@ function NavHeader({onSeleccion, items}) {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    </HoverProvider>
   );
 }
 

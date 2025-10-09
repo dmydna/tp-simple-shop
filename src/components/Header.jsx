@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Navbar } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import DropdownLogin from "./LoginDropdown";
-import Search from "./SearchBar";
+import Search from "./Search";
 import { useWindowsWidth } from "./useWindowSize";
 
 

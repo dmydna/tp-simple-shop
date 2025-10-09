@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Nav as BootstrapNav, Button, Container, Navbar } from "react-bootstrap";
+import { Nav as BootstrapNav, Container, Navbar } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useCarrito } from "../contexts/CartContext";
+import { useCart } from "../contexts/CartContext";
 import { DropdownContext } from "../contexts/DropdownContext";
 import { HoverProvider } from "../contexts/HoverContext";
-import HoverWrapper from "../contexts/HoverWrapper";
 import CartButton from "./CartButton";
 
 
@@ -16,7 +15,7 @@ function Nav({items, onSeleccion}) {
 
   const [expanded, setExpanded] = useState(false);
   const {isActiveDropdown , setIsActiveDropdown} = useContext(DropdownContext)
-  const {contadorCarrito} = useCarrito()
+  const {cartCount} = useCart()
 
 
   const toggleRoute = () => { 

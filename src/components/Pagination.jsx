@@ -15,11 +15,11 @@ const irAPagina = (numeroPagina) => {
   };
 
   return (
-    <div className="d-flex justify-content-center mt-4 flex-wrap">
+    <div className="d-flex container mt-4 my-5 flex-wrap">
       {/* Botón Anterior */}
       <Button
         variant="outline-secondary"
-        className="mx-1 mb-2 rounded-pill"
+        className="mx-1 mb-2 rounded"
         disabled={paginaActual === 1}
         onClick={() => irAPagina(paginaActual - 1)}
       >
@@ -32,7 +32,7 @@ const irAPagina = (numeroPagina) => {
         <Button
           key={indice + 1}
           variant={paginaActual === indice + 1 ? 'primary' : 'outline-primary'}
-          className="mx-1 mb-2 rounded-pill fw-bold"
+          className="mx-1 mb-2 rounded fw-bold"
           onClick={() => irAPagina(indice + 1)}
         >
           {indice + 1}
@@ -42,7 +42,7 @@ const irAPagina = (numeroPagina) => {
             {/* Botón Siguiente */}
       <Button
         variant="outline-secondary"
-        className="mx-1 mb-2 rounded-pill"
+        className="mx-1 mb-2 rounded"
         disabled={paginaActual === totalPaginas}
         onClick={() => irAPagina(paginaActual + 1)}
       >

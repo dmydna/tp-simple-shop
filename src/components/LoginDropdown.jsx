@@ -31,8 +31,8 @@ function DropdownLogin() {
      onClick={ loginRedirect } 
      onToggle={(isOpen) => setIsActiveDropdown(isOpen) } 
     >
-      <Dropdown.Toggle variant="dark" id="dropdown-basic"  >
-        <i className='bi-person-circle h4 me-2'></i>
+      <Dropdown.Toggle variant="ligth" id="dropdown-basic"  >
+        <i className='bi-person-circle h4 hover-icon'></i>
         {/* {"  "}{isAuth && ( width <= 800 ? '' : user )} */}
       </Dropdown.Toggle>
       <Dropdown.Menu className={ !isAuth && width < 445 ? 'd-md-none' : '' }
@@ -41,16 +41,16 @@ function DropdownLogin() {
         {/* Enlaces que solo se muestran si el usuario está autenticado */}
         {isAuth && (
          <>
-           <Dropdown.Item as={Link} to={`/perfil/${user}`}>
-           <i className='bi-person-circle h1 me-2'></i>
-             <b className="fw-bold">{user}</b>
-             <hr className="my-2"/>
+           <Dropdown.Item style={{borderBottom: "1px solid rgb(0 0 0 / 15%)"}} as={Link} to={`/perfil/${user}`}>
+             <b className="fw-bold">User01:</b>
+             <br/>
+             <p className="m-0 text-secondary">{user}</p>
            </Dropdown.Item >
            <Dropdown.Item  as={Link} to={`/perfil/${user}`}>
-             Perfil
+           <i class="bi bi-person me-1 hover-icon"></i> Perfil
            </Dropdown.Item >
            <Dropdown.Item  as={Link} to="/admin">
-             Dashboard
+           <i class="bi bi-gear me-1"></i> Dashboard
            </Dropdown.Item>
          </>
         )}
@@ -59,7 +59,7 @@ function DropdownLogin() {
          (<Login />) : 
          (<Dropdown.Item>
             <Button  variant="primary" onClick={handleLogout}>
-                Cerrar sesión
+            <i class="bi bi-box-arrow-in-left"></i> Cerrar sesión
             </Button>
           </Dropdown.Item>)}
       </Dropdown.Menu>

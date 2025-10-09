@@ -28,23 +28,23 @@ function App() {
  
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
   const [showModal, onHideModal] = useState(false);
-  const navItems = ["Productos", "Contacto"];
+  const navItems = ["Inicio", "Productos", "Contacto"];
   const [seccion, setSeccion] = useState("Inicio");
 
-  const mode = 'preview';
+  const navFix = 'mt-5 pt-5';
 
 
   return (
     <AuthProvider>
-    <ProductosProvider mode={mode}>
+    <ProductosProvider>
     <CarritoProvider>
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100 pt-3">
         <DropdownContext.Provider value={{isActiveDropdown, setIsActiveDropdown }}>
-           {/* <NavHeader  items={navItems} onSeleccion={setSeccion} /> */}
-        <Header />
-        <Nav items={navItems} seccion={seccion} onSeleccion={setSeccion}/>
+           <NavHeader  items={navItems} onSeleccion={setSeccion} />
+        {/* <Header />
+        <Nav items={navItems} seccion={seccion} onSeleccion={setSeccion}/> */}
         </DropdownContext.Provider>
-      <main className="flex-grow-1 p-3">
+      <main className={`flex-grow-1 p-3 px-0 ${navFix}`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

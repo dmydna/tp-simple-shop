@@ -31,7 +31,7 @@ export default function Login({ onHideModal}){
             <div className="d-flex align-items-center justify-content-between mb-4">
                <h1 className="h3 m-0">Iniciar sesión</h1>
                {onHideModal ?
-                <i onClick={() => onHideModal(false)} className="h3 bi bi-x m-0"></i> 
+                <i onClick={() => onHideModal(false)} className="h3 bi bi-x m-0 hover-icon"></i> 
                 : ''}
             </div>
 

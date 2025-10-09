@@ -54,7 +54,7 @@ function ProductBuyModal({show,onHide}) {
         (
           <>
             <div className="d-flex">
-               <img1 width={200} className="mx-auto" src={Img2}/>
+               <img width={200} className="mx-auto" src={Img2}/>
             </div>
             <p className="text-center"> 
                 Tu orden de comprar fue registrada con exito.
@@ -65,7 +65,7 @@ function ProductBuyModal({show,onHide}) {
         (
          <>
            <div className="d-flex">
-             <img1 width={200} className="mx-auto" src={Img3}/>
+             <img width={200} className="mx-auto" src={Img3}/>
            </div>
            <p className="text-center"> 
              En breve nos comunicaremos para coordinar los detalles. 
@@ -76,7 +76,7 @@ function ProductBuyModal({show,onHide}) {
         (
          <>
            <div className="d-flex">
-               <img1 width={200} className="mx-auto" src={Img4}/>
+               <img width={200} className="mx-auto" src={Img4}/>
            </div>
            <p className="text-center"> 
              Puedes hacer seguimiento de tu compra en todo momento. 
@@ -86,7 +86,7 @@ function ProductBuyModal({show,onHide}) {
         {step === 4 && (
          <>
            <div className="d-flex">
-             <img1 width={200} className="mx-auto" src={Img1}/>
+             <img width={200} className="mx-auto" src={Img1}/>
            </div>
            <p className="text-center">
              Gracias por tu compra. Vuelve pronto.
