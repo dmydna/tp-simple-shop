@@ -1,23 +1,25 @@
 import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useCarrito } from "../contexts/CartContext";
+import { useCart } from "../contexts/CartContext";
 import CarritoInput from "./CartInput";
 
 function CarritoItem(){
 
     const cardItemStyle = { borderLeft: "0", borderRight: "0", borderTop: "0" }
 
-    const {productosEnCarrito} = useCarrito()
+    const {cartItems} = useCart()
 
     const cardLinkStyle = { overflow: "hidden"}
     return (
         <>
-        {productosEnCarrito.map((item, index) => (
+        {cartItems.map((item, index) => (
             <Card style={cardItemStyle} key={item.id} className="my-2 border-0">
               <Row className="g-0" md={4}>
                 <Col className="col-md-4">
-                  <Card.Img  src={item.thumbnail} />
+                  <Card.Img 
+                   style={{ objectFit: 'contain', height: 160 }}
+                   src={item.thumbnail} />
                 </Col>
                 <Col className="col-md-6">
                   <Card.Body>
@@ -38,7 +40,7 @@ function CarritoItem(){
                   </Card.Body>
                 </Col>
               </Row>
-              <hr className={`${index ==  productosEnCarrito.length - 1 ? 'd-none' : ''}`}/>
+              <hr className={`${index ==  cartItems.length - 1 ? 'd-none' : ''}`}/>
             </Card>
 
           ))}

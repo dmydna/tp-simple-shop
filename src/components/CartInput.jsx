@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { useCarrito } from "../contexts/CartContext";
+import { useCart } from "../contexts/CartContext";
 
 function CarritoInput({ producto }) {
 
 
-  const { eliminarProductoCarrito,
-      decrementarProductoCarrito, 
-      incrementarProductoCarrito,
-  } = useCarrito();
+  const { removeFromCart,
+      decreaseCartItem, 
+      increaseCartItem,
+  } = useCart();
 
   const [cantidad, setCantidad] = useState(!producto.cantidad ? 0 : producto.cantidad)
 
@@ -17,7 +17,7 @@ function CarritoInput({ producto }) {
     setCantidad((prev)=> prev >= 0 && prev <= producto.stock ? 
     (!producto.cantidad ? prev : producto.cantidad) + 1 : 0 )
     if(producto.cantidad){
-      incrementarProductoCarrito(producto);
+      increaseCartItem(producto);
     } 
   }
 
@@ -25,7 +25,7 @@ function CarritoInput({ producto }) {
     setCantidad((prev)=> prev > 0 && prev <= producto.stock ?  
     (!producto.cantidad ? prev : producto.cantidad)  - 1 : 0 )
     if(producto.cantidad){
-      decrementarProductoCarrito(producto);
+      decreaseCartItem(producto);
     }
 
   }
@@ -33,7 +33,7 @@ function CarritoInput({ producto }) {
   const elimItem = (producto) => {
     setCantidad(0)
     if(producto.cantidad || producto.cantidad == 0){
-      eliminarProductoCarrito(producto)
+      removeFromCart(producto)
     }
   }
 
@@ -57,7 +57,7 @@ function CarritoInput({ producto }) {
         type="text"
         value={cantidad}
         onInput={e => actCarrito(producto,e)}
-        className="text-center"
+        className="text-center no-focus"
       ></Form.Control>
       <Button
         onClick={() => incCarrito(producto)}

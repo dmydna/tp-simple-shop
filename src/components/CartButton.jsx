@@ -1,8 +1,9 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import HoverWrapper from "../contexts/HoverWrapper";
-import { useCarrito } from "../contexts/CartContext";
 import { Button } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCart } from "../contexts/CartContext";
+import { HoverProvider } from "../contexts/HoverContext";
+import HoverWrapper from "../contexts/HoverWrapper";
 
 function CartButton(){
 
@@ -14,10 +15,11 @@ function CartButton(){
         navigate(-1) || navigate('/') : navigate('/carrito')
       }
 
-    const {contadorCarrito} = useCarrito()
+    const {cartCount} = useCart()
 
 
     return(
+      <HoverProvider>
         <HoverWrapper id="carrito-btn">
         {(isHovered) => (
          <Button 
@@ -27,19 +29,21 @@ function CartButton(){
               isHovered && location.pathname == '/carrito' ?
               'x' : 'cart3'  }`}>
             </i>
-            {contadorCarrito == 0 ? '' : 
+            {cartCount == 0 ? '' : 
             (isHovered && location.pathname == '/carrito' ?
                 '' : 
             <span className={`position-absolute bg-dark rounded-circle`}
                style={{width:18, height:18}}>
               <p style={{zIndex: 999, fontSize: 13}} className="text-white">
-                {contadorCarrito}
+                {cartCount}
               </p>
             </span>  
             )}
         </Button>
         )}
-      </HoverWrapper>
+        </HoverWrapper>
+      </HoverProvider>
+        
     )
 }
 

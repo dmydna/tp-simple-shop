@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Modal,Card, Container } from "react-bootstrap";
+import { Button, Card, Container, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CarritoItem from "../components/CartItem";
-import PurchaseSuccessModal from "../components/PurchaseSuccessModal";
+import ProductBuyModal from "../components/ProductBuyModal";
 import { useWindowsHeight } from "../components/useWindowSize";
-import { useCarrito } from "../contexts/CartContext";
+import { useCart } from "../contexts/CartContext";
 import emptyCaryImg from "/src/assets/empty-cart.png";
 
 function CartModal({show,onHide}) {
@@ -12,11 +12,11 @@ function CartModal({show,onHide}) {
 
   const height = useWindowsHeight()
 
-  const { limpiarCarrito, 
-      setTotalCarrito, 
-      totalCarrito,
-      productosEnCarrito 
-  } = useCarrito()
+  const { clearCart, 
+      setTotalPrice, 
+      totalPrice,
+      cartItems 
+  } = useCart()
 
   const [modalShow, setModalShow] = useState(false)
 
@@ -31,7 +31,7 @@ function CartModal({show,onHide}) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {productosEnCarrito.length != 0 ? 
+          {cartItems.length != 0 ? 
           <div className="">Carrito</div> : 
           <div className="">Carrito Vacio</div>}
         </Modal.Title>
@@ -40,22 +40,22 @@ function CartModal({show,onHide}) {
 
       {
 
-productosEnCarrito.length != 0 ? 
+cartItems.length != 0 ? 
     <Container className="mt-4 p-0">
       <CarritoItem/>
       <div className="my-3 mx-2 d-flex flex-row-reverse">
           <Button
             type="button"
             className="btn btn-danger"
-            onClick={() => limpiarCarrito()}
+            onClick={() => clearCart()}
           >
             <i className="bi bi-trash3" /> Vaciar carrito
           </Button>
       </div>
 
-      <PurchaseSuccessModal 
+      <ProductBuyModal 
         show={modalShow} 
-        onHide={() =>{ setModalShow(false); limpiarCarrito() }}
+        onHide={() =>{ setModalShow(false); clearCart() }}
       />
     </Container> :
   <Container className="py-5 mt-5 d-flex justify-content-center align-items-center">
@@ -80,12 +80,12 @@ productosEnCarrito.length != 0 ?
       </Modal.Body>
       <Modal.Footer>
       <Container className="p-0 m-0">
-        {productosEnCarrito.length != 0 ?
+        {cartItems.length != 0 ?
 
           <Card>
             <Card.Body className="d-flex">
               <Card.Text className="h3"> Total</Card.Text>
-              <Card.Text className="h3 ms-auto me-1">$ {totalCarrito.toFixed(2)}</Card.Text>
+              <Card.Text className="h3 ms-auto me-1">$ {totalPrice.toFixed(2)}</Card.Text>
             </Card.Body>
             <Button className="m-2" variant="primary" type="submit"
                   onClick={() => { setModalShow(true) }}
