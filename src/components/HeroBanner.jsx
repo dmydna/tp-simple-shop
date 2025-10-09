@@ -7,17 +7,20 @@ function HeroBanner({image, children, variant}){
    const textColor = `text-${variant && variant === 'white' || variant === 'light' ? 'dark' : 'light'}`
 
     return(
-        <Container className={`py-3 ${bgColor}`}>
-        <Row className={`${bgColor}`}>
-          <div className="p-md-5 p-2 col-lg-3 col-md-4 col-sm-6 col-12 order-md-2">
+        <Container className={`p-5 ${bgColor}`}>
+        <div className={`${bgColor} d-flex justify-content-between
+        flex-wrap gap-5`}>
+        {/* col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 order-lg-2 */}
+          <div className="order-md-2 flex-fill flex-md-grow-0">
             <img  className="d-block mx-auto" width={130} src={image} alt="" />
           </div>
-          <div className={`col-lg-9 col-md-4 col-sm-6 col-12 order-md-1
-          p-5 ${textColor}`}>
+          <div 
+          // col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 order-lg-1
+            className={`order-md-1 flex-fill pt-md-3 pt-0  ${textColor}`}>
                 {children}
           </div>
 
-        </Row>
+        </div>
       </Container> 
     )
 }
