@@ -1,18 +1,18 @@
 import React, { useContext, useState } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Navbar } from "react-bootstrap";
 import DropdownContext from "react-bootstrap/esm/DropdownContext";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useScrollY } from "../contexts/useWindowScroll";
 import CartButton from "./CartButton";
 import ContactModal from "./ContactModal";
 import DropdownLogin from "./LoginDropdown";
 import LoginModal from "./LoginModal";
 import Logo from "./Logo";
+import MobileMenu from "./MobileMenu";
+import NavItems from "./NavItems";
 import SearchBarOverlay from "./SearchOverlay";
 import { useWindowsWidth } from "./useWindowSize";
-import { useScrollY } from "../contexts/useWindowScroll";
-import LoginMenu from "./LoginMenu";
-
 
 function NavHeader({onSeleccion, items}) {
 
@@ -45,16 +45,33 @@ function NavHeader({onSeleccion, items}) {
     className={`${scrollY >= 100 ? 'py-0 shadow-sm' : 'py-3'} fixed-top px-0 px-sm-3 transition` } 
     >
       <Container className="align-items-center"> 
+        <MobileMenu>
+          {({show, handleClose})=>(
+             <NavItems  
+               show={show} 
+               setShow={handleClose} 
+               items={items} 
+               onSeleccion={onSeleccion} 
+               setExpanded={setExpanded}
+               className={'fw-semibold fs-5 fs-md-6 py-2 m-1'}
+             />
+          )}
+
+        </MobileMenu>
         <dir class="m-0 p-0">
-          <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3 border-0"/> 
+          {/* <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3 border-0"/>  */}
           <Logo/>
         </dir>
         <div className={`d-flex align-items-center order-md-2`}>
           <SearchBarOverlay/>
           {isAuth ?  
-            <DropdownLogin/> : 
+            <DropdownLogin className="d-none d-md-block" /> : 
             <>
-             <i onClick={()=>  onHideModal(true)} class="h3 bi bi-person-fill hover-icon m-0"></i>
+             <i 
+              onClick={()=>  onHideModal(true)} 
+              class="h3 bi bi-person-fill hover-icon m-0 d-none d-md-block"
+             >
+             </i>
              <LoginModal show={showModal} onHide={onHideModal}/> 
             </>
           }
@@ -63,18 +80,12 @@ function NavHeader({onSeleccion, items}) {
         </div>
         <ContactModal show={showModalContact} onHide={onHideModalContact}/>
         <Navbar.Collapse className="order-md-1" id="basic-navbar-nav">
-
           {/* <LoginMenu /> */}
-          <Nav className="me-auto w-100 ms-5 ps-4 align-items-left">
-            {items.map((item) =>
-              <Nav.Link 
-                as={Link} to={ item == "Contacto" ? '':  item.toLowerCase()} key={item} 
-                onClick={() => { item == "Contacto" ? onHideModalContact(true) : onSeleccion(item); setExpanded(false) }}
-              >
-                {item}
-              </Nav.Link>
-            )}
-          </Nav>
+          <NavItems 
+            items={items} 
+            onSeleccion={onSeleccion} 
+            onHideModalContact={onHideModalContact}
+          />
         </Navbar.Collapse>
       </Container>
     </Navbar>

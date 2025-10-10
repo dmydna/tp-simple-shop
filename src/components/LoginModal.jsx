@@ -3,6 +3,7 @@ import { Button, Modal,Card, Container } from "react-bootstrap";
 
 
 import Login from "../pages/Login";
+import LoginForm from "./LoginForm";
 
 
 
@@ -17,7 +18,12 @@ function LoginModal({show, onHide}) {
     centered
     >
       <Modal.Body style={{ maxHeight: "calc(80vh)", overflowY: "auto", boxSizing: 'border-box' }}>
-        <Login showModal={show} onHideModal={onHide} />
+       <LoginForm style={{maxWidth: 400, minWidth:300}}>
+         <div className="d-flex align-items-center justify-content-between mb-4">
+           <h1 className="h3 m-0">Iniciar sesión</h1>
+           <i onClick={() => onHide(false)} className="h3 bi bi-x m-0 hover-icon"></i> 
+         </div>
+       </LoginForm>
       </Modal.Body>
     </Modal>
   );

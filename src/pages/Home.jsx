@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -22,11 +22,16 @@ import Img11 from "../assets/paper-bag.png"
 
 function Home() {
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
   return (
   <>
      {/** Home Banner */}
 
-    <HeroBanner image={Img3} variant="light">
+    <HeroBanner image={Img3} variant="white">
       <h1> Bienvenido a la Aplicacion </h1>
       <h1> de <b>Simple SHOP</b> </h1>
       <p>Una tienda original c-:</p>    
@@ -34,9 +39,9 @@ function Home() {
 
     {/** Features */}
 
-    <div className="py-3 rounded bg-gradient-0">
+    <div className="py-3 bg-gradient-0">
       <Container>
-       <Row className="g-4 py-3 mb-3 container">
+       <Row className="g-4 py-3 mb-3">
           <CardFeature
             title='Compra Protegida'
             image= {Img5} 

@@ -8,14 +8,14 @@ import Login from '../pages/Login';
 import { useWindowsWidth } from "./useWindowSize";
 
 
-function DropdownLogin() {
+function DropdownLogin({className}) {
 
   const width = useWindowsWidth()
 
   const loginRedirect = () => width < 445 && !isAuth ? navigate('/login') : '' 
   const { user, token, login, logout } = useAuth();
   const isAuth = token && user ? true : false
-  const {isActiveDropdown , setIsActiveDropdown} = useContext(DropdownContext)
+  const {isActive , setIsActive} = useContext(DropdownContext)
   
   const navigate = useNavigate();
 
@@ -26,44 +26,62 @@ function DropdownLogin() {
 
 
   return (
-    <Dropdown 
-     align="end"  
-     onClick={ loginRedirect } 
-     onToggle={(isOpen) => setIsActiveDropdown(isOpen) } 
-    >
-      <Dropdown.Toggle variant="ligth" id="dropdown-basic"  >
-        <i className='bi-person-circle h4 hover-icon'></i>
-        {/* {"  "}{isAuth && ( width <= 800 ? '' : user )} */}
-      </Dropdown.Toggle>
-      <Dropdown.Menu className={ !isAuth && width < 445 ? 'd-md-none' : '' }
-        style={{zIndex: '99999999'}}
+      <Dropdown
+        align="end"
+        className={className}
+        onClick={loginRedirect}
+        onToggle={(isOpen) => setIsActive(isOpen) }
       >
-        {/* Enlaces que solo se muestran si el usuario está autenticado */}
+        <Dropdown.Toggle
+          id="user-dropdown"
+          variant="light"
+          className="border-0 bg-transparent p-0"
+
+        >
+          <i className="bi bi-person-circle h4 hover-icon m-0"></i>
+        </Dropdown.Toggle>
+  
         {isAuth && (
-         <>
-           <Dropdown.Item style={{borderBottom: "1px solid rgb(0 0 0 / 15%)"}} as={Link} to={`/perfil/${user}`}>
-             <b className="fw-bold">User01:</b>
-             <br/>
-             <p className="m-0 text-secondary">{user}</p>
-           </Dropdown.Item >
-           <Dropdown.Item  as={Link} to={`/perfil/${user}`}>
-           <i class="bi bi-person me-1 hover-icon"></i> Perfil
-           </Dropdown.Item >
-           <Dropdown.Item  as={Link} to="/admin">
-           <i class="bi bi-gear me-1"></i> Dashboard
-           </Dropdown.Item>
-         </>
+          <Dropdown.Menu
+            className={`shadow-sm ${width < 445 ? "d-md-none" : ""}`}
+            style={{ minWidth: "220px" }}
+          >
+            {/* Perfil info */}
+            <Dropdown.Item
+              as={Link}
+              to={`/perfil/${user}`}
+              className="border-bottom py-2"
+            >
+              <div>
+                <b className="fw-semibold">{user}</b>
+                <p className="m-0 small text-secondary">Ver perfil completo</p>
+              </div>
+            </Dropdown.Item>
+  
+            {/* Links de navegación */}
+            <Dropdown.Item as={Link} to={`/perfil/${user}`}>
+              <i className="bi bi-person me-2"></i> Perfil
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/admin">
+              <i className="bi bi-gear me-2"></i> Dashboard
+            </Dropdown.Item>
+  
+            <Dropdown.Divider />
+  
+            {/* Logout */}
+            <Dropdown.Item as="div" className="text-center">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={handleLogout}
+                className="w-100"
+              >
+                <i className="bi bi-box-arrow-right me-1"></i> Cerrar sesión
+              </Button>
+            </Dropdown.Item>
+          </Dropdown.Menu>
         )}
-         {/* Mostrar botón de login o logout según autenticación */}
-         {!isAuth ? 
-         (<Login />) : 
-         (<Dropdown.Item>
-            <Button  variant="primary" onClick={handleLogout}>
-            <i class="bi bi-box-arrow-in-left"></i> Cerrar sesión
-            </Button>
-          </Dropdown.Item>)}
-      </Dropdown.Menu>
-    </Dropdown>
+      </Dropdown>
   );
 }
 

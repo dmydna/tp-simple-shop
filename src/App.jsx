@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Nav  from "./components/Nav";
@@ -22,11 +22,13 @@ import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/ProductList";
 import { ModalContext } from "./contexts/ModalContext";
 
+useLocation
+
 import AdminProductTable from "./pages/AdminProductTable";
 
 function App() {
  
-  const [isActiveDropdown, setIsActiveDropdown] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const [showModal, onHideModal] = useState(false);
   const navItems = ["Inicio", "Productos", "Contacto"];
   const [seccion, setSeccion] = useState("Inicio");
@@ -34,12 +36,25 @@ function App() {
   const navFix = 'mt-5 pt-5';
 
 
+  const location = useLocation()
+
+  useEffect(()=>{
+    if(location.pathname.startsWith('/contacto') || location.pathname.startsWith('/login') ) 
+     {
+      document.querySelector('body')?.classList.add('bg-gradient-0')
+    }else{
+      document.querySelector('body')?.classList.remove('bg-gradient-0')
+    }
+  },[location])
+
+
+
   return (
     <AuthProvider>
     <ProductosProvider>
     <CarritoProvider>
     <div className="d-flex flex-column min-vh-100 pt-3">
-        <DropdownContext.Provider value={{isActiveDropdown, setIsActiveDropdown }}>
+        <DropdownContext.Provider value={{isActive, setIsActive }}>
            <NavHeader  items={navItems} onSeleccion={setSeccion} />
         {/* <Header />
         <Nav items={navItems} seccion={seccion} onSeleccion={setSeccion}/> */}

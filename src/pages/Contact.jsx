@@ -1,33 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState }  from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import ContactForm from '../components/ContactForm';
+import { useLocation } from 'react-router-dom';
 
-function Contact({onHideModal}) {
+function Contact() {
+
+  useEffect(() => {
+    const scrollX = (document.body.scrollWidth - window.innerWidth) / 2;
+    const scrollY = (document.body.scrollHeight - window.innerHeight) / 2;
+    window.scrollTo(scrollX, scrollY);
+  }, []);
+
   return (
-    <Container  className="my-5" style={{maxWidth: 400, minWidth:300}}>
+    <ContactForm className={'bg-light rounded p-5'} style={{maxWidth: 500, minWidth:400}}>
       <div className="d-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 m-0">Contacto</h1>
-        {onHideModal ?
-        <i onClick={() => onHideModal(false)} className="h3 bi bi-x m-0 hover-icon"></i> 
-        : ''}
       </div>
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Nombre</Form.Label>
-          <Form.Control type="text" placeholder="Tu nombre" />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="tu@email.com" />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Mensaje</Form.Label>
-          <Form.Control as="textarea" rows={3} />
-        </Form.Group>
-        <Button variant="primary" type="submit"  className="w-100 my-2" >
-          Enviar
-        </Button>
-      </Form>
-    </Container>
+    </ContactForm>
   );
 }
 

@@ -11,6 +11,11 @@ import BuyNowButton from "../components/BuyNowButton";
 
 function Products() {
 
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Agregar al Carrito, actualiza stock e incrementa producto en el Carrito
 
   const categoryMatch = useMatch("/productos/category/:category");

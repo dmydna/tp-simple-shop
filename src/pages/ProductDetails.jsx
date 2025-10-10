@@ -9,6 +9,10 @@ import { useProducts } from "../contexts/ProductContext";
 
 function ProductDetails(){
   
+   useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+  
 
 
     const name = decodeURIComponent(useParams().name) 
