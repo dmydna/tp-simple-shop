@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import HeroBanner from "../components/HeroBanner";
@@ -23,7 +23,7 @@ import Img11 from "../assets/paper-bag.png"
 function Home() {
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, []);
 
 
@@ -34,13 +34,17 @@ function Home() {
     <HeroBanner image={Img3} variant="white">
       <h1> Bienvenido a la Aplicacion </h1>
       <h1> de <b>Simple SHOP</b> </h1>
-      <p>Una tienda original c-:</p>    
+      <div className="d-flex align-items-center gap-2">
+        <p>Una tienda original</p>
+        <p style={{ fontFamily: "'Noto Emoji', sans-serif", fontSize: "1.5rem"}}> 😉 </p>    
+      </div>
+      
     </HeroBanner>
 
     {/** Features */}
 
-    <div className="py-3 bg-gradient-0">
-      <Container>
+    <div className="bg-gradient-0">
+      <Container fluid="xl">
        <Row className="g-4 py-3 mb-3">
           <CardFeature
             title='Compra Protegida'
@@ -65,50 +69,51 @@ function Home() {
        </Row>
      </Container>
    </div>
-   <Container>
+   <Container fluid="xl">
 
       {/** Product Ilands */}
 
-      <Row className="my-3 mx-0 py-3 mb-3">
-        <ProductSection filterFn={(p)=> p.category == "beauty"} count={4}>
-          <p className="pb-0 m-0 fs-4 fw-medium">Lo mas visto</p>
+      <Row className="g-0">
+        <ProductSection className="border p-4 my-3" filterFn={(p)=> p.category == "beauty"} count={4}>
+          <p className="fs-4 fw-medium pb-0 m-0">Lo mas visto</p>
           <Link to={'/productos'} className="text-decoration-none fw-bold">ver mas</Link>
         </ProductSection>
       </Row>
   
 
-      <div className="row g-3"> 
-       <div className="col-lg-4 col-md-12">
-         <ProductSection filterFn={(p)=> p.category === "beauty"} count={1}>
-           <p className="pb-0 m-0 fs-4 fw-medium">Oferton del día</p>
+      <Row className="g-0"> 
+      <Col className="p-0 my-3" md={12} lg={4}>
+         <ProductSection className="border p-4 m-0 me-lg-3" filterFn={(p)=> p.category === "beauty"} count={1}>
+           <p className="fs-4 fw-medium pb-0 m-0 ">Oferton del día</p>
            <Link to="/productos" className="text-decoration-none fw-bold">ver más</Link>
          </ProductSection>
-       </div>
+       </Col>
 
-       <div className="col-lg-8 col-md-12">
-         <ProductSection filterFn={(p)=> p.category === "furniture"} count={3}>
-           <p className="pb-0 m-0 fs-4 fw-medium">Para llevar más de uno</p>
+       <Col className="p-0 my-3" md={12} lg={8}>
+         <ProductSection className="border p-4" filterFn={(p)=> p.category === "furniture"} count={3}>
+           <p className="fs-4 fw-medium pb-0 m-0 ">Para llevar más de uno</p>
            <Link to="/productos" className="text-decoration-none fw-bold">ver más</Link>
          </ProductSection>
-      </div>
-     </div>
+       </Col>
+
+     </Row>
 
       
       {/** Carousels  */}
 
-  <Row className="my-3 mx-0 py-3 mb-3">
-    <ProductCarousel filterFn={(p)=> p.category == "beauty"} col={3} >
-      <h3 className="pb-0 m-0 fs-4 fw-medium">Con envio gratis</h3>
-      <Link to={'/productos/category/groceries'} 
-        className="text-decoration-none fw-bold">
-        ver mas
-      </Link>  
+  <Row className="g-0">
+    <ProductCarousel className="border mx-0 my-3 p-4" filterFn={(p)=> p.category == "beauty"} col={3} >
+       <h3 className="fs-4 fw-medium pb-0 m-0 ">Con envio gratis</h3>
+       <Link to={'/productos/category/groceries'} 
+         className="text-decoration-none fw-bold">
+         Ver mas
+       </Link>  
     </ProductCarousel>
   </Row>
 
-  <Row className="my-3 mx-0  py-3 mb-3">
-    <ProductCarousel filterFn={(p)=> p.discountPercentage >= 12} col={4}>
-      <h3 className="pb-0 m-0 fs-4 fw-medium">Ofertas</h3>
+  <Row className="g-0">
+    <ProductCarousel className="border mx-0 my-3 p-4" filterFn={(p)=> p.discountPercentage >= 12} col={4}>
+      <h3 className="fs-4 fw-medium pb-0 m-0 ">Ofertas</h3>
       <Link to={'/productos/category/groceries'} 
         className="text-decoration-none fw-bold">
         ver mas
@@ -119,13 +124,13 @@ function Home() {
   
   {/** Card Promos */}
 
-  <Row className="my-3 gap-3 mx-0 py-3 mb-3">
-    <CardPromo Img={Img1} variant="primary" to={'/products'} cta="comprar ahora">
+  <Row className="g-0">
+    <CardPromo className="my-3 me-md-1 me-0" Img={Img1} variant="primary" to={'/productos/category/beauty'} cta="comprar ahora">
         <p className="mb-1">6 cuotas sin interés</p>
         <p className="h5 fw-bold mb-1">HASTA 40% OFF EN</p>
         <p className="h5 fw-bold">PERFUMES Y BELLEZA</p>
     </CardPromo>
-    <CardPromo Img={Img2} variant="success" to={'/products'} cta="ver ofertas">
+    <CardPromo className="my-3 ms-md-1 ms-0" Img={Img2} variant="success" to={'/productos/category/furniture'} cta="ver ofertas">
        <p className="mb-1">6 cuotas sin interés</p>
        <p className="h5 fw-bold mb-1">2X1 EN ARTICULOS</p>
        <p className="h5 fw-bold">PARA EL HOGAR</p>

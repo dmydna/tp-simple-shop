@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Alert, Card } from "react-bootstrap";
+import { Form, Button, Container, Alert, Card, Row, Col } from "react-bootstrap";
 import React, { Children, useContext, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useUIContext } from "../contexts/UIContext";
 
 
  function LoginForm({ children, style, className}){
 
+
+    const {showLogin, onHideLogin} = useUIContext()
 
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
@@ -20,13 +23,15 @@ import { useAuth } from "../contexts/AuthContext";
         if (login(user, pass)) 
           {
           navigate("/perfil/admin");
+          onHideLogin(false)
+
         } else {
           setError("Usuario o contraseña inválidos");
         }
       };
 
     return (
-        <Container className={`my-5 ${className}`} style={style}>
+        <Col className={`${className} mx-auto`} style={style}>
                 {children}
             {error && <Alert variant="danger">{error}</Alert>}
             <Form  onSubmit={handleSubmit}>
@@ -50,14 +55,15 @@ import { useAuth } from "../contexts/AuthContext";
                     />
                 </Form.Group>
                 <Button variant="primary" type="submit" className="w-100 my-2" >
-                    Acceder
+                      Acceder
                 </Button>
                 <div className="d-flex justify-content-center m-2">
-                <p className="me-2">¿Aun no tienes una cuenta?</p> <p className="text-primary fw-bold">Registrarme</p>
+                   <p className="me-2">¿Aun no tienes una cuenta?</p>
+                   <p className="text-primary fw-bold">Registrarme</p>
                 </div>
 
             </Form>
-        </Container>
+        </Col>
     )
 
 

@@ -1,11 +1,12 @@
 import React  from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 
 function ContactForm({children, style, className}) {
 
   return (
-    <Container  className={`my-5 ${className}`} style={style}>
-        {children}
+    <>
+    <Col className={`${className} mx-auto`} style={style}>
+      {children}
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Nombre</Form.Label>
@@ -23,7 +24,8 @@ function ContactForm({children, style, className}) {
           Enviar
         </Button>
       </Form>
-    </Container>
+    </Col>
+    </>
   );
 }
 

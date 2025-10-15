@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-function BuyNowButton({handle, variant, children}){
+function BuyNowButton({handle, variant, children, className}){
 
 
     return(
         <Button
-          className="m-2 rounded flex-fill"
+          className={`rounded flex-fill ${className}`}
           variant={variant}
           type="submit"
           onClick={handle}

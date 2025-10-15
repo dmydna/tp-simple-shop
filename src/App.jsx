@@ -20,16 +20,18 @@ import NotFound from "./pages/NotFound";
 import Perfil from "./pages/Perfil";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/ProductList";
-import { ModalContext } from "./contexts/ModalContext";
+import "./styles/index.css"
+
+
 
 useLocation
 
 import AdminProductTable from "./pages/AdminProductTable";
+import { UIProvider } from "./contexts/UIContext";
 
 function App() {
  
-  const [isActive, setIsActive] = useState(false);
-  const [showModal, onHideModal] = useState(false);
+
   const navItems = ["Inicio", "Productos", "Contacto"];
   const [seccion, setSeccion] = useState("Inicio");
 
@@ -53,12 +55,13 @@ function App() {
     <AuthProvider>
     <ProductosProvider>
     <CarritoProvider>
+    <UIProvider>
     <div className="d-flex flex-column min-vh-100 pt-3">
-        <DropdownContext.Provider value={{isActive, setIsActive }}>
-           <NavHeader  items={navItems} onSeleccion={setSeccion} />
+        
+
+     <NavHeader  items={navItems} onSeleccion={setSeccion} />
         {/* <Header />
         <Nav items={navItems} seccion={seccion} onSeleccion={setSeccion}/> */}
-        </DropdownContext.Provider>
       <main className={`flex-grow-1 p-3 px-0 ${navFix}`}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -112,8 +115,8 @@ function App() {
       </main>
       <Footer />
     </div>
+    </UIProvider>
     </CarritoProvider>
-    
     </ProductosProvider>
     
     </AuthProvider>

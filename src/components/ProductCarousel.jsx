@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import { useProducts } from '../contexts/ProductContext';
-import { Card,  Button } from 'react-bootstrap';
+import { Card,  Button, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useWindowsWidth } from './useWindowSize';
 import CardProduct from './CardProduct';
 
 
 
-function ProductCarousel({children, filterFn, col, borders, className}) {
+function ProductCarousel({children, filterFn, col, className}) {
 
   const [index, setIndex] = useState(0);
 
@@ -17,15 +17,17 @@ function ProductCarousel({children, filterFn, col, borders, className}) {
   };
   const { products, filtered } = useProducts()
 
-  //  copia local de filtered
-  const cfiltered = useMemo(()=>{
-     return products.filter(p => filterFn(p))
-  }, [products])
 
-  
   const [chunkSize, setChunkSize] = useState()
   const width = useWindowsWidth()
 
+  //  copia local de filtered
+  const cfiltered = useMemo(()=>{
+     return products.filter(p => filterFn(p))
+  }, [products, chunkSize])
+ 
+  
+   
   const [visibleProducts, setVisibleProducts] = useState(cfiltered);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ function ProductCarousel({children, filterFn, col, borders, className}) {
 
   return (
 
-    <div className={`${!borders ? 'border' : '' } ${className} rounded p-4 h-100`}>
+    <div className={`${className} rounded  h-100`}>
       <div className='d-flex justify-content-between'>
         <div>
          {children} {/* header */}
@@ -74,7 +76,7 @@ function ProductCarousel({children, filterFn, col, borders, className}) {
     indicators={false} variant="dark" activeIndex={index} onSelect={handleSelect}>
       {slides.map((group, index)=>(
           <Carousel.Item>
-          <div className="d-flex justify-content-around"> {/* Use flexbox for item arrangement */}
+          <div className="row d-flex justify-content-around"> {/* Use flexbox for item arrangement */}
             {group.map((p)=>(
               <CardProduct 
                 className={'border-0'} 

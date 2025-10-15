@@ -10,11 +10,11 @@ function CategoryNav({show}){
 
     return(
         <div className={`d-flex mb-2 flex-wrap ${show ? '': 'd-none' } `}>
-          <b className={`p-2 border mx-2 rounded px-3 mb-2  ${ location.pathname == '/productos' ? 'bg-primary' : '' } `}>
+          <b className={`p-2 border mx-2 rounded px-3 mb-2  
+            ${ location.pathname == '/productos' ? 'bg-primary' : '' } `}>
               <Link to={'/productos'} className={` text-decoration-none
-                ${location.pathname == '/productos' ? 'text-white' : ''}`}>
-                  {(location.pathname == '/productos' ? "#": <i class="bi bi-arrow-left"></i> )}
-                  
+                ${location.pathname == '/productos' ? 'text-white' : ''}`}
+              >  {(location.pathname == '/productos' ? "#": <i class="bi bi-arrow-left"></i> )}
               </Link></b>
          {[...new Set(products.map(p => p.category))].map(category => (
            <b className={`p-2 border mx-2 rounded mb-0 mb-2

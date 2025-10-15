@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -8,6 +8,12 @@ export function AuthProvider({ children })
 
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+
+  const isAuth = useMemo(()=>{
+    return token && user ? true : false
+  },[token, user])
+
+
 
    useEffect(() => 
     {
@@ -44,7 +50,7 @@ export function AuthProvider({ children })
   };
 
     return (
-    <AuthContext.Provider value={{ token, user, login, logout }}>
+    <AuthContext.Provider value={{ token, user, login, logout, isAuth }}>
       {children}
     </AuthContext.Provider>
   );

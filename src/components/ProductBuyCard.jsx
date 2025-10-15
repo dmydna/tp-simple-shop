@@ -23,6 +23,7 @@ function ProductBuyCard({ title, rating, ship, id, stock, price }) {
       </Card.Body>
       <InputGroup className="w-100 align-items-center gap">
         <BuyNowButton
+          className='m-2'
           variante='primary'
           handle={() => setModalShow(true)} 
         />

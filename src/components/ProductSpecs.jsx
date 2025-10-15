@@ -3,10 +3,12 @@ import {Table, Button, Form, InputGroup } from "react-bootstrap";
 
 
 
-function ProductSpecs({producto}) {
+function ProductSpecs({producto, children}) {
 
 
   return (
+    <>
+    {children}
     <Table striped bordered hover rounded>
       <tbody>
         <tr>
@@ -32,6 +34,8 @@ function ProductSpecs({producto}) {
         
       </tbody>
     </Table>
+    </>
+    
   );
 }
 

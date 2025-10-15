@@ -17,8 +17,8 @@ function LoginModal({show, onHide}) {
     aria-labelledby="contained-modal-title-vcenter"
     centered
     >
-      <Modal.Body style={{ maxHeight: "calc(80vh)", overflowY: "auto", boxSizing: 'border-box' }}>
-       <LoginForm style={{maxWidth: 400, minWidth:300}}>
+      <Modal.Body className="p-0">
+       <LoginForm className={'bg-light rounded p-5'} style={{maxWidth: 500}}>
          <div className="d-flex align-items-center justify-content-between mb-4">
            <h1 className="h3 m-0">Iniciar sesión</h1>
            <i onClick={() => onHide(false)} className="h3 bi bi-x m-0 hover-icon"></i> 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Navbar } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
-import DropdownLogin from "./LoginDropdown";
+import UserDropdown from "./UserDropdown";
 import Search from "./Search";
 import { useWindowsWidth } from "./useWindowSize";
 
@@ -40,7 +40,7 @@ function Header() {
         {(width >= 1300 ?  <Search /> : '' )} 
         <div className={`${ toggleBarraBusquedaActiva ? 'd-block w-100' : 'd-flex' } `}>
           <div className={`${toggleBarraBusquedaActiva ? 'd-none' : '' } `} >
-             {location.pathname != '/login' ? <DropdownLogin /> : '' }
+             {location.pathname != '/login' ? <UserDropdown /> : '' }
           </div>
           {(width < 1300 ?  < Search   toggle={toggleBarraBusqueda} setToggle ={setToggleBarraBusqueda} /> : '' )} 
         </div>

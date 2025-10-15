@@ -7,12 +7,12 @@ function CardFeature({title, image, text }){
   return(
        <Col key={title} xs={12} sm={6} md={4} lg={3}>
          <Card
-           className="h-100 text-center border hover-shadow transition-all"
+           className="h-100 text-center border hover-shadow transition"
            style={{ cursor: "pointer" }}
          >
          <div className="p-3">
            <Card.Title 
-             className="fw-semibold text-secondary fs-6 text-truncate mb-2"
+             className="fs-6 fw-semibold text-secondary text-truncate mb-2"
            >
              {title}
            </Card.Title>
@@ -27,7 +27,7 @@ function CardFeature({title, image, text }){
              />
            </div>
              <Card.Text 
-              className="mt-3 text-muted small"
+              className="text-muted small mt-3"
              >
               {text}
              </Card.Text>

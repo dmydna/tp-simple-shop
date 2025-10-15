@@ -1,20 +1,27 @@
 import React from "react";
-import {Nav} from "react-bootstrap"
+import { Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useUIContext } from "../contexts/UIContext";
 
-function NavItems({items, onSeleccion ,onHideModalContact, setShow, show, className}){
+function NavItems({items, onSeleccion, className}){
+
+  const navigate = useNavigate()
+
+    const {onHideContact, onHideMenu, showMenu} = useUIContext()
+
 
     const handleContact = () =>{ 
-      show == null ? 
-      onHideModalContact(true) : 
+      !showMenu ? 
+      onHideContact(true) : 
       navigate('/contacto'), 
-      setShow(false)
+      onHideMenu(false)
     }
     const handleClick = (item) => {  
       onSeleccion(item) ;
-      setShow(false)
+      showMenu &&
+      onHideMenu(false)
     }
-    const navigate = useNavigate()
+  
     return(
         <Nav className="me-auto w-100 align-items-left">
         {items.map((item) =>

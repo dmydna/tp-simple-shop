@@ -27,13 +27,12 @@ function ProductSection({children, filterFn, count, className, borders}){
 
 
     return(
-      <div className={`${!borders ? 'border' : '' } ${className} rounded p-4 h-100`}>
+      <div className={`${className} rounded  h-100 p-4`}>
         <div className='row'>
           {children}
         {cfiltered.map((p, i) => (
-          
             <CardProduct 
-              className={'border-0'} 
+              className={'border-0 m-0 p-0'} 
               id={p.id} 
               image={p.thumbnail} 
               title={p.title} 

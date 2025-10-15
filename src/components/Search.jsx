@@ -49,7 +49,8 @@ function Search({toggle, setToggle}){
         
         <Form
           onSubmit={handleSubmit}
-          className={`w-100 ${ !toggle && width < 1300 ? "d-none" : "" }  bg-white border mx-2 rounded custom-input-group `}
+          className={`w-100 bg-white border mx-2 rounded custom-input-group  
+            ${ !toggle && width < 1300 ? "d-none" : "" } `}
         >
           
           <InputGroup>
@@ -100,7 +101,8 @@ function Search({toggle, setToggle}){
         <Button
           onClick={()=> setToggle((prev)=>!prev)}
           variant="ligth"
-          className={`bg-transparent bi d-xl-none  ${ toggle ? "bi-x-lg" : "bi-search"} border-0`}>
+          className={`bg-transparent  d-xl-none border-0 bi
+              ${ toggle ? "bi-x-lg" : "bi-search"} `}>
         </Button>
       </div>
     );

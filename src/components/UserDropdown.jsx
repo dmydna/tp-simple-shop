@@ -1,22 +1,22 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { DropdownContext } from "../contexts/DropdownContext";
-import Login from '../pages/Login';
-import { useWindowsWidth } from "./useWindowSize";
+import { useUIContext } from "../contexts/UIContext";
 
 
-function DropdownLogin({className}) {
+function UserDropdown({className}) {
 
-  const width = useWindowsWidth()
 
-  const loginRedirect = () => width < 445 && !isAuth ? navigate('/login') : '' 
-  const { user, token, login, logout } = useAuth();
-  const isAuth = token && user ? true : false
-  const {isActive , setIsActive} = useContext(DropdownContext)
+  const { user, isAuth, logout } = useAuth();
+  const {onHideLogin} = useUIContext()
+
+  const [isActive, setIsActive] = useState(false)
   
+  const handleToggle =  (isOpen) =>  isAuth ? setIsActive(isOpen) : onHideLogin(true)
+
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -26,24 +26,24 @@ function DropdownLogin({className}) {
 
 
   return (
+    <>
       <Dropdown
+        show={isActive}
         align="end"
         className={className}
-        onClick={loginRedirect}
-        onToggle={(isOpen) => setIsActive(isOpen) }
+        onToggle={handleToggle}
       >
         <Dropdown.Toggle
           id="user-dropdown"
           variant="light"
-          className="border-0 bg-transparent p-0"
+          className="border-0 bg-transparent p-0 no-caret"
 
         >
-          <i className="bi bi-person-circle h4 hover-icon m-0"></i>
+          <i className={`d-none d-md-block h3 bi bi-person${isAuth ? '-fill' : ''} hover-icon m-0`}></i>
         </Dropdown.Toggle>
-  
-        {isAuth && (
+
           <Dropdown.Menu
-            className={`shadow-sm ${width < 445 ? "d-md-none" : ""}`}
+            className={`shadow-sm`}
             style={{ minWidth: "220px" }}
           >
             {/* Perfil info */}
@@ -80,9 +80,9 @@ function DropdownLogin({className}) {
               </Button>
             </Dropdown.Item>
           </Dropdown.Menu>
-        )}
       </Dropdown>
+    </>
   );
 }
 
-export default DropdownLogin;
+export default UserDropdown;

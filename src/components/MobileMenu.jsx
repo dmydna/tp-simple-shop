@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Nav, Offcanvas } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useUIContext } from "../contexts/UIContext";
 
 
 function MobileMenu({children}) {
-  const [show, setShow] = useState(false);
+
+  const {showMenu, onHideMenu  } = useUIContext()
 
 
   const navigate = useNavigate()
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => onHideMenu(false);
+  const handleShow = () => onHideMenu(true);
 
-  const { user, token, login, logout } = useAuth();
-  const isAuth = token && user ? true : false
+  const { isAuth,  logout } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -21,8 +22,8 @@ function MobileMenu({children}) {
   };
 
   const handleLogin = () => {
-    show && 
-    setShow(false);
+    showMenu &&
+    handleClose()
     navigate('/login');
   }
 
@@ -31,8 +32,7 @@ function MobileMenu({children}) {
       <Button className="d-md-none" variant="light" onClick={handleShow}>
         <span class="navbar-toggler-icon"></span>
       </Button>
-
-      <Offcanvas show={show} onHide={handleClose}>
+      <Offcanvas show={showMenu} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
           {/* <Logo></Logo> */}
@@ -41,7 +41,7 @@ function MobileMenu({children}) {
         <Offcanvas.Body className="px-5">
         {!isAuth ? (
           <>
-          {children({ show, handleClose })}
+          {children}
 
           <div className="mt-5">
             <Button
@@ -83,7 +83,7 @@ function MobileMenu({children}) {
             ))}
           </Nav>
     
-          {children({ show, handleClose })}
+          {children}
     
           <Button
             variant="danger"

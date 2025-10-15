@@ -7,12 +7,12 @@ function CardProduct({title, image ,price, stock, id, children, className, cols}
 
 
     return(
-        <Col className={`d-flex flex-column 
+        <Col className={`d-flex flex-column p-0
           ${cols ? cols : 'col-lg-3 col-md-4 col-sm-6 col-12'}`}
         >
-           <Card className={`row m-2 text-decoration-none ${className}`}>
+           <Card className={`${className || 'm-2'}`}>
               <Link 
-                className="text-decoration-none text-reset"
+                className="text-decoration-none text-reset p-0"
                to={"/productos/details/" + encodeURIComponent(title)}
               >
               <Card.Img   src={image}
@@ -24,17 +24,16 @@ function CardProduct({title, image ,price, stock, id, children, className, cols}
               />
               <Card.Body>
                 <Card.Title 
-                    className={`fs-6 fw-semibold mb-2 text-truncate-2 hover-link`}
+                    className={`text-truncate-2 hover-link mb-2 fs-6 fw-semibold `}
                     style={{
                       height: "3.2rem", 
                       overflow: "hidden", 
                       textDecoration: "none", 
-                      fontWeight: "bold" 
                     }}
                 >
                    {title}
                 </Card.Title>
-                <Card.Text className="h4 fw-bold text-success mb-1">
+                <Card.Text className="fs-4 fw-bold text-success mb-1">
                   $ {price || "N/A"}
                 </Card.Text>
                 <Card.Text className="small fw-medium text-secondary">
@@ -42,7 +41,7 @@ function CardProduct({title, image ,price, stock, id, children, className, cols}
                 </Card.Text>
               </Card.Body>
               </Link>
-              <div className="p-2 d-flex">
+              <div className="d-flex p-2">
                 {children}
               </div>
             </Card>

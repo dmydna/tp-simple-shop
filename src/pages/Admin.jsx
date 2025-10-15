@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Admin(){
     return (
-        <Container className="mt-4">
+        <Container fluid="xl" className="mt-4 px-4 px-sm-4 px-md-4 px-lg-5">
             <h2>Panel de Administracion</h2>
             <p>Acceso exclusivo para usuarios autentificados.</p>
         

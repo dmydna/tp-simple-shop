@@ -68,7 +68,7 @@ function Products() {
 
  
   return (
-    <Container className="mt-2 mb-5 pb-5 bg-white rounded">
+    <Container fluid="xl" className="bg-white rounded mt-2 mb-5 pb-5">
       { <>
        <CategoryNav show={showCategoryNav} />
        <div className="w-100 d-flex  align-items-center justify-content-between">
@@ -80,7 +80,7 @@ function Products() {
       <Row>
         <span className="mb-5">{meta.message}</span>
         {productosVisibles.map((p) => (  
-          <CardProduct className={'border'}
+          <CardProduct className={'border m-2'}
             id={p.id}
             image={p.thumbnail}
             title={p.title}
