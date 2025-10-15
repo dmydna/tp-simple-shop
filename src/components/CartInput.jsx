@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useCart } from "../contexts/CartContext";
 
-function CarritoInput({ producto }) {
+function CarritoInput({ producto, className }) {
 
 
   const { removeFromCart,
@@ -41,28 +41,30 @@ function CarritoInput({ producto }) {
      e.target.value > 0 && e.target.value <= producto.stock ? setCantidad(e.target.value ): (!producto.cantidad ? prev : producto.cantidad)
   }
   return (
-    <InputGroup className="align-items-center" style={{ width: "160px" }}>
+    <InputGroup className={`small align-items-center border border-3 border-dark rounded px-1`} style={{ maxWidth: "110px" }}>
       <Button
+        className="btn p-1 border-0"
         onClick={() => elimItem(producto)}
-        variant="outline-secondary"
-      >
-        <i className="bi bi-trash3"></i>
+        variant
+      ><i className="bi bi-trash3"></i>
       </Button>
       <Button
+        className="btn p-1 border-0"
         onClick={() =>  decCarrito(producto) }
-        variant="outline-secondary"
-      >{" "}-{" "}
+        variant
+      ><i class="bi bi-dash-lg"></i>
       </Button>
       <Form.Control
         type="text"
         value={cantidad}
         onInput={e => actCarrito(producto,e)}
-        className="text-center no-focus"
+        className="text-center no-focus p-0"
       ></Form.Control>
       <Button
+        className="btn p-1 border-0"
         onClick={() => incCarrito(producto)}
-        variant="outline-secondary"
-      >{" "}+{" "}
+        variant
+      ><i class="bi bi-plus-lg"></i>
       </Button>
     </InputGroup>
   );
