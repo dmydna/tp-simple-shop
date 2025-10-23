@@ -9,27 +9,33 @@ function ProductSpecs({producto, children}) {
   return (
     <>
     {children}
-    <Table striped bordered hover rounded>
-      <tbody>
-        <tr>
-          <td className="fw-bold">Brand</td>
-          <td>{producto.brand}</td>
+    <Table striped hover rounded>
+      <tbody className="rounded">
+        <tr className="border-0">
+          <td className="fw-medium border-0">Brand</td>
+          <td  className="fw-medium text-secondary border-0">
+            {producto.brand}
+          </td>
         </tr>
-        <tr>
-          <td  className="fw-bold">Dimensions</td>
-          <td>
+        <tr className="border-0">
+          <td  className="fw-medium border-0">Dimensions</td>
+          <td  className="fw-medium text-secondary border-0">
             {producto.dimensions.width} x {'  '}
             {producto.dimensions.height} x {'  '}
             {producto.dimensions.depth} 
-            </td>
+          </td>
         </tr>
-        <tr>
-          <td className="fw-bold">Weight</td>
-          <td> {producto.weight} </td>
+        <tr className="border-0">
+          <td className="fw-medium border-0">Weight</td>
+          <td  className="fw-medium text-secondary border-0"> 
+            {producto.weight} 
+          </td>
         </tr>
-        <tr>
-          <td className="fw-bold">Warranty Information</td>
-          <td> {producto.warrantyInformation} </td>
+        <tr className="border-0">
+          <td className="fw-medium border-0">Warranty Information</td>
+          <td  className="fw-medium text-secondary border-0"> 
+            {producto.warrantyInformation} 
+          </td>
         </tr>
         
       </tbody>

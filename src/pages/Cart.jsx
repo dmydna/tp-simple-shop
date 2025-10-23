@@ -56,20 +56,13 @@ function Carrito() {
         style={{fontSize: "xx-large"}} class="bi bi-x hover-icon"></i>
       </div>
 
-      <CartClearModal  show={showClearCart}  onHide={onHideClearCart}  
-      handle={()=>  clearCart()  } />
-
+      <CartClearModal  
+        show={showClearCart}  
+        onHide={onHideClearCart}  
+        handle={()=>  clearCart()  } 
+      />
       <hr/>
       <CarritoItem/>
-      <div className="d-flex flex-row-reverse d-none my-3 mx-2">
-        <Button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => clearCart()}
-        >
-          <i className="bi bi-trash3" /> Vaciar carrito
-        </Button>
-      </div>
       </Card>
 
       </Col>

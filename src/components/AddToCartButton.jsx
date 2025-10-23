@@ -15,7 +15,6 @@ function AddToCartButton({id, variant='success', children}){
 
     const [product] = useMemo(()=>{
       return products.filter((p)=> {
-        console.log(p.id == id ? p : '')
         return p.id == id
       })
     },[products]) 

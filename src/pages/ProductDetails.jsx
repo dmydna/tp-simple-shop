@@ -57,7 +57,7 @@ function ProductDetails(){
                 <Col className="m-3 mt-5 mx-0" sm={12} md={7}>
                    <Col md={12}>
                       <ProductSpecs producto={p} >
-                         <div className="h3 mb-5">Características del producto</div>
+                         <div className="fs-5 fw-medium mb-5">Características del producto</div>
                       </ProductSpecs>              
                    </Col>
                 </Col >
@@ -65,7 +65,7 @@ function ProductDetails(){
                 {/**Product Description */}
                 <Col className="m-3 mx-0" xs={12} md={7}  >
                    <Col md={12} >
-                      <div className="h3 mb-5">Descripcion</div>
+                      <div className="fs-5 fw-medium mb-5">Descripcion</div>
                       <p>{p.description}</p>
                    </Col>
                 </Col >
@@ -73,7 +73,7 @@ function ProductDetails(){
                 {/**Product Reviews */}
                 <Col className="m-3 mx-0" xs={12} md={7}>
                    <Col md={12} >
-                      <div className="h3 mb-5">Opiniones</div>
+                      <div className="fs-5 fw-medium mb-5">Opiniones</div>
                       {p.reviews.map(r => 
                           <CardReview
                             id={r.id}

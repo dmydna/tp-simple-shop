@@ -8,7 +8,7 @@ function CardProduct({title, image ,price, stock, id, children, className, cols}
 
     return(
         <Col className={`d-flex flex-column p-0
-          ${cols ? cols : 'col-lg-3 col-md-4 col-sm-6 col-12'}`}
+          ${cols ? cols : 'col-12 col-sm-6 col-md-4 col-lg-3'}`}
         >
            <Card className={`${className || 'm-2'}`}>
               <Link 

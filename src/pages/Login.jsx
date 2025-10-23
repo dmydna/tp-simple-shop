@@ -17,7 +17,7 @@ function Login(){
     return (
     <Container fluid="xl">
      <Row>
-        <LoginForm className={'bg-light rounded p-5'} style={{maxWidth: 500}}>
+        <LoginForm className={'bg-light rounded p-4 p-md-5'} style={{maxWidth: 500}}>
              <div className="d-flex align-items-center justify-content-between mb-4">
                 <p className="fs-3 m-0">Iniciar sesión</p>
             </div>
