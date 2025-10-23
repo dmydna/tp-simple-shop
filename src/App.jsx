@@ -88,6 +88,13 @@ function App() {
 
           }
           /> 
+          <Route path="/productos/filter/" element={
+            <> 
+            <Products/>
+            <Pagination/>
+            </>
+          }
+          /> 
           <Route path="/productos/search/:product" element={
             <> 
             <Products/>

@@ -1,32 +1,59 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link, useMatch } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
+import { Col, Container, Row } from "react-bootstrap";
+import CategoryItem from "./CategoryItem";
 
-function CategoryNav({show}){
+import Img1 from "../assets/lipstick.png";
+import Img2 from '../assets/perfume.png';
+import Img3 from "../assets/dressing-table.png";
+import Img4 from '../assets/grocery.png';
+import { useUIContext } from "../contexts/UIContext";
+
+
+function CategoryNav(){
 
     const categoryMatch = useMatch("/productos/category/:category");
     const searchMatch = useMatch("/productos/search/:product");
+    const {showFilter} = useUIContext()
     const {products} = useProducts()
 
+    const  categories = useMemo(()=>(
+      [...new Set(products.map(p => p.category))]
+    ),[products])
+    
+    
     return(
-        <div className={`d-flex mb-2 flex-wrap ${show ? '': 'd-none' } `}>
-          <b className={`p-2 border mx-2 rounded px-3 mb-2  
-            ${ location.pathname == '/productos' ? 'bg-primary' : '' } `}>
-              <Link to={'/productos'} className={` text-decoration-none
-                ${location.pathname == '/productos' ? 'text-white' : ''}`}
-              >  {(location.pathname == '/productos' ? "#": <i class="bi bi-arrow-left"></i> )}
-              </Link></b>
-         {[...new Set(products.map(p => p.category))].map(category => (
-           <b className={`p-2 border mx-2 rounded mb-0 mb-2
-              ${categoryMatch?.params.category == category ? 'bg-primary' : ''} `} key={category}>
-            <Link className={`text-decoration-none
-              ${categoryMatch?.params.category == category ? 'text-white' : ''}
-              `} to={'/productos/category/'+ category }>
-               {category}
-            </Link>
-           </b> 
-          ))}
-        </div>
+       <Row className={`mb-3 d-none  ${showFilter ? 'd-md-flex' : ''}`}> 
+        <CategoryItem 
+          className="me-2 border ps-0"
+          category={categories[0]} 
+          image={Img1} 
+          link={`/productos/category/${categories[0]}`}
+        />
+        <CategoryItem 
+          // variant="primary"
+          className="me-2 border"
+          category={categories[1]} 
+          image={Img2} 
+          link={`/productos/category/${categories[1]}`}
+        />
+        <CategoryItem 
+          // variant="success"
+          className="me-2 border"
+          category={categories[2]} 
+          image={Img3} 
+          link={`/productos/category/${categories[2]}`}
+        />
+        <CategoryItem 
+          // variant="dark"
+          className="border pe-0"
+          category={categories[3]} 
+          image={Img4} 
+          link={`/productos/category/${categories[3]}`}
+        />
+      </Row>
+         
     )
 
 }

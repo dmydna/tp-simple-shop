@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
-import { Link, useLocation, useMatch } from "react-router-dom";
+import { Link, useLocation, useMatch, useSearchParams } from "react-router-dom";
 import AddToCartButton from "../components/AddToCartButton";
 import CategoryNav from "../components/CategoryNav";
 import { HoverProvider } from "../contexts/HoverContext";
@@ -8,6 +8,7 @@ import HoverWrapper from "../contexts/HoverWrapper";
 import { useProducts } from "../contexts/ProductContext";
 import CardProduct from "../components/CardProduct";
 import BuyNowButton from "../components/BuyNowButton";
+import FilterSearch from "../components/FilterSearch";
 
 function Products() {
 
@@ -20,8 +21,9 @@ function Products() {
 
   const categoryMatch = useMatch("/productos/category/:category");
   const searchMatch = useMatch("/productos/search/:product");
+  const filterMatch = useMatch("/productos/filter/:product");
 
-  const { productosVisibles, setCategory, setSearch, filtered, products } = useProducts();
+  const { productosVisibles, setCategory, setSearch, filtered, setActiveFilters } = useProducts();
   const location = useLocation();
 
   // Informacion a mostrar segun Pagina
@@ -34,51 +36,100 @@ function Products() {
 
   const [ showCategoryNav, setShowCategoryNav ] = useState(false);
 
+
   
   useEffect(() => {
+     if( location.pathname.startsWith("/productos/category") || 
+       location.pathname.startsWith("/productos/search")   || 
+       location.pathname === "/productos" ){
+      // resetea filtro activos
+      setActiveFilters({tags : [], minPrice: 0, maxPrice : 15000})
+     }
+     if(location.pathname.startsWith("/productos/filter")){
+      // resetea otro filtros 
+      setSearch("")
+      setCategory(null)
+     }
+  },[location])
+
+  useEffect(() => {
+    let routeType = 'base';
+
     if (categoryMatch?.params.category) {
-
-      setCategory(categoryMatch.params.category);
-      setSearch(""); // limpia búsqueda si vengo de categoría
-      setMeta(prev => 
-      ({ ...prev,  
-        title: categoryMatch.params.category, 
-        message: filtered.length + " productos"
-      }));
-
+        routeType = 'category';
     } else if (searchMatch?.params.product) {
-      setSearch(searchMatch?.params.product);
-      setCategory(null); // limpia categoría si vengo de búsqueda
-      setMeta(prev => 
-      ({ ...prev, 
-        title: "Resultados de Busqueda", 
-        message: filtered.length + " encontrado"  // ahora sí usa el estado
-      }))
-
-    } else {
-      setCategory(null);
-      setSearch("");
-      setMeta(prev => 
-      ({ ...prev, 
-        title: "Productos", 
-        message: "todas las categorias" 
-      }));
+        routeType = 'search';
+    } else if (location.pathname.startsWith("/productos/filter")) {
+        routeType = 'filter';
     }
-  }, [location, searchMatch, categoryMatch, filtered]);
+    
+    switch (routeType) {
+        case 'category':
+            setCategory(categoryMatch.params.category);
+            setSearch(""); // Limpieza de búsqueda
+            setMeta(prev => ({
+                ...prev,
+                title: categoryMatch.params.category,
+                message: filtered.length + " productos"
+            }));
+            break;
+
+        case 'search':
+            setCategory(null); // Limpieza de categoría
+            setSearch(searchMatch?.params.product)
+            setMeta(prev => ({
+                ...prev,
+                title: "Resultados",
+                message: filtered.length + " encontrado"
+            }));
+            break;
+
+        case 'filter':
+            // Si el filtro es solo por query params sin búsqueda de texto libre
+            setMeta(prev => ({
+                ...prev,
+                title: "Resultados",
+                message: filtered.length + " encontrados"
+            }));
+            break;
+
+        case 'base':
+        default:
+            setCategory(null);
+            setSearch("");
+            setMeta(prev => ({
+                ...prev,
+                title: "Productos",
+                message: "todas las categorias"
+            }));
+            break;
+    }
+
+  }, [location.pathname, categoryMatch, searchMatch, filtered]);
 
  
   return (
+    <>
     <Container fluid="xl" className="bg-white rounded mt-2 mb-5 pb-5">
-      { <>
-       <CategoryNav show={showCategoryNav} />
-       <div className="w-100 d-flex  align-items-center justify-content-between">
-         <p className="text-capitalize fw-medium fs-3" >{meta.title}</p>
-         <i  onClick={() => setShowCategoryNav(prev => !prev)} style={{fontSize: "x-large"}} 
-         className="bi bi-three-dots-vertical btn-hover"></i>
+
+       <div className="w-100 d-flex flex-wrap mt-2 mb-4">
+         <span style={{fontSize: '1.4rem'}} className="text-capitalize fw-semibold me-3" >
+          {meta.title}
+         </span>
+         <span style={{lineHeight: '2.3rem'}} className="text-secondary">
+          {meta.message}
+         </span>
        </div>
-       </> }
+       {
+        location.pathname.startsWith('/productos/filter') ?
+        <>
+          <CategoryNav show={showCategoryNav} />
+          <FilterSearch className=""/>
+        </> : ''
+       }
+
+
       <Row>
-        <span className="mb-5">{meta.message}</span>
         {productosVisibles.map((p) => (  
           <CardProduct className={'border m-2'}
             id={p.id}
@@ -92,7 +143,8 @@ function Products() {
         ))}
       </Row>
     </Container>
-  );
+    </>
+  )
 }
 
 export default Products;

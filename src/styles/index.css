@@ -119,13 +119,46 @@
 .container-xl {
     padding-inline: clamp(1rem, 4vw, 3rem)!important;
     /* max-width: 1180px; */
-    max-width: 1280px;
+    max-width: 1280px!important;
   }
+
+.multi-col-dropdown-menu {
+    /* Define 2 o 3 columnas para el contenido */
+    column-count: 3; 
+    column-gap: 1.5rem; /* Espacio entre columnas */
+    padding: 10px; /* Añade espacio alrededor */
+    max-width: 500px; /* Evita que crezca demasiado */
+}
+
+.multi-col-item {
+    /* Mantiene los elementos dentro de su columna */
+    break-inside: avoid;
+    /* Da espacio extra verticalmente */
+    margin-bottom: 0.5rem; 
+}
+
+.toggle-end::after {
+    margin-left: auto; 
+    margin-right: 0.255em; 
+}
+
 
 
 @media (min-width: 1200px) { /* xl */
     .container-xl {
         /* padding-inline: 0!important; */
     }
+
 }
 
+
+@media (max-width: 1399.98px) { /* xl */ }
+@media (max-width: 1199.98px) { /* lg */ }
+@media (max-width: 991.98px)  { /* md */ }
+@media (max-width: 767.98px)  { /* sm */ 
+    .multi-col-dropdown-menu{
+        column-count: 2; 
+    } 
+
+}
+@media (max-width: 575.98px)  { /* xs */ }

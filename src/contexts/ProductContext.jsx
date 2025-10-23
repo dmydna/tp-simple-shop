@@ -8,15 +8,15 @@ export function ProductosProvider({ children }){
     const [loading, setLoading] = useState(true);
     const [paginaActual, setPaginaActual] = useState(1);
 
+
     // Filtros
     const [category, setCategory] = useState(null);
     const [search, setSearch] = useState("");
-    const [discount, setDiscount] = useState(0)
-    const [rating, setRating] = useState(0)
-    const [price, setPrice] = useState(0)
-    const [stock, setStock] = useState(0)
-    const [tags, setTags] = useState("")
-    const [funcFilter, setFuncFilter] = useState()
+    const [filterDraft, setFilterDraft] = useState({tags : [], minPrice: 0, maxPrice : 15000})
+    const [activeFilters, setActiveFilters] = useState({tags : [], minPrice: 0, maxPrice : 15000})
+
+
+    // crear un estado predicateFilter que
 
     const productosPorPagina = 8;
 
@@ -46,27 +46,24 @@ export function ProductosProvider({ children }){
     // Logica de filter
     const filtered = useMemo(() => {
       return products.filter(p => {
-        const matchFunc = funcFilter ? funcFilter(p) : true;
+
+        console.log("filtrar")
+
+        const { tags, minPrice, maxPrice } = activeFilters;
+        const matchTags = tags?.every(t => p.tags.includes(t));
+        const matchPrice = p.price >= minPrice && p.price <= maxPrice;
+        
         const matchCategory = category ? p.category === category : true;
-        const matchTags = tags ? p.tags === tags : true;
-        const matchRating = rating ? p.rating >= rating : true;
-        const matchStock = stock ? p.stock >= stock : true;
-        const matchDiscount = discount ? p.discountPercentage >= discount : true;
-        const matchPrice = price ? p.price >= price : true;
+        
         const matchSearch = search ? 
          p.title.toLowerCase().includes(search.toLowerCase()) ||
          p.description?.toLowerCase().includes(search.toLowerCase()) ||
          p.brand?.toLowerCase().includes(search.toLowerCase())  : true;
         return matchCategory 
           && matchSearch 
-          && matchRating 
-          && matchDiscount
-          && matchTags 
-          && matchPrice
-          && matchStock
-          && matchFunc;
+          && (matchTags && matchPrice);
       });
-    }, [products, category, search]);
+    }, [products, category, search, activeFilters]);
 
 
     // Lógica de paginación
@@ -82,12 +79,12 @@ export function ProductosProvider({ children }){
         value={{ 
           products, setProducts, 
           loading, setLoading, 
-          totalPaginas, 
-          paginaActual, setPaginaActual, 
-          productosVisibles ,
-          filtered,
+          totalPaginas, paginaActual, setPaginaActual, 
+          productosVisibles ,filtered,
           setCategory,
           setSearch,
+          filterDraft, setFilterDraft,
+          activeFilters, setActiveFilters
           }}>
             {children}
         </ProductContext.Provider>

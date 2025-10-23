@@ -1,14 +1,17 @@
 import React, { useMemo, useState } from "react";
 import { Button, Dropdown, Form, InputGroup } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
 import { useWindowsWidth } from "./useWindowSize";
+import { useUIContext } from "../contexts/UIContext";
 
 function Search({toggle, setToggle}){
     
     const width = useWindowsWidth()
     const navigate = useNavigate();
+    const location = useLocation();
 
+    const {onHideFilter} = useUIContext()
     const [query, setQuery] = useState(""); 
     const {products} = useProducts()
 
@@ -30,9 +33,15 @@ function Search({toggle, setToggle}){
 
     function handleFilter(e){
       e.preventDefault();
-      navigate(`/productos/`);
-      setToggle(false)
-      setShow(false)
+      if(!location.pathname.startsWith('/productos/filter')){
+        navigate('/productos/filter');
+        onHideFilter(true);
+      }else{
+        onHideFilter(prev => !prev);
+      }
+
+      // setToggle(false);
+      // setShow(false);
     }
     // Similar a useEffect pero para datos
     const filtered = useMemo(() => {
