@@ -21,8 +21,8 @@ import Perfil from "./pages/Perfil";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/ProductList";
 import "./styles/index.css"
-
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 useLocation
 
@@ -119,6 +119,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
 
         </Routes>
+        <ToastContainer limit={3} />
       </main>
       <Footer />
     </div>

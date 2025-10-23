@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { Button } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useCart } from "../contexts/CartContext";
 import { useProducts } from "../contexts/ProductContext";
 
@@ -20,6 +19,9 @@ function AddToCartButton({id, variant='success', children}){
     },[products]) 
 
     const handleAddToCart = () => {
+      if (toast.isActive()) {
+        return;
+      }
       toast.success("Producto agregado al carrito!");
     };
 
@@ -44,7 +46,6 @@ function AddToCartButton({id, variant='success', children}){
           )}
         {children ? children : 'Agregar al Carrito' }
        </Button>
-      <ToastContainer />
       </>
     )
 }
