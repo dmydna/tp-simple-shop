@@ -14,8 +14,8 @@ function UserDropdown({className}) {
 
   const [isActive, setIsActive] = useState(false)
   
+  // si esta logeado activa el dropdown toggle, si no muestra LoginModal
   const handleToggle =  (isOpen) =>  isAuth ? setIsActive(isOpen) : onHideLogin(true)
-
 
   const navigate = useNavigate();
 

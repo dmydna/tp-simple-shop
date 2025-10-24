@@ -2,8 +2,8 @@ import React, { useMemo, useState } from "react";
 import { Button, Dropdown, Form, InputGroup } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
-import { useWindowsWidth } from "./useWindowSize";
 import { useUIContext } from "../contexts/UIContext";
+import { useWindowsWidth } from "../contexts/useWindowSize";
 
 function Search({toggle, setToggle}){
     
@@ -39,14 +39,10 @@ function Search({toggle, setToggle}){
       }else{
         onHideFilter(prev => !prev);
       }
-
-      // setToggle(false);
-      // setShow(false);
     }
-    // Similar a useEffect pero para datos
+    
+    // Filtro para la lista de coincidencias
     const filtered = useMemo(() => {
-      // filtro de forma local
-      // para mostrar en el lista de coincidencia
       if (!query) return [];
       return products.filter(p =>
         p.title.toLowerCase().includes(query.toLowerCase())

@@ -8,6 +8,7 @@ export function CarritoProvider({ children }) {
 
 
   const {products, setProducts} = useProducts()
+  const [couponDiscount, setCouponDiscount] = useState(false)
 
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
@@ -184,7 +185,9 @@ export function CarritoProvider({ children }) {
          setProducts, 
          products,
          clearCart,
-         addToCart}}>
+         addToCart,
+         couponDiscount, 
+         setCouponDiscount}}>
       {children}
     </CartContext.Provider>
   )

@@ -43,7 +43,7 @@ function CarritoInput({ producto, className }) {
   return (
     <InputGroup className={`small align-items-center border border-3 border-dark rounded px-1`} style={{ maxWidth: "110px" }}>
       <Button
-        className="btn p-1 border-0"
+        className="btn p-1 border-0 me-4"
         onClick={() => elimItem(producto)}
         variant
       ><i className="bi bi-trash3"></i>

@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import { useProducts } from '../contexts/ProductContext';
-import { Card,  Button, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useWindowsWidth } from './useWindowSize';
+import { useWindowsWidth } from '../contexts/useWindowSize';
 import CardProduct from './CardProduct';
 
 
@@ -97,27 +96,5 @@ function ProductCarousel({children, filterFn, col, className}) {
 
   );
 }
-
-
-
-              // <Card 
-              //   key={product.id} 
-              //   className="flex-fill  border-0" 
-              //   style={{ minWidth: '12rem', maxWidth: '18rem' }}
-              // >
-              //   <Card.Img 
-              //     style={{ objectFit: 'contain', height: 160 }}
-              //     variant="top" src={product.thumbnail}  />
-              //   <Card.Body>
-              //     <Card.Title 
-              //      as={Link} to={`/productos/details/${product.title}`}
-              //      className='text-truncate text-decoration-none hover-link fs-6'>
-              //       {product.title}
-              //     </Card.Title>
-              //     <Card.Text className='small text-muted text-truncate'>
-              //       ${product.price}
-              //     </Card.Text>
-              //   </Card.Body>
-              // </Card>
 
 export default ProductCarousel;

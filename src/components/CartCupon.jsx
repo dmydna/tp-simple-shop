@@ -1,12 +1,14 @@
 import React, { Children, useState } from "react";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
+import { useCart } from "../contexts/CartContext";
 
 function CartCupon({title, check, onCheck}){
 
     const [query, setQuery] = useState(""); 
     const [placehoder, setPlacehoder] = useState("Ingresa cupon..")
     const [error, setError] = useState(false)
+    const {couponDiscount, setCouponDiscount} = useCart()
 
   
     function handleChange(e) {
@@ -16,12 +18,13 @@ function CartCupon({title, check, onCheck}){
   
     function handleSubmit(e){
       e.preventDefault();
-      if(query === '#321ABC' && !check){
+      if(query === '#MISHA123' && !check){
         toast.success("Cupon aplicado!");
         setPlacehoder("Ingresa cupon...")
         setQuery("")
         onCheck(true)
         setError(false)
+        setCouponDiscount(true)
       }else{
         setError(true)
         setPlacehoder("Cupon invalido...")

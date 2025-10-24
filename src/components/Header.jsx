@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Container, Navbar } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
-import UserDropdown from "./UserDropdown";
+import { useWindowsWidth } from "../contexts/useWindowSize";
 import Search from "./Search";
-import { useWindowsWidth } from "./useWindowSize";
+import UserDropdown from "./UserDropdown";
 
 
 function Header() {

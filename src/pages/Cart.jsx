@@ -1,16 +1,14 @@
 import React, { useMemo, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import BuyNowButton from "../components/BuyNowButton";
 import CartClearModal from "../components/CartClearModal";
 import CartCupon from "../components/CartCupon";
 import CarritoItem from "../components/CartItem";
 import ProductBuyModal from "../components/ProductBuyModal";
-import { useWindowsHeight, useWindowsWidth } from "../components/useWindowSize";
 import { useCart } from "../contexts/CartContext";
+import { useWindowsHeight, useWindowsWidth } from "../contexts/useWindowSize";
 import Img0 from "/src/assets/empty-cart.png";
-import Img1 from "/src/assets/shopping-cart.gif"
 
 import CartEmpty from "../components/CartEmpty";
 
@@ -23,7 +21,8 @@ function Carrito() {
   const { clearCart, 
       setTotalPrice, 
       totalPrice,
-      cartItems 
+      cartItems ,
+      couponDiscount
   } = useCart()
 
   const[cuponCheck, setCuponCheck] = useState(false)
@@ -32,7 +31,7 @@ function Carrito() {
   const [showClearCart, onHideClearCart] = useState(false)
 
   const Order = useMemo(() => {
-    const descuento = cuponCheck ? 5.0 : 0;
+    const descuento = couponDiscount ? 5.0 : 0;
     const envio = 10.30;
     return {
       envio: envio,

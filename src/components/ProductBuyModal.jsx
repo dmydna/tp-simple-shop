@@ -39,8 +39,8 @@ function ProductBuyModal({show,onHide}) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Header className="border-0" closeButton>
+          <Modal.Title id="contained-modal-title-vcenter" className="text-secondary fs-5 fw-semibold">
             paso {step} de 4
           </Modal.Title>
         </Modal.Header>
@@ -54,7 +54,7 @@ function ProductBuyModal({show,onHide}) {
         (
           <>
             <div className="d-flex">
-               <img width={200} className="mx-auto" src={Img2}/>
+               <img className="p-4 mx-auto" width={170} src={Img2}/>
             </div>
             <p className="text-center"> 
                 Tu orden de comprar fue registrada con exito.
@@ -65,7 +65,7 @@ function ProductBuyModal({show,onHide}) {
         (
          <>
            <div className="d-flex">
-             <img width={200} className="mx-auto" src={Img3}/>
+             <img className="p-4 mx-auto" width={170} src={Img3}/>
            </div>
            <p className="text-center"> 
              En breve nos comunicaremos para coordinar los detalles. 
@@ -76,7 +76,7 @@ function ProductBuyModal({show,onHide}) {
         (
          <>
            <div className="d-flex">
-               <img width={200} className="mx-auto" src={Img4}/>
+               <img className="p-4 mx-auto" width={170} src={Img4}/>
            </div>
            <p className="text-center"> 
              Puedes hacer seguimiento de tu compra en todo momento. 
@@ -86,7 +86,7 @@ function ProductBuyModal({show,onHide}) {
         {step === 4 && (
          <>
            <div className="d-flex">
-             <img width={200} className="mx-auto" src={Img1}/>
+             <img className="p-4 mx-auto" width={170} src={Img1}/>
            </div>
            <p className="text-center">
              Gracias por tu compra. Vuelve pronto.
@@ -94,7 +94,7 @@ function ProductBuyModal({show,onHide}) {
          </>  
         )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="border-0">
             {step == 1 && (<Button variant="danger" onClick={handleAccept}>Cancelar</Button>)}
             {step > 1  && (<Button variant="secondary" onClick={handlePrev}>Anterior</Button>)}
             {step < 4  ? 

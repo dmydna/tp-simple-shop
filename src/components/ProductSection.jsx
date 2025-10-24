@@ -1,9 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+import { useMemo } from 'react';
 import { useProducts } from '../contexts/ProductContext';
-import { Card, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useWindowsWidth } from './useWindowSize';
+import { useWindowsWidth } from '../contexts/useWindowSize';
 import CardProduct from './CardProduct';
 
 function ProductSection({children, filterFn, count, className, borders}){
