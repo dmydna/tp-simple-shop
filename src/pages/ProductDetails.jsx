@@ -50,6 +50,7 @@ function ProductDetails(){
                      ship={p.shippingInformation}
                      stock={p.stock}
                      price={p.price}
+                     discount={p.discountPercentage}
                    />
                 </Col>
                 

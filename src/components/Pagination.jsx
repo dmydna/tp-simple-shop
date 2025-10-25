@@ -60,7 +60,7 @@ const irAPagina = (numeroPagina) => {
         disabled={paginaActual === totalPaginas}
         onClick={() => irAPagina(paginaActual + 1)}
       >
-        <i class="bi bi-chevron-right"></i>
+        <i class={`bi bi-chevron-right ${totalPaginas == 0 ? 'd-none': ''}`}></i>
       </Button>
     </Container>
   );

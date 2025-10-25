@@ -143,6 +143,19 @@
 }
 
 
+.pageNotFound {
+    color: rgb(50, 121, 175);
+    opacity: 0.8;
+    max-width: 71px;
+    line-height: 24px;
+    height: 53px;
+}
+
+.page404 {
+    font-size: 6.5625rem; 
+    color: rgb(50, 121, 175);
+}
+
 
 @media (min-width: 1200px) { /* xl */
     .container-xl {

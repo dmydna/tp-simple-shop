@@ -3,13 +3,12 @@ import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AddToCartButton from "./AddToCartButton";
 
-function CardProduct({title, image ,price, stock, id, children, className, cols}){
+function CardProduct({title, image ,price, stock, id, children, className, cols, discount}){
 
 
     return(
         <Col className={`d-flex flex-column p-0
-          ${cols ? cols : 'col-12 col-sm-6 col-md-4 col-lg-3'}`}
-        >
+          ${cols ? cols : 'col-12 col-sm-6 col-md-4 col-lg-3'}`}>
            <Card className={`${className || 'm-2'}`}>
               <Link 
                 className="text-decoration-none text-reset p-0"
@@ -33,8 +32,8 @@ function CardProduct({title, image ,price, stock, id, children, className, cols}
                 >
                    {title}
                 </Card.Title>
-                <Card.Text className="fs-4 fw-bold text-success mb-1">
-                  $ {price || "N/A"}
+                <Card.Text className="fs-4 fw-semibold  mb-1">
+                  $ {price || "N/A"}  <span className="text-success fw-medium fs-6">{discount}% OFF</span>
                 </Card.Text>
                 <Card.Text className="small fw-medium text-secondary">
                   stock: {stock ?? 0}

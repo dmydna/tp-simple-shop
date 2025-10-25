@@ -47,10 +47,8 @@ export function ProductosProvider({ children }){
     const filtered = useMemo(() => {
       return products.filter(p => {
 
-        console.log("filtrar")
-
         const { tags, minPrice, maxPrice } = activeFilters;
-        const matchTags = tags?.every(t => p.tags.includes(t));
+        const matchTags = tags.length === 0 || tags.some(t => p.tags.includes(t));
         const matchPrice = p.price >= minPrice && p.price <= maxPrice;
         
         const matchCategory = category ? p.category === category : true;

@@ -6,7 +6,7 @@ import BuyNowButton from "./BuyNowButton";
 import ProductBuyModal from "./ProductBuyModal";
 
 
-function ProductBuyCard({ title, rating, ship, id, stock, price }) {
+function ProductBuyCard({ title, rating, ship, id, stock, price, discount }) {
   const [modalShow, setModalShow] = useState(false);
   const {clearCart} = useCart()
 
@@ -15,8 +15,10 @@ function ProductBuyCard({ title, rating, ship, id, stock, price }) {
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <img className="mb-2" src={`/rating${Math.round(rating)}.png`} />
-        <Card.Text className="h3">$ {price.toFixed(2)}</Card.Text>
-        <Card.Text className="text-secondary">Disponible: {stock}</Card.Text>
+        <Card.Text className="h3">$ {price.toFixed(2)} 
+          <span className="mx-2 text-success fw-medium fs-6">{discount}% OFF</span> 
+        </Card.Text>
+        <Card.Text className="text-secondary">stock: {stock}</Card.Text>
         <Card.Text className="text-secondary mb-3">
           <i class="bi bi-truck"></i> {ship}
         </Card.Text>

@@ -137,6 +137,7 @@ function Products() {
             title={p.title}
             stock={p.stock}
             price={p.price}
+            discount={p.discountPercentage}
           >
           <AddToCartButton variant="outline-success" id={p.id} />
           </CardProduct>

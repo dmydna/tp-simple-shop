@@ -2,26 +2,39 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, Container } from "react-bootstrap";
 import warningIMG from "/src/assets/404.png"
+import Img1 from "/src/assets/web_404_crop.png"
 
 export default function NotFound(){
 
     return (
     <Container style={{height: "80vh"}} 
-      className="py-5 mt-5 d-flex justify-content-center align-items-center">
+      className="py-5 mt-5 d-flex justify-content-center align-items-center overflow-overlay">
       <div>
         <img style={{
           marginInline: "auto",
           maxWidth: "300px",
           display: "block", 
           position: "relative",
+          rotate: "395deg"
         }} 
-          src={warningIMG} />
-        <h4 className="text-muted fw-bolder m-4">
-          Pagina no encontrada!
-        </h4>
-        <Button as={Link} to={'/productos'}  className="col w-100 col-md-2 p-2 h-2" variant="primary"> 
-        <i className="bi bi-arrow-left"></i>
-        <b className="mx-2">volver</b></Button>
+          src={Img1} />
+        <div className="d-flex align-items-center gap-3">
+          <h4 className="fw-bold  text-uppercase text-center m-0 mt-4 page404">
+            404
+          </h4>
+          <div className="fw-bolder m-0 text-uppercase fs-4 pageNotFound">
+            <p className="m-0 p-0">Page</p>
+            <p className="m-0 p-0">Not</p>  
+            <p className="m-0 p-0">Found</p>
+          </div>
+        </div>
+
+        <Button style={{maxWidth:"300px"}} as={Link} to={'/productos'}  
+        className="col w-100 col-md-2 p-2 d-block mx-auto my-4" variant="primary"> 
+        <i className="bi bi-chevron-left"></i>
+        <b className="mx-2 text-uppercase fw-medium">
+          volver
+        </b></Button>
       </div>
    </Container>
         

@@ -36,6 +36,7 @@ function ProductSection({children, filterFn, count, className, borders}){
               stock={p.stock} 
               price={p.price}
               cols={colClass}
+              discount={p.discountPercentage}
             />
         ))}
         </div>
@@ -43,42 +44,4 @@ function ProductSection({children, filterFn, count, className, borders}){
 
     )
 }
-
-
- {/*
-             <Col className={`d-flex flex-column 
-              ${colClass} `} 
-             // xs={12} sm={6} md={4} lg={3}
-                >
-
-              <Card  
-              className={`row m-2 text-decoration-none border-0
-              ${i != 3  && width < 723 ? 'border-bottom' : '' }
-              ps-0`}
-            >
-              <Card.Img 
-                style={{ objectFit: 'contain', height: 160 }} 
-                className="mx-auto" src={product.thumbnail} 
-              />
-              <Card.Body>
-                <Card.Title 
-                  as={Link} 
-                  to={`/productos/details/${product.title}`} 
-                  className={`d-block text-wrap fw-normal hover-link`}
-                >
-                  {product.title}
-                </Card.Title>
-                <Card.Text  className="h3 text-truncate">
-                  $ {product.price || "N/A"}
-                </Card.Text>
-                <Card.Text className="fw-bolder text-secondary">
-                  stock: {product.stock || 0}
-                </Card.Text>
-              </Card.Body>
-              <Card.Text className="w-100 d-flex mb-2"></Card.Text>
-            </Card> 
-             </Col>
-            */}
-
-
 export default ProductSection;

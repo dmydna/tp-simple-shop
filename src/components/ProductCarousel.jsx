@@ -84,6 +84,7 @@ function ProductCarousel({children, filterFn, col, className}) {
                 title={p.title} 
                 stock={p.stock} 
                 price={p.price}
+                discount={p.discountPercentage}
               />
             ))}
           </div>
