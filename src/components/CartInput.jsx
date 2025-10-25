@@ -41,7 +41,7 @@ function CarritoInput({ producto, className }) {
      e.target.value > 0 && e.target.value <= producto.stock ? setCantidad(e.target.value ): (!producto.cantidad ? prev : producto.cantidad)
   }
   return (
-    <InputGroup className={`small align-items-center border border-3 border-dark rounded px-1`} style={{ maxWidth: "110px" }}>
+    <InputGroup className={`small align-items-center border border-3 border-dark rounded px-1`} style={{ maxWidth: "140px" }}>
       <Button
         className="btn p-1 border-0 me-4"
         onClick={() => elimItem(producto)}

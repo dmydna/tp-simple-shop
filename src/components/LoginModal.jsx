@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
-import { Button, Modal,Card, Container } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Modal,Card, Container, ButtonGroup } from "react-bootstrap";
 
 
 import Login from "../pages/Login";
 import LoginForm from "./LoginForm";
-
+import Img0 from "../assets/check-crop-gif.gif"
+import Img1 from "../assets/check-crop-frame.gif"
 
 
 function LoginModal({show, onHide}) {
+
 
   return (
     <Modal
@@ -17,13 +19,13 @@ function LoginModal({show, onHide}) {
     aria-labelledby="contained-modal-title-vcenter"
     centered
     >
-      <Modal.Body className="p-0">
-       <LoginForm className={'bg-light rounded p-5'} style={{maxWidth: 500}}>
+      <Modal.Body className="p-0">       
+        <LoginForm className={'bg-light rounded p-5'} style={{maxWidth: 500}}>
          <div className="d-flex align-items-center justify-content-between mb-4">
-           <h1 className="h3 m-0">Iniciar sesión</h1>
-           <i onClick={() => onHide(false)} className="h3 bi bi-x m-0 hover-icon"></i> 
-         </div>
-       </LoginForm>
+          <h1 className="h3 m-0">Iniciar sesión</h1>
+          <i onClick={()=> onHide(false)} className="h3 bi bi-x m-0 hover-icon"></i> 
+         </div> 
+        </LoginForm> 
       </Modal.Body>
     </Modal>
   );

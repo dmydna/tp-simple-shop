@@ -21,7 +21,7 @@ function UserDropdown({className}) {
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate("/login");
   };
 
 

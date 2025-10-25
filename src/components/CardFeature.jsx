@@ -2,10 +2,10 @@ import React from "react";
 import { Col, Card } from "react-bootstrap";
 
 
-function CardFeature({title, image, text }){
+function CardFeature({title, image, text, id }){
 
   return(
-       <Col key={title} xs={12} sm={6} md={4} lg={3}>
+       <Col id={id} key={title} xs={12} sm={6} md={4} lg={3}>
          <Card
            className="h-100 text-center border hover-shadow transition"
            style={{ cursor: "pointer" }}

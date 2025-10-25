@@ -11,6 +11,7 @@ function CartCupon({title, check, onCheck}){
     const {couponDiscount, setCouponDiscount} = useCart()
 
   
+    
     function handleChange(e) {
       const value = e.target.value;
       setQuery(value.toUpperCase());
@@ -44,7 +45,7 @@ function CartCupon({title, check, onCheck}){
         <input
            placeholder={placehoder}
            type="text"
-           className={`form-control no-focus`}
+           className={`form-control no-focus text-secondary`}
            value={query.toUpperCase()}
            onChange={handleChange}
         ></input>

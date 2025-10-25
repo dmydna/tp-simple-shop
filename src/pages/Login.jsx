@@ -8,11 +8,17 @@ import LoginForm from "../components/LoginForm";
 
 function Login(){
 
+    const {token, user, isAuth} = useAuth()
+    
+    const navigate = useNavigate()
     useEffect(() => {
         const scrollX = (document.body.scrollWidth - window.innerWidth) / 2;
         const scrollY = (document.body.scrollHeight - window.innerHeight) / 2;
         window.scrollTo({top: 0});
     }, []);
+
+
+    if(isAuth) navigate('/perfil/admin');
 
     return (
     <Container fluid="xl">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -19,6 +19,8 @@ import Img8 from "../assets/discount.png"
 import Img9 from "../assets/customer-service.png"
 import Img10 from "../assets/online-store.png"
 import Img11 from "../assets/paper-bag.png"
+import CouponModal from "../components/CouponModal";
+import { useAuth } from "../contexts/AuthContext";
 
 function Home() {
 
@@ -26,6 +28,17 @@ function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, []);
 
+
+  const{isAuth} = useAuth()
+
+  useEffect(()=>{
+    const cuponElem = document.querySelector('#cupon');
+    cuponElem.addEventListener("click", ()=> {
+      isAuth ? setShowCupon(true) : {} 
+    })
+  },[document.onload])
+
+  const [showCupon, setShowCupon] = useState()
 
   return (
   <>
@@ -52,6 +65,7 @@ function Home() {
             text='Podes devolver tu compra gratis'
           />
           <CardFeature
+            id={'cupon'}
             title='Cupones'
             image={Img8} 
             text='Descubri los mejores descuentos'
@@ -139,6 +153,7 @@ function Home() {
 
 
     </Container>
+    <CouponModal show={showCupon} onHide={setShowCupon}/>
     </>
   );
 }
