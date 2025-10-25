@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Modal,Card, Container, ButtonGroup } from "react-bootstrap";
 
 
-import Login from "../pages/Login";
 import LoginForm from "./LoginForm";
-import Img0 from "../assets/check-crop-gif.gif"
-import Img1 from "../assets/check-crop-frame.gif"
+
 
 
 function LoginModal({show, onHide}) {
