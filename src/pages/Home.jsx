@@ -71,9 +71,9 @@ function Home() {
             text='Descubri los mejores descuentos'
           />
           <CardFeature
-            title='Envios Gratis'
+            title='Envios Express'
             image= {Img6} 
-            text='Podes devolver tu compra gratis'
+            text='Recibi tu compra mas rapido'
           />
           <CardFeature
             title='Tiendas oficiales'

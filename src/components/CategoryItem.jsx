@@ -30,7 +30,7 @@ function CategoryItem({category, image, link, className, variant}){
                 <Col
                  style={{opacity:'.9'}}
                  className={`d-flex  flex-fill align-items-center ${!!variant ? `text-white bg-${variant}` : 'text-reset' }`}>
-                  <Card.Body style={{width: "120px"}} className="ps-3 p-1">
+                  <Card.Body style={{maxWidth: "120px"}} className="ps-3 p-1">
                     <Card.Title 
                     as={Link}
                     className={`d-block text-uppercase small text-decoration-none 

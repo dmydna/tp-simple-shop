@@ -14,27 +14,27 @@ function ProductSpecs({producto, children}) {
         <tr className="border-0">
           <td className="fw-medium border-0">Brand</td>
           <td  className="fw-medium text-secondary border-0">
-            {producto.brand}
+            {producto.brand || 'N/A'}
           </td>
         </tr>
         <tr className="border-0">
           <td  className="fw-medium border-0">Dimensions</td>
           <td  className="fw-medium text-secondary border-0">
-            {producto.dimensions.width} x {'  '}
-            {producto.dimensions.height} x {'  '}
-            {producto.dimensions.depth} 
+            {producto.dimensions?.width || 'N/A'} x {'  '}
+            {producto.dimensions?.height || 'N/A'} x {'  '}
+            {producto.dimensions?.depth || 'N/A'} 
           </td>
         </tr>
         <tr className="border-0">
           <td className="fw-medium border-0">Weight</td>
           <td  className="fw-medium text-secondary border-0"> 
-            {producto.weight} 
+            {producto.weight || 'N/A'} 
           </td>
         </tr>
         <tr className="border-0">
           <td className="fw-medium border-0">Warranty Information</td>
           <td  className="fw-medium text-secondary border-0"> 
-            {producto.warrantyInformation} 
+            {producto.warrantyInformation || 'N/A'} 
           </td>
         </tr>
         

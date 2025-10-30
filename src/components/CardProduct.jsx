@@ -14,7 +14,7 @@ function CardProduct({title, image ,price, stock, id, children, className, cols,
                 className="text-decoration-none text-reset p-0"
                to={"/productos/details/" + encodeURIComponent(title)}
               >
-              <Card.Img   src={image}
+              <Card.Img   src={image || "https://dummyimage.com/300x300/fff/000&text=Image+not+found"}
                     style={{ 
                       objectFit: 'contain', 
                       height: '180px', 
@@ -30,13 +30,16 @@ function CardProduct({title, image ,price, stock, id, children, className, cols,
                       textDecoration: "none", 
                     }}
                 >
-                   {title}
+                   {title || "N/A"}
                 </Card.Title>
                 <Card.Text className="fs-4 fw-semibold  mb-1">
-                  $ {price || "N/A"}  <span className="text-success fw-medium fs-6">{discount}% OFF</span>
+                  $ {price || "N/A"}  
+                  <span className="text-success fw-medium fs-6">
+                    {discount ? discount + '% OFF' : ''}
+                  </span>
                 </Card.Text>
                 <Card.Text className="small fw-medium text-secondary">
-                  stock: {stock ?? 0}
+                  stock: {stock || "N/A"}
                 </Card.Text>
               </Card.Body>
               </Link>

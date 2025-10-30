@@ -13,11 +13,13 @@ function ProductBuyModal({show,onHide}) {
 
     const [step, setStep] = useState(0);
     const [progress, setProgress] = useState(0);
+    const [enabled, setEnabled] = useState('disabled')
 
 
     const handleNext = () => {
         setStep((prev) => prev + 1)
         setProgress(((step) * 33.3))
+        setEnabled('disabled')
     }
     const handlePrev = () => {
         setStep((prev) => prev - 1)
@@ -26,6 +28,8 @@ function ProductBuyModal({show,onHide}) {
     const handleAccept = () => {
         onHide()
     }
+
+
 
     useEffect(()=>{
       if(!show){
@@ -62,7 +66,8 @@ function ProductBuyModal({show,onHide}) {
             <SuccessCheck 
              width={170} 
              show={true} 
-             onHide={{}}
+             handleEnd={()=>setEnabled('enabled')}
+             time={1500}
             />
             <p className="text-center text-success"> 
                 Tu orden de comprar fue registrada con exito.
@@ -86,7 +91,10 @@ function ProductBuyModal({show,onHide}) {
                 Cancelar
               </Button>)}
             {step < 2  ? 
-              (<Button variant="primary" onClick={() => handleNext() && handleAccept()}>
+              (<Button 
+              className={step == 1 && enabled} 
+              variant="primary" 
+              onClick={() => handleNext()}>
                  Continuar 
               </Button>) : 
               (<Button variant="success" onClick={()=> onHide(false)}>

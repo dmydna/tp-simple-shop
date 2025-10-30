@@ -29,7 +29,7 @@ function ProductDetails(){
                     <Link className='text-decoration-none fw-bold' to='/productos'> Volver</Link> 
                    <span className="fw-bold mx-2"> | </span>
                     <Link className='text-decoration-none text-capitalize' 
-                     to={`/productos/category/${p.category}`}>
+                     to={`/productos/category/${p.category || ''}`}>
                       {p.category}
                     </Link>
                 </Col>
@@ -37,7 +37,7 @@ function ProductDetails(){
                {/**Product Image */}
                 <Col sm={12} md={7}>
                     <div className="w-100">
-                      <img className="d-block mx-auto" src={p.thumbnail} />
+                      <img className="d-block mx-auto" src={p.thumbnail || "https://dummyimage.com/300x300/fff/000&text=Image+not+found"} />
                     </div>
                 </Col>
 
@@ -67,7 +67,7 @@ function ProductDetails(){
                 <Col className="m-3 mx-0" xs={12} md={7}  >
                    <Col md={12} >
                       <div className="fs-5 fw-medium mb-5">Descripcion</div>
-                      <p>{p.description}</p>
+                      <p>{p.description || 'N/A'}</p>
                    </Col>
                 </Col >
 
@@ -75,14 +75,14 @@ function ProductDetails(){
                 <Col className="m-3 mx-0" xs={12} md={7}>
                    <Col md={12} >
                       <div className="fs-5 fw-medium mb-5">Opiniones</div>
-                      {p.reviews.map(r => 
+                      {p.reviews?.map(r => 
                           <CardReview
                             id={r.id}
                             comment={r.comment}
                             rating={r.rating}
                             date={r.date}
                           />
-                      )}
+                      ) || ''}
                       
                    </Col>
                 </Col >

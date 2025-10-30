@@ -14,13 +14,15 @@ function ProductBuyCard({ title, rating, ship, id, stock, price, discount }) {
     <Card className="h-100">
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <img className="mb-2" src={`/rating${Math.round(rating)}.png`} />
+        <img className="mb-2" src={`/rating${Math.round(rating || 1)}.png`} />
         <Card.Text className="h3">$ {price.toFixed(2)} 
-          <span className="mx-2 text-success fw-medium fs-6">{discount}% OFF</span> 
+          <span className="mx-2 text-success fw-medium fs-6">
+            {discount ? discount + '% OFF' : ''}
+          </span> 
         </Card.Text>
-        <Card.Text className="text-secondary">stock: {stock}</Card.Text>
+        <Card.Text className="text-secondary">stock: {stock || "N/A"}</Card.Text>
         <Card.Text className="text-secondary mb-3">
-          <i class="bi bi-truck"></i> {ship}
+          <i class="bi bi-truck"></i> {ship || 'N/A'}
         </Card.Text>
       </Card.Body>
       <InputGroup className="w-100 align-items-center gap">

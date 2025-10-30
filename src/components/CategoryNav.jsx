@@ -26,21 +26,21 @@ function CategoryNav(){
     return(
        <Row className={`mb-3 d-none  ${showFilter ? 'd-md-flex' : ''}`}> 
         <CategoryItem 
-          className="me-2 border ps-0"
+          className="border ps-0"
           category={categories[0]} 
           image={Img1} 
           link={`/productos/category/${categories[0]}`}
         />
         <CategoryItem 
           // variant="primary"
-          className="me-2 border"
+          className="border"
           category={categories[1]} 
           image={Img2} 
           link={`/productos/category/${categories[1]}`}
         />
         <CategoryItem 
           // variant="success"
-          className="me-2 border"
+          className="border"
           category={categories[2]} 
           image={Img3} 
           link={`/productos/category/${categories[2]}`}
